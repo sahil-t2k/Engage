@@ -1,5 +1,6 @@
 export default {
   editchildguestcharges:"Edit Child Guest Charges",
+  landing:"Landing",
  addchildguestcharges:"Add Child Guest Charges",
   excludefromcapacity:"Exclude from Capacity",
   chargetype:"Charge Type",

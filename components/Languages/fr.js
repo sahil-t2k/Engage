@@ -3,6 +3,7 @@ export default {
   addchildguestcharges:"Ajouter des frais d'invité enfant",
   excludefromcapacity:"Exclure de la capacité",
   chargetype:"Type de frais",
+  landing:"Un Atterrissage",
   extraguestcharge:"Frais d'invité supplémentaire",
   countbasecomponent:"Compter le composant de base",
   charges:"Des charges",

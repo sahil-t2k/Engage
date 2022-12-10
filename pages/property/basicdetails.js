@@ -186,7 +186,7 @@ export default function BasicDetails() {
 }
   return (
     <>
-    <Title name="Engage | Basic Details"/>
+    <Title name={`Engage |  ${language?.basicdetails}`}/>
       <div>
 
         <Header color={color} Primary={english.Side} />

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import lang from '../../components/GlobalData'
 import axios from "axios";
 import DarkModeLogic from "../../components/darkmodelogic";
-import objChecker, { filter } from "lodash"
+import objChecker, { filter } from "lodash";
+import Title from '../../components/title';
 import Sidebar  from "../../components/Sidebar";
 import Headloader from '../../components/loaders/headloader';
 import validateAddress from "../../components/Validation/address";
@@ -175,7 +176,7 @@ function Address() {
 
   return (
     <>
-   
+      <Title name={`Engage |  ${language?.address}`}/>
      <Header color={color} Primary={english?.Side}/>
      <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
      

@@ -95,7 +95,7 @@ const  Landing=() =>{
 
   return ( 
     <>
-     <Title name="Engage | Landing"/>
+     <Title name={`Engage |  ${language?.landing}`}/>
   <div className={`${color.greybackground} min-h-screen pt-8 lg:px-32 sm:px-1 `} >
     <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
       <span
