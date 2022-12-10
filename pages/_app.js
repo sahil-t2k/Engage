@@ -10,15 +10,10 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
-  // if (Component.getLayout){
-  //   return Component.getLayout(<Component{...pageProps} />)
-  // }
   
   return(
     <>
-   
-       <Component {...pageProps} />
-   
+   <Component {...pageProps} />
    </>
   )
 }

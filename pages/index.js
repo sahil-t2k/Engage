@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Title from "../components/title";
 import mode from '../components/darkmode'
 import Axios from "axios";
 import bcrypt from "bcryptjs";
@@ -232,6 +233,8 @@ function Signin(args) {
 
   }
   return ( 
+    <>
+     <Title name="Engage | Sign in"/>
     <div className={`min-h-screen ${color?.greybackground} p-4 `}>
       <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
         <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
@@ -394,6 +397,8 @@ function Signin(args) {
       />
       <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   />
     </div>
+    </>
+
    
   );
 }
