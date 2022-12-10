@@ -16,8 +16,6 @@ import DarkModeLogic from "../components/darkmodelogic";
 import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
-
-
 function Signin(args) {
   const [lang, setLang] = useState("");
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
