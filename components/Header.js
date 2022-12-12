@@ -262,6 +262,9 @@ function Navbar(args) {
                     {language?.rooms}</a>
                     </Link></span>
                 </li>
+                
+                {JSON.stringify(args?.Type) === "2"?<></>:
+                <>
                 <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2  group`}>
                   <svg
                     className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
@@ -308,37 +311,29 @@ function Navbar(args) {
           className= {`${args?.color?.text} ${args?.color?.sidebar} group  rounded-lg flex items-center p-2 
             w-full p-2 text-base font-normal  transition duration-75`} >
                    <svg
-
                     className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
                   </svg>
-
-                  <span className="flex-1 ml-3 text-left whitespace-nowrap" >ARI</span>
+                <span className="flex-1 ml-3 text-left whitespace-nowrap" >ARI</span>
                   <svg sidebar-toggle-item className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" 
                   xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
             </button>
            <div className={ari === true ? 'block' : 'hidden'}>
 					<ul  className="py-2 space-y-2">
-						<li className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}
-     >
+						<li className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 							<Link  href={{pathname:args?.Primary?.availability, query: { id: 1 }}}>
             	<a>{language?.availability}</a></Link>
 						</li>
 						<li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.inventory, query: { id: 1 }}}>
-              <a 
-							>
-                  {language?.inventory}</a>
+              <a>{language?.inventory}</a>
 						</Link></li>
             <li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.promotion, query: { id: 1 }}}>
-              <a 
-							>
-                  {language?.promotions}</a>
+              <a>{language?.promotions}</a>
 						</Link></li>
             <li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.modification, query: { id: 1 }}}>
@@ -355,6 +350,7 @@ function Navbar(args) {
 					
 					</ul></div>
 				        </li>
+                </>}
               </ul>
               <div className="space-y-2 pt-2">
                 <ul>
@@ -392,6 +388,8 @@ function Navbar(args) {
                     <Link  href={{pathname:args?.Primary?.theme, query: { id: 1 }}}><a>{language?.theme}</a></Link>
                     </span>
                   </li>
+                  {JSON.stringify(args?.Type) === "2"?<></>:
+                <>
                   <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2  group`}>
                     <svg
                       className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
@@ -429,7 +427,7 @@ function Navbar(args) {
                     <Link href={{pathname:args?.Primary?.roomsxml, query: { id: 1 }}}>
                     <a>{language?.roomxml}</a></Link>
                     </span>
-                  </li>
+                  </li></>}
                 </ul>
               </div>
             </div>

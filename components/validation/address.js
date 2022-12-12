@@ -2,8 +2,7 @@ const validateAddress = (data) => {
   var error = {};
   var flag = []
   var final_flag = true;
-alert(JSON.stringify(data))
- 
+   
   if (data.address_street_address === "") {
     flag.push(false)
     error.address_street_address = "App: The street address is required"

@@ -108,7 +108,6 @@ function Address() {
       }
      else{
       var result = validateAddress(allHotelDetails)
-      alert(JSON.stringify(result))
       if(result===true)
       {
       setSpinner(1)
@@ -139,8 +138,10 @@ function Address() {
           draggable: true,
           progress: undefined,
         });
+        setError({})
         fetchHotelDetails(); 
         Router.push("./address");
+       
         setAllHotelDetails([])
       })
       .catch((error) => {
@@ -177,7 +178,7 @@ function Address() {
   return (
     <>
       <Title name={`Engage |  ${language?.address}`}/>
-     <Header color={color} Primary={english?.Side}/>
+     <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
      <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
      
     <div id="main-content"
@@ -354,7 +355,7 @@ function Address() {
                         onChange={(e) =>
                           setAllHotelDetails({
                             ...allHotelDetails,
-                            address_latitude:e.target.value,
+                            address_latitude:parseFloat(e.target.value),
                           },setFlag(1))
                         }
                       />
@@ -380,7 +381,7 @@ function Address() {
                         onChange={(e) =>
                           setAllHotelDetails({
                             ...allHotelDetails,
-                            address_longitude: e.target.value,
+                            address_longitude: parseFloat(e.target.value),
                           },setFlag(1))
                         }
                       />
@@ -432,7 +433,7 @@ function Address() {
                         onChange={(e) =>
                           setAllHotelDetails({
                             ...allHotelDetails,
-                            address_precision: e.target.value
+                            address_precision: parseInt(e.target.value)
                           },setFlag(1))
                         }
                       />

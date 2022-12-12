@@ -100,7 +100,7 @@ function PropertySummary() {
     <>
      <Title name={`Engage |  ${language?.propertysummary}`}/>
      <div>
-      <Header color={color} Primary={english?.Side} />
+      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
       {/* Body */}
       <div id="main-content"

@@ -189,7 +189,7 @@ export default function BasicDetails() {
     <Title name={`Engage |  ${language?.basicdetails}`}/>
       <div>
 
-        <Header color={color} Primary={english.Side} />
+        <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} />
         <Sidebar color={color} Primary={english.Side} Type={currentLogged?.user_type} />
 
         <div id="main-content"
