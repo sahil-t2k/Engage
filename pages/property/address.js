@@ -6,7 +6,7 @@ import objChecker, { filter } from "lodash";
 import Title from '../../components/title';
 import Sidebar  from "../../components/Sidebar";
 import Headloader from '../../components/loaders/headloader';
-import validateAddress from "../../components/Validation/address";
+import validateAddress from "../../components/validation/address";
 import Lineloader from '../../components/loaders/lineloader';
 import Header  from "../../components/Header";
 import { ToastContainer, toast } from "react-toastify";
