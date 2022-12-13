@@ -1,5 +1,7 @@
 export default {
   editchildguestcharges:"Edit Child Guest Charges",
+  userprofile:"User Profile",
+  settings:"Settings",
   landing:"Landing",
  addchildguestcharges:"Add Child Guest Charges",
   excludefromcapacity:"Exclude from Capacity",

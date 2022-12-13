@@ -1,5 +1,7 @@
 export default {
   editchildguestcharges:"تحرير رسوم ضيف الأطفال",
+  settings:"إعدادات",
+  userprofile:"ملف تعريفي للمستخدم",
   landing:"هبوط",
   addchildguestcharges:"إضافة رسوم ضيف الأطفال",
   excludefromcapacity:"استثناء من السعة",

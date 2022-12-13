@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import Link from 'next/link'
 //import {execSync} from "child_process";
 import english from "./Languages/en";
 import french from "./Languages/fr";
@@ -35,14 +36,23 @@ function Footer(args) {
     <div  className={`${args?.color?.greybackground} px-4 relative overflow-y-auto lg:ml-64`}>
     <footer className= {`${args?.color?.whitebackground} md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6`}>
     <ul className="flex items-center flex-wrap mb-6 md:mb-0">
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline mr-4 md:mr-6`}>{language?.termsandconditions}</a></li>
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline mr-4 md:mr-6`}>{language?.privacypolicy}</a></li>
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline mr-4 md:mr-6`}>{language?.licensing}</a></li>
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline mr-4 md:mr-6`}>{language?.cookiepolicy}</a></li>
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline mr-4 md:mr-6`}>{language?.contact}</a></li>
-        <li><a href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:underline`}>v:{publicRuntimeConfig?.version}#{generatedGitInfo.gitBranch}@{generatedGitInfo.gitCommitHash}
+        <li>
+        <Link href="../termsandconditions">
+            <span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
+            {language?.termsandconditions}</span></Link></li>
+        <li>
+        <Link href="../privacypolicy"><span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
+       {language?.privacypolicy}</span></Link></li>
+        <li>
+        <Link href="../liscensing"><span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
+      {language?.licensing}</span></Link></li>
+        <li><Link href="../cookiepolicy"><span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
+        {language?.cookiepolicy}</span></Link></li>
+        <li> <Link href="../contactus"><span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
+       {language?.contact}</span></Link></li>
+        <li><span href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline`}>v:{publicRuntimeConfig?.version}#{generatedGitInfo.gitBranch}@{generatedGitInfo.gitCommitHash}
           
-          </a></li>
+          </span></li>
         </ul>
     <div className="flex sm:justify-center space-x-6">
         <a href="#" className={`${args?.color?.textgray} ${args?.color?.footerhover}`}>

@@ -27,6 +27,7 @@ var country;
 var currentLogged;
 function Address() {
   const [visible,setVisible]=useState(0) 
+  const [state,setStates]=useState([]) 
   const [spinner, setSpinner] = useState(0)
   const [flag, setFlag] = useState([]);
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
@@ -62,6 +63,7 @@ function Address() {
    Router.push("./address");
   },[])
 
+  
 
   /* Function call to fetch Current Property Details when page loads */
   const fetchHotelDetails = async () => { 
