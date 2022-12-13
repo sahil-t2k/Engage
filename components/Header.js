@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import Link from 'next/link';
 var language;
 var currentLogged;
-
 function Navbar(args) {
   const [ari, setAri] = useState(false)
   const [services, setServices] = useState(false)
