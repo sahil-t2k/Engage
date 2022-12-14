@@ -1,3 +1,4 @@
+const postalCodes = require('postal-codes-js');
 const validateAddress = (data) => {
   var error = {};
   var flag = []
@@ -37,7 +38,7 @@ const validateAddress = (data) => {
 
   if (data.address_zipcode === '') {
     flag.push(false)
-    error.address_zipcode = "App: The address zipcode is required"
+    error.address_zipcode = "App: The address postal code is required"
   }
 
 
@@ -59,7 +60,7 @@ const validateAddress = (data) => {
 
   //check latitudes 
   if (data.address_latitude !== '') {
-    if (!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/).test(data.address_latitude)) {
+    if (!(/^-?[0-9]\d*(\.\d+)?$/).test(data.address_latitude)) {
       flag.push(false)
       error.address_latitude = 'APP: Invalid latitude value.'
     }
@@ -71,7 +72,7 @@ const validateAddress = (data) => {
   }
   //check longitude 
   if (data.address_longitude !== '') {
-    if (!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/).test(data.address_longitude)) {
+    if (!(/^-?[0-9]\d*(\.\d+)?$/).test(data.address_longitude)) {
       flag.push(false)
       error.address_longitude = 'APP: Invalid longitude value.'
     }
@@ -82,9 +83,11 @@ const validateAddress = (data) => {
   }
   //check zip code
   if (data.address_zipcode !== '') {
-    if (!(/^[1-9][0-9]{5}$/).test(data.address_zipcode)) {
+    var result= postalCodes.validate(data?.address_country, data?.address_zipcode)
+    
+    if (result != true) {
       flag.push(false)
-      error.address_zipcode = 'APP: Invalid zip code'
+      error.address_zipcode = `APP: ${result}`
     }
   }
   //check precision

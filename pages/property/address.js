@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Country, State, City } from "country-state-city";
 import lang from '../../components/GlobalData'
 import axios from "axios";
 import DarkModeLogic from "../../components/darkmodelogic";
@@ -27,7 +28,11 @@ var country;
 var currentLogged;
 function Address() {
   const [visible,setVisible]=useState(0) 
-  const [state,setStates]=useState([]) 
+  const [countryInitial,setCountryInitial]=useState([])
+  const [provinceInitial,setProvinceInitial]=useState([])
+  const [cityInitial,setCityInitial]=useState([])
+  const [states,setStates]=useState([]) 
+  const [cities,setCities]=useState([])
   const [spinner, setSpinner] = useState(0)
   const [flag, setFlag] = useState([]);
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
@@ -76,7 +81,10 @@ function Address() {
     axios.get(url)
     .then((response)=>{setAddress(response.data.address?.[i]);
       filterCountry(response.data.address?.[i])
-      setAllHotelDetails(response.data.address?.[i])
+      setAllHotelDetails(response.data.address?.[i]);
+      setCountryInitial(response.data.address?.[i]?.address_country)
+      setProvinceInitial(response.data.address?.[i]?.address_province)
+      setCityInitial(response.data.address?.[i]?.address_city)
       logger.info("url  to fetch property details hitted successfully")
      setVisible(1);
    
@@ -110,6 +118,7 @@ function Address() {
       }
      else{
       var result = validateAddress(allHotelDetails)
+     
       if(result===true)
       {
       setSpinner(1)
@@ -130,7 +139,8 @@ function Address() {
       .put(url, final_data, { header: { "content-type": "application/json" } })
       .then((response) => {
         setSpinner(0)
-        setFlag([])
+        setFlag([]);
+        setVisible(0)
         toast.success("Address Updated Successfully!", {
           position: "top-center",
           autoClose: 5000,
@@ -174,9 +184,19 @@ function Address() {
     });
   }
 
- 
+  useEffect(()=>{
+     var state_code;
+    setStates(State.getStatesOfCountry(allHotelDetails?.address_country?.toString()));
+    state_code =  State.getStatesOfCountry(allHotelDetails?.address_country?.toString()).filter(el => {
+      return allHotelDetails?.address_province === el.name;
+   });
+   setAllHotelDetails({...allHotelDetails,address_province_code: state_code?.[i]?.isoCode});
+    },[allHotelDetails?.address_country,allHotelDetails?.address_province])
    
-
+ 
+    useEffect(()=>{
+     setCities(City.getCitiesOfState(allHotelDetails?.address_country,allHotelDetails?.address_province_code))
+    },[allHotelDetails?.address_country,allHotelDetails?.address_province_code])
   return (
     <>
       <Title name={`Engage |  ${language?.address}`}/>
@@ -268,15 +288,91 @@ function Address() {
                         type="text"
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         defaultValue={address?.address_landmark}
-                        onChange={(e) =>
+                        onChange={(e) =>{
                           setAllHotelDetails({
                             ...allHotelDetails,
                             address_landmark: e.target.value,
-                          },setFlag(1))
+                          });setFlag(1);}
                         }
                       />
                        <p className="text-sm text-sm text-red-700 font-light">
                           {error?.address_landmark}</p></div>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className={`text-sm font-medium ${color?.text} block mb-2`}
+                        htmlFor="grid-password"
+                      >
+                        {language?.country}
+                        <span style={{ color: "#ff0000" }}>*</span>
+                      </label>
+                      <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
+                      <div className={visible === 1 ? 'block' : 'hidden'}>
+                      <select className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                      onChange={(e) =>{
+                       
+                          setAllHotelDetails({...allHotelDetails,address_country: e.target.value,
+                            address_province:"",
+                            address_city:"",
+                           address_zipcode:""});
+                         setFlag(1);
+                        }
+                        }>
+                        <>
+                       
+                       <option  disabled selected value={country?.[i]?.country_code}>{country?.[i]?.country_name}</option>
+                       {lang?.CountryData?.map(i => {
+                        return (
+                          <option key={i.country_code} value={i.country_code}>{i?.country_name}</option>)
+                      }
+                      )}</>
+                      </select>
+                      <p className="text-sm text-sm text-red-700 font-light">
+                          {error?.address_country}</p></div>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className={`text-sm font-medium ${color?.text} block mb-2`}
+                        htmlFor="grid-password"
+                      >
+                       {language?.province} 
+                       <span style={{ color: "#ff0000" }}>*</span>
+                      </label>
+                      <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
+                      <div className={visible === 1 ? 'block' : 'hidden'}>
+                      <select
+                        className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                        onChange={(e) =>{
+                       
+                          setAllHotelDetails({
+                            ...allHotelDetails,
+                            address_province: JSON.parse(e.target.value).name,
+                            address_province_code: JSON.parse(e.target.value).isoCode,
+                            address_city:"",
+                            address_zipcode:""
+                         });
+                         setFlag(1);
+                        }
+                        }
+                      >
+                         {countryInitial===allHotelDetails?.address_country?<>
+                          <option  disabled selected >{allHotelDetails?.address_province}</option>
+                        
+                         </>:<>
+                         <option disabled selected>Select province</option>
+                        </>}
+                        {states?.map(i => {
+                        return (
+                          <option key={i.name} value={JSON.stringify(i)}>{i?.name}</option>)
+                      }
+                      )} 
+                      </select>
+                      <p className="text-sm text-sm text-red-700 font-light">
+                          {error?.address_province}</p></div>
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
@@ -292,17 +388,26 @@ function Address() {
                       <div className={visible === 1 ? 'block' : 'hidden'}>
                       <select
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                        onChange={(e) =>
+                        onChange={(e) =>{
                           setAllHotelDetails({
                             ...allHotelDetails,
                             address_city: e.target.value,
-                          },setFlag(1))
+                            address_zipcode:""
+                        })
+                        }
                         }
                       >
-                        <option disabled selected>{address?.address_city}</option>
-                        <option value="Baramulla">Baramulla</option>
-                        <option value="Pahalgam">Pahalgam</option>
-                        <option value="Gulmarg">Gulmarg</option>
+                         {(countryInitial===allHotelDetails?.address_country) && (provinceInitial===allHotelDetails?.address_province)?<>
+                          <option disabled selected>{address?.address_city}</option>
+                         </>:<>
+                         <option disabled selected>{language?.select}</option>
+                         </>}
+                       
+                        {cities?.map(i => {
+                        return (
+                          <option key={i.name} value={i.name}>{i?.name}</option>)
+                      }
+                      )}
                       </select>
                       <p className="text-sm text-sm text-red-700 font-light">
                           {error?.address_city}</p>
@@ -315,28 +420,27 @@ function Address() {
                         className={`text-sm font-medium ${color?.text} block mb-2`}
                         htmlFor="grid-password"
                       >
-                       {language?.province}
-                       <span style={{ color: "#ff0000" }}>*</span>
+                        {language?.postalcode} 
+                        <span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                      <select
-                        className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                        onChange={(e) =>
-                          setAllHotelDetails({
-                            ...allHotelDetails,
-                            address_province: e.target.value,
-                          },setFlag(1))
-                        }
-                      >
-                         <option selected disabled>{address?.address_province}</option>
-                        <option value="Jammu And Kashmir">Jammu and Kashmir</option>
-                        <option value="Kargil">Kargil</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Maharastra">Maharastra</option>
-                      </select>
-                      <p className="text-sm text-sm text-red-700 font-light">
-                          {error?.address_province}</p></div>
+                      <input
+                  type="text" 
+                  className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                  defaultValue={allHotelDetails.address_zipcode!=''?allHotelDetails.address_zipcode:''}
+                  onChange={(e) =>{
+                    setAllHotelDetails({
+                      ...allHotelDetails,
+                      address_zipcode: e.target.value,
+                    });
+                    setFlag(1);}
+                  }
+                />
+
+
+                       <p className="text-sm text-sm text-red-700 font-light">
+                          {error?.address_zipcode}</p></div>
                     </div>
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
@@ -354,11 +458,11 @@ function Address() {
                        type="text" 
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         defaultValue={address?.address_latitude}
-                        onChange={(e) =>
+                        onChange={(e) =>{
                           setAllHotelDetails({
                             ...allHotelDetails,
                             address_latitude:parseFloat(e.target.value),
-                          },setFlag(1))
+                          }); setFlag(1);}
                         }
                       />
                        <p className="text-sm text-sm text-red-700 font-light">
@@ -380,50 +484,25 @@ function Address() {
                         type="text" 
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         defaultValue={address?.address_longitude}
-                        onChange={(e) =>
+                        onChange={(e) =>{
                           setAllHotelDetails({
                             ...allHotelDetails,
                             address_longitude: parseFloat(e.target.value),
-                          },setFlag(1))
+                          }); setFlag(1);}
                         }
                       />
                        <p className="text-sm text-sm text-red-700 font-light">
                           {error?.address_longitude}</p></div>
                     </div>
                   </div>
+                
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
                         className={`text-sm font-medium ${color?.text} block mb-2`}
                         htmlFor="grid-password"
                       >
-                        {language?.postalcode}
-                        <span style={{ color: "#ff0000" }}>*</span>
-                      </label>
-                      <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
-                      <div className={visible === 1 ? 'block' : 'hidden'}>
-                      <input
-                        type="text" 
-                        className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                        defaultValue={address?.address_zipcode}
-                        onChange={(e) =>
-                          setAllHotelDetails({
-                            ...allHotelDetails,
-                            address_zipcode: e.target.value,
-                          },setFlag(1))
-                        }
-                      />
-                       <p className="text-sm text-sm text-red-700 font-light">
-                          {error?.address_zipcode}</p></div>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className={`text-sm font-medium ${color?.text} block mb-2`}
-                        htmlFor="grid-password"
-                      >
-                        {language?.precision}
+                        {language?.precision}({language?.inmeters})
                         <span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
@@ -432,47 +511,19 @@ function Address() {
                        type="text"   
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         defaultValue={address?.address_precision}
-                        onChange={(e) =>
+                        onChange={(e) =>{
                           setAllHotelDetails({
                             ...allHotelDetails,
                             address_precision: parseInt(e.target.value)
-                          },setFlag(1))
-                        }
+                          });
+                          setFlag(1);
+                        }}
                       />
                        <p className="text-sm text-sm text-red-700 font-light">
                           {error?.address_precision}</p></div>
                     </div>
                   </div>
-                  <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label
-                        className={`text-sm font-medium ${color?.text} block mb-2`}
-                        htmlFor="grid-password"
-                      >
-                        {language?.country}
-                        <span style={{ color: "#ff0000" }}>*</span>
-                      </label>
-                      <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
-                      <div className={visible === 1 ? 'block' : 'hidden'}>
-                      <select className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}>
-                      onChange={(e) =>
-                          setAllHotelDetails({
-                            ...allHotelDetails,
-                            address_country: e.target.value
-                          },setFlag(1))
-                        }
-                        <>
-                       <option  disabled selected value={country?.[i]?.country_code}>{country?.[i]?.country_name}</option>
-                       {lang?.CountryData?.map(i => {
-                        return (
-                          <option key={i.country_code} value={i.country_code}>{i?.country_name}</option>)
-                      }
-                      )}</>
-                      </select>
-                      <p className="text-sm text-sm text-red-700 font-light">
-                          {error?.address_country}</p></div>
-                    </div>
-                  </div>
+                 
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
                       </div></div>

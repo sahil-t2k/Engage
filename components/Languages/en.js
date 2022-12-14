@@ -1,5 +1,6 @@
 export default {
   editchildguestcharges:"Edit Child Guest Charges",
+  inmeters:"in meters",
   userprofile:"User Profile",
   settings:"Settings",
   landing:"Landing",

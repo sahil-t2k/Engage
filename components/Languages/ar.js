@@ -1,5 +1,6 @@
 export default {
   editchildguestcharges:"تحرير رسوم ضيف الأطفال",
+  inmeters:"بالأمتار",
   settings:"إعدادات",
   userprofile:"ملف تعريفي للمستخدم",
   landing:"هبوط",

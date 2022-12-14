@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import validateRoomRates from '../../../components/Validation/room/roomratesadd';
+import validateRoomRates from '../../../components/validation/room/roomratesadd';
 import validateRoom from '../../../components/validation/room/roomdescriptionadd';
-import validateRoomGallery from '../../../components/Validation/room/roomgalleryadd';
-import validateBedData from '../../../components/Validation/room/roombedadd';
+import validateRoomGallery from '../../../components/validation/room/roomgalleryadd';
+import validateBedData from '../../../components/validation/room/roombedadd';
 import Multiselect from 'multiselect-react-dropdown';
 import lang from '../../../components/GlobalData'
 import DarkModeLogic from "../../../components/darkmodelogic";
@@ -13,12 +13,12 @@ import Button from '../../../components/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "next/link";
-import english from "../../../components/Languages/en"
-import french from "../../../components/Languages/fr"
-import arabic from "../../../components/Languages/ar"
-import Footer from "../../../components/Footer"
-import Sidebar from '../../../components/Sidebar'
-import Header from '../../../components/Header'
+import english from "../../../components/Languages/en";
+import french from "../../../components/Languages/fr";
+import arabic from "../../../components/Languages/ar";
+import Footer from "../../../components/Footer";
+import Sidebar from '../../../components/Sidebar';
+import Header from '../../../components/Header';
 var language;
 var currentProperty;
 var addroom;
