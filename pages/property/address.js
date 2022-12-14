@@ -322,7 +322,7 @@ function Address() {
                         }>
                         <>
                        
-                       <option  disabled selected value={country?.[i]?.country_code}>{country?.[i]?.country_name}</option>
+                       <option  selected value={country?.[i]?.country_code}>{country?.[i]?.country_name}</option>
                        {lang?.CountryData?.map(i => {
                         return (
                           <option key={i.country_code} value={i.country_code}>{i?.country_name}</option>)
@@ -360,7 +360,7 @@ function Address() {
                         }
                       >
                          {countryInitial===allHotelDetails?.address_country?<>
-                          <option  disabled selected >{allHotelDetails?.address_province}</option>
+                          <option  selected >{allHotelDetails?.address_province}</option>
                         
                          </>:<>
                          <option disabled selected>Select province</option>
@@ -398,7 +398,7 @@ function Address() {
                         }
                       >
                          {(countryInitial===allHotelDetails?.address_country) && (provinceInitial===allHotelDetails?.address_province)?<>
-                          <option disabled selected>{address?.address_city}</option>
+                          <option  selected>{address?.address_city}</option>
                          </>:<>
                          <option disabled selected>{language?.select}</option>
                          </>}
