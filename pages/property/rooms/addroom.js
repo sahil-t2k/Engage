@@ -353,24 +353,16 @@ function Addroom() {
         image_link: i.image_link,
         image_title: i.image_title,
         image_description: i.image_description,
-        image_category: "outside"
+        image_category: "room",
+        room_id:roomId
       }
     }))
    var result = validateRoomGallery(imagedata);
    if (result === true) {
     setSpinner(1);
       const finalImage = { "images": imagedata }
-      axios.post(`/api/gallery`, finalImage).then(response => {
-        const images = imageData?.map((i => {
-          return {
-            "image_id": response.data.image_id,
-            "room_id": roomId
-          }
-        }))
-        const final = { "room_images": images }
-        axios.post('/api/room-images', final, {
-          headers: { 'content-type': 'application/json' }
-        }).then(response => {
+      axios.post(`/api/gallery`, finalImage)
+       .then(response => {
           setSpinner(0);
           toast.success(JSON.stringify(response.data.message), {
             position: "top-center",
@@ -397,19 +389,6 @@ function Addroom() {
               progress: undefined,
             });
           });
-      }).catch(error => {
-        setSpinner(0)
-        toast.error("API: Gallery link error.", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setFlag([]);
-      });
     }
 
     else {
@@ -1157,7 +1136,6 @@ function Addroom() {
                               <td className={ `${color.text} px-2 py-4 whitespace-nowrap text-base font-normal `}>
                                 <div className="flex">
                                   <div className="form-check ml-4 form-check-inline">
-
                                     <label htmlFor={"default-toggle" + idx} className="inline-flex relative items-center cursor-pointer">
                                       {item?.service_value}
                                       <input type="checkbox" value={item?.service_value}
@@ -1240,9 +1218,9 @@ function Addroom() {
                    {language?.room}  {language?.gallery}
                   </h6> <div className="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0">
                   </div>
-                  {/* <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
+                  <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <Button Primary={language?.Add} onClick={addPhotos} />
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
@@ -1251,7 +1229,7 @@ function Addroom() {
                   <div>
                     {imageData?.map((imageData, index) => (
                       <> 
-                      {/* <button
+                      <button
                         className="float-right my-8 sm:inline-flex  text-gray-800  
         font-semibold border  focus:ring-4 focus:ring-cyan-200 font-semibold bg-gray-200
         rounded-lg text-sm px-1 py-1 text-center 
@@ -1260,7 +1238,7 @@ function Addroom() {
                         onClick={() => removeImage(imageData?.index)}>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
                         </path></svg>
-                      </button> */}
+                      </button>
                         <div className="p-6 space-y-6">
                           <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">

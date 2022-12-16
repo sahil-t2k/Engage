@@ -54,7 +54,7 @@ currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
     /**Function to save Current property to be viewed to Local Storage**/
   const currentRoom = (props) => {
     localStorage.setItem("RoomId", (props.id));
-    Router.push("./rooms/room");
+    Router.push("./rooms/editroom");
   };
 
   const fetchRooms = async () => {

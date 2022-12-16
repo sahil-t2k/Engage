@@ -31,7 +31,7 @@ const validateContact = (data,props) =>{
     const pn = parsePhoneNumber(data.contact_data, {regionCode:props})
     if (pn?.valid == false) {
         flag.push(false)
-        error.contact_data = `APP: The phone number is not valid or country code missing.`
+        error.contact_data = `APP: The phone number is invalid.`
       }
 }
     }

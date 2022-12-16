@@ -159,10 +159,11 @@ function Gallery() {
                 fetchHotelDetails();
                 setImage({});
                 setActionImage({})
-                document.getElementById('addgallery').reset()
+                document.getElementById('addgallery').reset();
                 Router.push("./gallery");
                 setAddImage(0)
          }).catch(error => {
+              document.getElementById('addgallery').reset();
                 setSpinner(0)
                 toast.error(" Gallery Error", {
                     position: "top-center",
@@ -349,8 +350,9 @@ const validationGalleryEdit = () => {
             </ol>
           </nav>
 
-            {/* Header */}
+             {/* Gallery */}
             <div className={`${color?.whitebackground} shadow rounded-lg  px-12 p-6  -mb-4 sm:p-6 xl:p-8  2xl:col-span-2`} >
+               {/* Header */}
                 <h6 className={`text-xl mb-2 flex leading-none pl-4 pt-2 font-bold ${color?.text}`}>
                     {language?.gallery}
                 </h6>
@@ -399,7 +401,7 @@ const validationGalleryEdit = () => {
                         return (
                             <div className="block text-blueGray-600 text-xs  mt-6 font-bold " key={idx} >
                                 <button onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
-                                     <img src={item.image_link} alt='Room Image' style={{ height: "250px", width: "450px" }} />
+                                     <img src={item.image_link} alt='Room Image' style={{ height: "200px", width: "450px" }} />
                                 </button>
                                 <table>
                                     <tr className="pt-1">
@@ -479,7 +481,7 @@ const validationGalleryEdit = () => {
                             <form id='editImage'>
                                   <div className="grid grid-cols-6 gap-6">
                                     <div className="col-span-6 sm:col-span-3">
-                                        <img src={actionImage?.image_link} alt='property_image' height={"200"} width={"400"} />
+                                        <img src={actionImage?.image_link} alt='Property Image' height={"200"} width={"400"} />
                                     </div>
                                      <div className="col-span-6 sm:col-span-3">
                                         <label
@@ -606,7 +608,7 @@ const validationGalleryEdit = () => {
                                                     }</div>
                                     </div>
                                     <div className="col-span-6 sm:col-span-3 mt-2">
-                                    <img className={`py-2 ${color?.text}`} src={image?.image_link} alt='ImagePreview' style={{ height: "150px", width: "250px" }} />
+                                    <img className={` ${color?.text}`} src={image?.image_link} alt='Image Preview' style={{ height: "150px", width: "250px" }} />
                                    </div>
                                    <div className="col-span-6 sm:col-span-3">
                                         <label

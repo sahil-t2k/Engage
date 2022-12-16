@@ -1,5 +1,5 @@
 import { parsePhoneNumber } from "awesome-phonenumber";
-const validateContactEdit = (data) =>{
+const validateContactEdit = (data,props) =>{
     
     var error={};
      var flag=[]
@@ -25,9 +25,7 @@ const validateContactEdit = (data) =>{
     }
 }
     }
-    
-    
-
+   
     if(data.name !== "" && data.name !== undefined){
         if(data.name === "Tdd Number"){  
         if((!data.type?.match(/^([1-9]+[0-9]*)$/))){
@@ -44,13 +42,12 @@ const validateContactEdit = (data) =>{
             }
         }
      }
-     
-     if(data.type !== "" && data.type !== undefined){
-        if(data.type === "phone"){  
-        const pn = parsePhoneNumber(data.name, {regionCode:props})
+     if(data.name !== "" && data.name !== undefined){
+        if(data.name === "Phone"){  
+        const pn = parsePhoneNumber(data.type, {regionCode:props})
         if (pn?.valid == false) {
             flag.push(false)
-            error.type = `APP: The phone number is not valid or country code missing.`
+            error.type= `APP: The phone number is invalid.`
           }
     }
         }

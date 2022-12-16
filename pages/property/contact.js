@@ -67,130 +67,6 @@ function Contact() {
     Router.push("./contact");
   }, [])
 
-  /* Function Add Contact*/
-  function submitContactAdd() {
-    if(flag === 1){
-    setSpinner(1)
-   
-    if (contact.contact_type!==undefined) {
-      const contactdata = [{
-        property_id: currentProperty?.property_id,
-        contact_type: contact?.contact_type,
-        contact_data: contact?.contact_data,
-        status: true
-      }];
-      const finalContact = { contacts: contactdata };
-      axios
-        .post(`/api/contact`,finalContact, {
-          headers: { "content-type": "application/json" },
-        })
-        .then((response) => {
-          setSpinner(0)
-          toast.success("API:Contact Added Successfully!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          document.getElementById('addcontactform').reset();
-          setView(0)
-          fetchHotelDetails();
-          Router.push("./contact");
-          setContact([]);
-          setError({});
-          setFlag([]);
-        })
-        .catch((error) => {
-          setSpinner(0)
-          toast.error("API:Contact Add Error!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          setView(0)
-          setFlag([]);
-        });
-    }
-  }
-  }
-
- /* Function Edit Contact*/
- const submitContactEdit = (props,noChange) => {
-  if(objChecker.isEqual(props,noChange)){
-    toast.warn('No change in contacts detected. ', {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-  }
-  else{
-    setError({})
-    var result = validateContactEdit(props)
-       if(result===true)
-       {
-        submitContactAdd();
-      
-  const final_data = {
-    contact_id: props.id,
-    contact_data: props.type,
-    status: props.status
-  };
-  const url = "/api/contact";
-  axios
-    .put(url, final_data, { header: { "content-type": "application/json" } })
-    .then((response) => {
-    toast.success("API:Contact Updated Successfully!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      fetchHotelDetails(); 
-      Router.push("./contact");
-    })
-    .catch((error) => {
-      setSpinner(0)
-      toast.error("API:Contact Update Error!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    });
-  }
-  else
-  {
-    toast.warn(result?.type, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    
-   setError(result)
-  }
-  }
-};
 
 // Fetch Hotel Details
   const fetchHotelDetails = async () => {
@@ -233,6 +109,130 @@ function Contact() {
     setColor(DarkModeLogic(darkModeSwitcher))
    },[darkModeSwitcher])
 
+  /* Function Add Contact*/
+  function submitContactAdd() {
+    if(flag === 1){
+    setSpinner(1);
+    if (contact.contact_type!==undefined) {
+      const contactdata = [{
+        property_id: currentProperty?.property_id,
+        contact_type: contact?.contact_type,
+        contact_data: contact?.contact_data,
+        status: true
+      }];
+      const finalContact = { contacts: contactdata };
+      axios
+        .post(`/api/contact`,finalContact, {
+          headers: { "content-type": "application/json" },
+        })
+        .then((response) => {
+          setSpinner(0)
+          toast.success("API: Contact add success.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          document.getElementById('addcontactform').reset();
+          setView(0)
+          fetchHotelDetails();
+          Router.push("./contact");
+          setContact([]);
+          setSpin(0)
+          setError({});
+          setFlag([]);
+        })
+        .catch((error) => {
+          setSpinner(0)
+          toast.error("API: Contact add error.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setView(0)
+          setFlag([]);
+        });
+    }
+  }
+  }
+
+ /* Function Edit Contact*/
+ const submitContactEdit = (props,noChange) => {
+  if(objChecker.isEqual(props,noChange)){
+    toast.warn('No change in contacts detected. ', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  else{
+    setError({})
+    var result = validateContactEdit(props,countryCode)
+       if(result===true)
+       {
+        submitContactAdd();
+      
+  const final_data = {
+    contact_id: props.id,
+    contact_data: props.type,
+    status: props.status
+  };
+  const url = "/api/contact";
+  axios
+    .put(url, final_data, { header: { "content-type": "application/json" } })
+    .then((response) => {
+    toast.success("API: Contact update success.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      fetchHotelDetails(); 
+      Router.push("./contact");
+    })
+    .catch((error) => {
+      setSpinner(0)
+      toast.error("API:Contact update error.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+  }
+  else
+  {
+    toast.warn(result?.type, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    
+   setError(result)
+  }
+  }
+};
 
    // Add Validation Contact Delete
   const submitContactDelete = (props) => {
@@ -241,7 +241,7 @@ function Contact() {
       .delete(url)
       .then((response) => {
         setSpin(0);
-        toast.success("API:Contact Deleted Successfully!", {
+        toast.success("API:Contact delete success.", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -255,7 +255,7 @@ function Contact() {
         Router.push("./contact");
       })
       .catch((error) => {
-        toast.error("API:Contact Delete Error!", {
+        toast.error("API: Contact delete error.", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
