@@ -3,7 +3,7 @@ import validateRoom from '../../../components/validation/room/roomdescriptionadd
 import validateEditGallery from '../../../components/validation/room/roomgalleryedit';
 import validateBedData from '../../../components/validation/room/roombedadd'
 import validateRoomRates from '../../../components/validation/room/roomratesadd';
-import validateBedAdd from '../../../components/Validation/room/roomsinglebedadd';
+import validateBedAdd from '../../../components/validation/room/roomsinglebedadd';
 import LoaderTable from '../../../components/loadertable';
 import objChecker from "lodash"
 import Table from '../../../components/Table';
@@ -99,6 +99,7 @@ function Room() {
     const url = `/api/${currentProperty.address_province.replace(/\s+/g, '-')}/${currentProperty.address_city}/${currentProperty.property_category}s/${currentProperty.property_id}/${currentroom}`
     axios.get(url)
       .then((response) => {
+        alert(JSON.stringify(response.data.beds))
         setRoomDetails(response.data);
         setAllRoomDetails(response.data);
         setFinalView(response?.data?.views);
@@ -107,7 +108,7 @@ function Room() {
         if(response.data.room_facilities !== undefined){
         setServices(response.data.room_facilities);
         }
-        if(response.data?.room_type === 'rt001'){
+        if(response.data?.room_type == 'Single'){
           setAllRoomDetails({ ...allRoomDetails, length:response.data.beds?.[i]?.length }) 
           setAllRoomDetails({ ...allRoomDetails, width:response.data.beds?.[i]?.width }) 
         }
@@ -115,6 +116,7 @@ function Room() {
         if(response.data.room_facilities == undefined){
         fetchServices();
         }
+        if(response.data?.room_type ==  'Semi_Double' || 'King' || 'Queen' || 'Studio_Room' || 'Double') {
         var genData = [];
         {
           response.data?.beds?.map((item) => {
@@ -127,6 +129,7 @@ function Room() {
           })
           setGen(genData);
       }
+    }
         logger.info("url  to fetch room hitted successfully");
         setVisible(1);
       })
@@ -1347,10 +1350,10 @@ const validationImage = () => {
                       <Button Primary={language?.SpinnerUpdate} />
                       </div>
                       <Button Primary={language?.Next} onClick={() => {
-                         { roomDetails?.room_type_id === 'rt002' || roomDetails?.room_type_id === 'rt003'|| roomDetails?.room_type_id === 'rt004'
-                         || roomDetails?.room_type_id === 'rt005' ?
+                         { (roomDetails?.room_type=== 'Single' || roomDetails?.room_type=== 'Semi_Double'|| roomDetails?.room_type=== 'King'
+                         || roomDetails?.room_type=== 'Queen' || roomDetails?.room_type=== 'Double') ?
                         setDisp(4) 
-                        : roomDetails?.room_type_id !== 'rt001' ?
+                        : roomDetails?.room_type === 'Single' ?
                         setDisp(5):
                       setDisp(1) }
                     }} />
