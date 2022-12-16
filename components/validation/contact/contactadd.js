@@ -1,4 +1,6 @@
-const validateContact = (data) =>{
+import { parsePhoneNumber } from "awesome-phonenumber";
+
+const validateContact = (data,props) =>{
     var error={};
      var flag=[]
      var final_flag=true;
@@ -26,10 +28,11 @@ const validateContact = (data) =>{
 
     if(data.contact_type !== "" && data.contact_type !== undefined){
     if(data.contact_type === "phone"){  
-    if((!data.contact_data?.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/))){
+    const pn = parsePhoneNumber(data.contact_data, {regionCode:props})
+    if (pn?.valid == false) {
         flag.push(false)
-        error.contact_data="App: The phone is invalid."
-    }
+        error.contact_data = `APP: The phone number is not valid or country code missing.`
+      }
 }
     }
    

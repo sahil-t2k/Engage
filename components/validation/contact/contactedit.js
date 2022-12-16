@@ -1,3 +1,4 @@
+import { parsePhoneNumber } from "awesome-phonenumber";
 const validateContactEdit = (data) =>{
     
     var error={};
@@ -24,15 +25,8 @@ const validateContactEdit = (data) =>{
     }
 }
     }
-
-    if(data.name !== "" && data.name !== undefined){
-    if(data.name === "Phone"){  
-    if((!data.type?.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/))){
-        flag.push(false)
-        error.type="App: The phone is invalid."
-    }
-}
-    }
+    
+    
 
     if(data.name !== "" && data.name !== undefined){
         if(data.name === "Tdd Number"){  
@@ -50,7 +44,16 @@ const validateContactEdit = (data) =>{
             }
         }
      }
-    
+     
+     if(data.type !== "" && data.type !== undefined){
+        if(data.type === "phone"){  
+        const pn = parsePhoneNumber(data.name, {regionCode:props})
+        if (pn?.valid == false) {
+            flag.push(false)
+            error.type = `APP: The phone number is not valid or country code missing.`
+          }
+    }
+        }
     for (let value in flag) {
      
         if(flag[value]=== false)

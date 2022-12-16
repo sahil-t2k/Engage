@@ -23,6 +23,7 @@ import Router from 'next/router'
 import LoaderTable from "../../components/loadertable";
 const logger = require("../../services/logger");
 var currentLogged;
+var i=0;
 
 function Contact() {
   const [gen, setGen] = useState([]) 
@@ -34,6 +35,7 @@ function Contact() {
   const [visible,setVisible]=useState(0) 
   const [deleteContact, setDeleteContact] = useState(0);
   const [contacts, setContacts] = useState([]);
+  const [countryCode, setCountryCode] = useState({});
   const [view, setView] = useState(0);
   const [flag, setFlag] = useState([]);
   const [contact, setContact] = useState([]);
@@ -201,6 +203,7 @@ function Contact() {
     axios.get(url)
       .then((response) => {
         setContacts(response.data.contacts);
+        setCountryCode(response.data.address?.[i]?.address_country);
         propertyName=response.data.property_name;
         {
           response.data?.contacts?.map((item) => {
@@ -268,7 +271,7 @@ function Contact() {
    // Add Validation Contact
    const validationContact = () => {
     setError({})
-    var result = validateContact(contact)
+    var result = validateContact(contact,countryCode)
     console.log("Result" +JSON.stringify(result))
        if(result===true)
        {

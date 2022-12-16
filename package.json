@@ -18,6 +18,7 @@
     "@mui/material": "^5.10.9",
     "@mui/styled-engine-sc": "^5.10.6",
     "@nrwl/next": "^14.0.2",
+    "awesome-phonenumber": "^4.1.0",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

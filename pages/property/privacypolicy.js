@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import english from '../components/Languages/en';
-import french from "../components/Languages/fr";
-import arabic from "../components/Languages/ar";
+import english from '../../components/Languages/en';
+import french from "../../components/Languages/fr";
+import arabic from "../../components/Languages/ar";
 import Router from 'next/router';
 import DarkModeLogic from '../components/darkmodelogic';
 var language;
