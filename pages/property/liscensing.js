@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import english from '../components/Languages/en';
-import french from "../components/Languages/fr";
-import arabic from "../components/Languages/ar";
+import english from '../../components/Languages/en';
+import french from "../../components/Languages/fr";
+import arabic from "../../components/Languages/ar";
 import Router from 'next/router';
-import DarkModeLogic from '../components/darkmodelogic';
+import DarkModeLogic from '../../components/darkmodelogic';
 var language;
 
-function CookiePolicy() {
+
+function Liscensing() {
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
 
@@ -31,12 +32,13 @@ function CookiePolicy() {
           }
       }
       firstfun();
-      Router.push("./cookiepolicy");
+      Router.push("./liscensing");
   }, [])
 
   useEffect(() => {
       setColor(DarkModeLogic(darkModeSwitcher))
   }, [darkModeSwitcher])
+
   return (
     <div className={`${color?.whitebackground} mb-4 sm:p-6 xl:p-8 2xl:col-span-2`} >
     <div className="pt-2">
@@ -44,11 +46,12 @@ function CookiePolicy() {
             <div className="border-b-2 py-8 border-cyan-600">
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <span className={`${color?.text} text-xl sm:text-3xl mb-8 leading-none font-bold `}>{language?.cookiepolicy}</span>
+                        <span className={`${color?.text} text-xl sm:text-3xl mb-8 leading-none font-bold `}>{language?.licensing}</span>
 
                     </div>
                     <div className="flex-shrink-0">
                         <div className="flex items-center justify-end flex-1 mr-10 text-cyan-600 text-lg font-bold">
+
                         </div>
                     </div>
                 </div>
@@ -65,7 +68,7 @@ function CookiePolicy() {
                      Furthermore, this Privacy Policy is intended to satisfy the obligation of transparency under the EU General Data
                       Protection Regulation 2016/679 (GDPR) and the laws implementing GDPR.
 
-                 </p>
+                   </p>
 
                 <p className="text-sm text-gray-500 my-4">
                     The legal basis upon which we rely for the collection and processing of your Personal Information under the GDPR are the following:<br/>
@@ -90,7 +93,6 @@ function CookiePolicy() {
                      If you have a question about the terms and conditions, privacy policy, practices or contents of a third party, please contact the third party directly.
                  
                 </p>
-
             </div>
         </div>
     </div>
@@ -98,4 +100,4 @@ function CookiePolicy() {
   )
 }
 
-export default CookiePolicy
+export default Liscensing

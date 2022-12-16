@@ -472,7 +472,7 @@ export default function BasicDetails() {
 
 
         </div>
-        <Footer color={color} Primary={english.Side}  />
+        <Footer color={color} Primary={english.Foot}  />
       </div>
 
     </>

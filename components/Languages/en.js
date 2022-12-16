@@ -194,6 +194,10 @@ export default {
   label: "Update",
    color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
 },
+"SubmitDisabled" :{
+  label: "Submit",
+   color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
+},
 "AddDisabled" :{
   label: "Add",
    color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
@@ -817,6 +821,29 @@ promotion:'../../promotions',
 modification:'../../modifications',
 extraguestcharge:'../../extraguestcharges'
  },
+ "Foot":{
+  termsandconditions:'./termsandconditions',
+  liscensing:'./liscensing',
+  privacypolicy:'./privacypolicy',
+  contactus:'./contactus',
+  cookiepolicy:'./cookiepolicy'
+ },
+ "Foot1":{
+  termsandconditions:'../termsandconditions',
+  liscensing:'../liscensing',
+  privacypolicy:'../privacypolicy',
+  contactus:'../contactus',
+  cookiepolicy:'../cookiepolicy'
+ },
+ "Foot2":{
+  termsandconditions:'../../termsandconditions',
+  liscensing:'../../liscensing',
+  privacypolicy:'../../privacypolicy',
+  contactus:'../../contactus',
+  cookiepolicy:'../../cookiepolicy'
+
+ },
+
   descriptiondate: "Description Date",
   update:'Update',
   country:'Country',

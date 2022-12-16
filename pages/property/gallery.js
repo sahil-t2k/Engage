@@ -399,7 +399,7 @@ const validationGalleryEdit = () => {
                         return (
                             <div className="block text-blueGray-600 text-xs  mt-6 font-bold " key={idx} >
                                 <button onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
-                                     <img src={item.image_link} alt='pic_room' style={{ height: "250px", width: "450px" }} />
+                                     <img src={item.image_link} alt='Room Image' style={{ height: "250px", width: "450px" }} />
                                 </button>
                                 <table>
                                     <tr className="pt-1">
@@ -708,7 +708,7 @@ const validationGalleryEdit = () => {
                 pauseOnHover />
         </div>
      {/* Footer */}
-    <Footer  color={color} Primary={english.Side}/>  
+     <Footer color={color} Primary={english.Foot}/>
      </>
     ) 
 }

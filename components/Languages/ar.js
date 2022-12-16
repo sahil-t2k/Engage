@@ -104,6 +104,10 @@ export default {
    col3: "ايام الاسبوع",
    search: "بحث"
   },
+  "SubmitDisabled" :{
+    label:'اِختَضَع أَجَدّ',
+     color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
+  },
   "AddLOS" :{
     label: "يضيف",
      color: "bg-cyan-600 hover:bg-cyan-700 text-white ",

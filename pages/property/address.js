@@ -526,7 +526,9 @@ function Address() {
                  
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
-                      </div></div>
+                      </div>
+                  </div>
+                  
                   <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
                    <div className={flag !== 1 && spinner === 0? 'block' : 'hidden'}>
                       <Button Primary={language?.UpdateDisabled}  /></div>
@@ -558,7 +560,7 @@ function Address() {
       />
     </div>
     
-    <Footer color={color} Primary={english.Side}/>
+    <Footer color={color} Primary={english.Foot}/>
    
     </>
   );

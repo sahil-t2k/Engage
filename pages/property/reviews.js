@@ -824,7 +824,7 @@ function Reviews() {
         </div>
       </div>
 
-      <Footer color={color} Primary={english?.Side}/>
+      <Footer color={color} Primary={english.Foot}/>
 
       {/* Toast Container */}
       <ToastContainer

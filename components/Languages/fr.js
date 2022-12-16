@@ -220,7 +220,10 @@ export default {
     label: "Ajouter",
      color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
   },
-
+  "SubmitDisabled" :{
+    label: "Soumettre",
+     color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    
+  },
 
   "Previous" :{
     label:"Précédent",
