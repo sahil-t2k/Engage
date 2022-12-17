@@ -210,6 +210,16 @@ export default {
    col2 : "Programme Niveau",
     
   },
+  "BedsCols":{
+  
+    col1 : "Bed Length",
+    col2 : "Bed Width", 
+   },
+   
+   "BedsCols":{
+    col1 :"Longueur du Lit",
+    col2 : "Largeur du Lit", 
+   },
 
   "UpdateDisabled" :{
     label: "Éditer",

@@ -104,6 +104,11 @@ export default {
    col3: "ايام الاسبوع",
    search: "بحث"
   },
+  "BedsCols":{
+  
+    col1 : "طول السرير",
+    col2 : "عرض السرير", 
+   },
   "SubmitDisabled" :{
     label:'اِختَضَع أَجَدّ',
      color: "bg-cyan-600 hover:bg-cyan-700 mx-2 text-white opacity-60 cursor-not-allowed"    

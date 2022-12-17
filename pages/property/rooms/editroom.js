@@ -106,8 +106,7 @@ function Room() {
         setRoomDetails(response.data);
        setFinalView(response?.data?.views);
        if (response.data?.room_type == 'Single') {
-        setBedDetails({ ...bedDetails, bed_length: response.data.beds?.[i].length })
-        setBedDetails({ ...bedDetails, bed_width: response.data.beds?.[i]?.width })
+        setBedDetails( response.data.beds?.[i])
       }
         setAllRoomRates(response.data?.unconditional_rates?.[i]);
         filterCurrency(response.data?.unconditional_rates?.[i]);
@@ -124,8 +123,8 @@ function Room() {
           {
             response.data?.beds?.map((item) => {
               var temp = {
-                name: item.length,
-                type: item.width,
+                name: item.bed_length,
+                type: item.bed_width,
                 id: item.bed_id
               }
               genData.push(temp)
@@ -660,7 +659,6 @@ function Room() {
   }
 
   
-  
    /* Function to add bed */
    const addBed = () => {
     var result = validateBedAdd(modified);
@@ -889,7 +887,6 @@ function Room() {
     }
   }
 
- 
 
   // Validate Beds Data
   const validationBedData = () => {
@@ -1465,7 +1462,8 @@ function Room() {
                   setDisp(1)
                 }} />
               </div>  
-            </div></div>
+            </div>
+            </div>
 
           {/* Single Bed */}
           <div id='5' className={disp === 5 ? 'block' : 'hidden'}>
@@ -1738,10 +1736,10 @@ function Room() {
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
 
                   <Button Primary={language?.Add} onClick={() => setAddImage(1)} />
-                  <a href="#" className="w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto">
-                    <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
-                    {language?.export}
-                  </a>
+                  <a href="#" className={`w-1/2 ${color?.text} ${color?.whitebackground} border border-gray-300  ${color?.hover}  focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
+                            <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
+                            Import
+                        </a>
                 </div>
               </div>
 
@@ -2025,7 +2023,7 @@ function Room() {
                         type="text"
                         onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value }))}
                         className={`${color?.greybackground} ${color?.text} shadow-sm py-2  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full px-2.5`}
-                        placeholder="Image Title" />
+                        />
                       <p className="text-sm text-sm text-red-700 font-light">
                         {error?.image_title}</p>
                     </div>
@@ -2192,7 +2190,7 @@ function Room() {
                   <div className="p-6 space-y-6">
                     <div className="grid grid-cols-6 gap-6">
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="first-name" className={`text-sm ${color?.text} font-medium  block mb-2`}>{language?.bed} {language?.length}
+                        <label htmlFor="first-name" className={`text-sm ${color?.text} font-medium  block mb-2`}>{language?.bed} {language?.length}({language?.incm})
                           <span style={{ color: "#ff0000" }}>*</span>
                         </label>
                         <input type="text" name="first-name"
@@ -2204,7 +2202,7 @@ function Room() {
                           {error?.bed_length}</p>
                       </div>
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="last-name" className={`text-sm ${color?.text} font-medium  block mb-2`}>{language?.bed} {language?.width}
+                        <label htmlFor="last-name" className={`text-sm ${color?.text} font-medium  block mb-2`}>{language?.bed} {language?.width}({language?.incm})
                           <span style={{ color: "#ff0000" }}>*</span>
                         </label>
                         <input type="text" name="first-name"
