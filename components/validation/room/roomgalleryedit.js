@@ -1,9 +1,9 @@
 const validateEditGallery = (data) =>{
+  alert(JSON.stringify(data))
     var error={};
     var flag=[]
     var final_flag=true;
     
-   
     if(data.image_title==="" || data.image_title===undefined )
     {
         flag.push(false)

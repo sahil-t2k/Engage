@@ -21,6 +21,7 @@ function Rooms() {
   const [visible,setVisible]=useState(0) 
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
+
    /** Use Effect to fetch details from the Local Storage **/
    useEffect(()=>{  
     const firstfun=()=>{
@@ -67,7 +68,7 @@ currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
       response?.data?.map((item)=>{
         var temp={
           name:item.room_name,
-          type:item.room_type_name,
+          type:item.room_type_name.replaceAll("_"," "),
           status:item.status,
           id:item.room_id
         }

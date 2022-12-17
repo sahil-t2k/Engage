@@ -244,6 +244,7 @@ function Address() {
         <h6 className={`${color?.text} text-xl  flex leading-none pl-6 pt-2 font-bold`}>
           {language?.address} 
         </h6>
+
             <div className="pt-6">
               <div className=" md:px-4 mx-auto w-full">
                 <div className="flex flex-wrap">
@@ -539,11 +540,11 @@ function Address() {
                    <Button Primary={language?.SpinnerUpdate} />
                        </div>
               </div>  
+
                 </div>
               </div>
             </div>
-         
-       
+          
       </div>
 
       {/* Toast Container */}

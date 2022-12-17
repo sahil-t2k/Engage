@@ -3,8 +3,7 @@ const validateBedData = (all_data) => {
     for (let count = 0; count < all_data.length; count++) {
       error.push({})
     }
-  
-    var flag = []
+    var flag = [];
     var final_flag = true;
     all_data.map((data, index) => {
       if (data?.length === "" || data?.length === undefined) {
