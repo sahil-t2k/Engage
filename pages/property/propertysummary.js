@@ -40,7 +40,12 @@ function PropertySummary() {
   const router = useRouter();
   useEffect(() => {
     firstfun();
-    fetchHotelDetails();
+    if(JSON.stringify(currentUser)==='null'){
+      router.push(window.location.origin)
+    } 
+    else
+    {fetchHotelDetails();}
+    
     // router.push("./propertysummary");
   }, [])
 
@@ -65,9 +70,11 @@ function PropertySummary() {
       language = french;
     }
     currentUser = JSON.parse(localStorage.getItem("Signin Details"));
+       
     /** Current Property Details fetched from the local storage **/
     currentProperty = JSON.parse(localStorage.getItem("property"));
     currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+
   }
 }
 

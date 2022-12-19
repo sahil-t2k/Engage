@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/router";
 import Title from '../../components/title';
 import objChecker from "lodash";
 import DarkModeLogic from "../../components/darkmodelogic";
@@ -81,7 +82,13 @@ export default function BasicDetails() {
   }
   /* Function call to fetch Current Property Details when page loads */
   useEffect(() => {
-    fetchBasicDetails();
+    if(JSON.stringify(currentUser)==='null'){
+      router.push(window.location.origin)
+    }    
+    else{
+      fetchBasicDetails();
+    }
+    
   }, []);
 
   useEffect(()=>{ 
