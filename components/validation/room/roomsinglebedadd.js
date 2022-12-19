@@ -5,25 +5,25 @@ const validateBedAdd = (data) => {
     
      if (data?.bed_length === "" || data?.bed_length === undefined) {
       flag.push(false)
-      error.bed_length = "App: The bed length is required."
+      error.bed_length = "APP: The bed length is required."
     }
       
       if (data?.bed_width === "" || data?.bed_width === undefined) {
         flag.push(false)
-        error.bed_width= "The bed width is required."
+        error.bed_width= "APP: The bed width is required."
       }
       if(data?.bed_length != "" && data?.bed_length != undefined)
       {
          if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.bed_length))){
           flag.push(false)
-          error.bed_length="The bed length accepts only numbers and decimal values."
+          error.bed_length="APP: The bed length accepts only numbers and decimal values."
       }
      }
      if(data?.bed_width != "" && data?.bed_width != undefined)
      {
         if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.bed_width))){
          flag.push(false)
-         error.bed_width="The bed width accepts only numbers and decimal values."
+         error.bed_width="APP: The bed width accepts only numbers and decimal values."
      }
     }
    

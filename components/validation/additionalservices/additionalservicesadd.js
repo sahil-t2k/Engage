@@ -6,7 +6,7 @@ const validateAdditionalServices = (data) =>{
     if(data?.add_service_name==="" || data?.add_service_name===undefined)
     {
         flag.push(false)
-        error.add_service_name="App: The service name is required"
+        error.add_service_name="APP: The service name is required"
     }
 
   
@@ -14,7 +14,7 @@ const validateAdditionalServices = (data) =>{
     if(data?.add_service_comment==="" || data?.add_service_comment===undefined)
     {
         flag.push(false)
-        error.add_service_comment="App: The service description is required."
+        error.add_service_comment="APP: The service description is required."
     }
 
    

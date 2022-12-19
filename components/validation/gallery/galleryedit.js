@@ -7,18 +7,18 @@ const validateEditGallery = (data) =>{
     if(data.image_title==="" || data.image_title===undefined )
     {
         flag.push(false)
-        error.image_title="App: The image title is required"
+        error.image_title="APP: The image title is required"
     }
    
     if(data.image_description =="" || data.image_description===undefined )
     {
         flag.push(false)
-        error.image_description="App: The image description is required."
+        error.image_description="APP: The image description is required."
     }
     if(data.image_link==="" || data.image_link===undefined)
   {
     flag.push(false)
-        error.image_link="App: The image link is required."
+        error.image_link="APP: The image link is required."
     }
 
         

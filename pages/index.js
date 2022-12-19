@@ -29,6 +29,7 @@ function Signin(args) {
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
   const[modeChanger,setModeChanger] = useState("")
+
   /** State for internationalization **/
   useEffect(() => {
     firstfun()
@@ -70,7 +71,7 @@ function Signin(args) {
      
   }
 }
-  //write into cookies
+  //Write into cookies
   function setCookieData(checked) {
     if (checked) {
       Cookies.set("email", signinDetails.email, { expires: 30 })
@@ -81,7 +82,7 @@ function Signin(args) {
       Cookies.remove("password")
     }
   }
-  //read from cookies
+  //Read from cookies
   function getCookieData() {
     var mail = Cookies.get("email");
     var pass = Cookies.get("password")
@@ -216,17 +217,18 @@ function Signin(args) {
     }
 
   }
+
   //Checking Form Data for Validations
   const checkFormData = (signinDetails) => {
     var error = {};
     if (signinDetails?.email === "" || signinDetails.email === undefined) {
-      error.email = "The email field is required."
+      error.email = "APP: The email field is required."
     }
     if ((!signinDetails?.email?.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) && (signinDetails?.email != "" && signinDetails.email != undefined))) {
-      error.email = "The email field is in invalid format."
+      error.email = "APP: The email field is in invalid format."
     }
     if (signinDetails?.password === "" || signinDetails.password === undefined) {
-      error.password = "The password field is required"
+      error.password = "APP: The password field is required"
     }
 
     return Object.keys(error).length === 0 ? true : error;
@@ -237,6 +239,7 @@ function Signin(args) {
      <Title name="Engage | Sign in"/>
     <div className={`min-h-screen ${color?.greybackground} p-4 `}>
       <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
+
         <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
           enGage
         </span>
@@ -351,6 +354,7 @@ function Signin(args) {
             </form>
           </div>
         </div>
+
         <div className="mx-64 mt-2 text-teal-600">
           <div>
             <button

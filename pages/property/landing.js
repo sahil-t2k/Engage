@@ -87,8 +87,7 @@ const  Landing=() =>{
   };
 
   /**Function to save Current property to be viewed to Local Storage**/
-  const LocalProperty = ({ item }) => {
-    
+  const LocalProperty = ({ item }) => {  
     localStorage.setItem("property", JSON.stringify(item));
     router.push('./propertysummary');
   };
@@ -198,6 +197,7 @@ const  Landing=() =>{
                               <td className="p-2 whitespace-nowrap space-x-1">
                                            
                                <Button Primary={language?.View}  onClick={() => {
+                                alert(JSON.stringify(item))
                                     LocalProperty({ item});
                                     
                                   }} />

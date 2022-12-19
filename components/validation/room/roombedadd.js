@@ -8,24 +8,24 @@ const validateBedData = (all_data) => {
     all_data.map((data, index) => {
       if (data?.length === "" || data?.length === undefined) {
         flag.push(false)
-        error[index].length = "App: The bed length is required."
+        error[index].length = "APP: The bed length is required."
       }
       if (data?.width === "" || data?.width === undefined) {
         flag.push(false)
-        error[index].width= "App: The bed width is required."
+        error[index].width= "APP: The bed width is required."
       }
       if(data?.length != "" && data?.length != undefined)
       {
          if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.length))){
           flag.push(false)
-          error[index].length="App: The bed length accepts only numbers and decimal values."
+          error[index].length="APP: The bed length accepts only numbers and decimal values."
       }
      }
      if(data?.width != "" && data?.width != undefined)
      {
         if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.width))){
          flag.push(false)
-         error[index].width="App: The bed width accepts only numbers and decimal values."
+         error[index].width="APP: The bed width accepts only numbers and decimal values."
      }
     }
      

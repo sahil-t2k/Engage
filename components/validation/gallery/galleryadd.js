@@ -6,25 +6,25 @@ const validateGallery = (data,props) =>{
     if(data.image_title==="" || data.image_title===undefined)
     {
         flag.push(false)
-        error.image_title="App: The image title is required"
+        error.image_title="APP: The image title is required"
     }
 
     if(props==="" || props===undefined)
     {
         flag.push(false)
-        error.image_link="App: The image link is required."
+        error.image_link="APP: The image link is required."
     }
 
     if(data.image_description==="" || data.image_description===undefined)
     {
         flag.push(false)
-        error.image_description="App: The image description is required."
+        error.image_description="APP: The image description is required."
     }
 
     if(props !== "" && props !== undefined){
     if((!props?.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/))){
         flag.push(false)
-        error.image_link="App: The image link is invalid."
+        error.image_link="APP: The image link is invalid."
     }
     }
 
