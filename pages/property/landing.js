@@ -32,7 +32,13 @@ const  Landing=() =>{
  
   useEffect(()=>{
     firstfun();
-    fetchProperty();
+    if(JSON.stringify(currentUser)==='null'){
+      router.push(window.location.origin)
+    }    
+    else{
+      fetchProperty();
+    }
+   
   },[])
 
   
@@ -57,7 +63,8 @@ const  Landing=() =>{
         language = french;
       }     
      
-      currentUser = JSON.parse(localStorage.getItem("Signin Details"));    
+      currentUser = JSON.parse(localStorage.getItem("Signin Details"));   
+     
     } 
   }
 
@@ -100,7 +107,7 @@ const  Landing=() =>{
       <span
       className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold
       whitespace-nowrap`}>
-        enGage
+        enGage 
       </span>
       <div className={`${color.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
         <div className="p-4 sm:p-8 lg:p-space-y-2">

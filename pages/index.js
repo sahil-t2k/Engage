@@ -16,6 +16,7 @@ import DarkModeLogic from "../components/darkmodelogic";
 import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
+var currentUser;
 
 
 function Signin(args) {
@@ -68,7 +69,18 @@ function Signin(args) {
           setLang("fr")
         }
       }
-     
+      currentUser = JSON.parse(localStorage.getItem("Signin Details")); 
+      if(JSON.stringify(currentUser)!='null'){
+        if(currentUser?.id.match('user00.[0-9]*'))
+        {
+          router.push('./property/landing')
+        }
+        else if(currentUser?.id.match('admin00.[0-9]*'))
+        {
+          router.push('./admin/AdminLanding');
+        }
+
+      }     
   }
 }
   //Write into cookies
@@ -241,7 +253,7 @@ function Signin(args) {
       <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
 
         <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
-          enGage
+          enGage 
         </span>
 
         <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
