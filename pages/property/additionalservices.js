@@ -90,9 +90,14 @@ function AdditionalServices() {
     }
 
     useEffect(() => {
-        fetchAdditionalServices();
-        fetchHotelDetails();
-
+        if(JSON.stringify(currentLogged)==='null'){
+            Router.push(window.location.origin)
+          }    
+          else{
+            fetchAdditionalServices();
+            fetchHotelDetails();
+    
+          }
     }, [])
 
   /* Function call to fetch Current Property Details when page loads */

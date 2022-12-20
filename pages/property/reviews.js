@@ -98,8 +98,13 @@ function Reviews() {
   }, [])
 
   useEffect(() => {
-    fetchReviews();
-  }, []);
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
+    }    
+    else{
+      fetchReviews();
+    }
+ }, []);
 
   useEffect(()=>{ 
     setColor(DarkModeLogic(darkModeSwitcher))
