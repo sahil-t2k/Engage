@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import Router from 'next/router';
 import axios from "axios";
 import Title from "../../components/title";
 import validateContact from "../../components/validation/contact/contactadd";
@@ -19,7 +20,6 @@ var currentProperty;
 var propertyName;
 import Headloader from "../../components/loaders/headloader";
 import DarkModeLogic from "../../components/darkmodelogic";
-import Router from 'next/router'
 import LoaderTable from "../../components/loadertable";
 const logger = require("../../services/logger");
 var currentLogged;
@@ -101,9 +101,13 @@ function Contact() {
   }
 
   useEffect(() => {
-    fetchHotelDetails();
-
-  }, []);
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
+    }    
+    else{
+      fetchHotelDetails();
+    }
+   }, []);
 
   useEffect(()=>{ 
     setColor(DarkModeLogic(darkModeSwitcher))

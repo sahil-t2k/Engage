@@ -82,8 +82,8 @@ export default function BasicDetails() {
   }
   /* Function call to fetch Current Property Details when page loads */
   useEffect(() => {
-    if(JSON.stringify(currentUser)==='null'){
-      router.push(window.location.origin)
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
     }    
     else{
       fetchBasicDetails();

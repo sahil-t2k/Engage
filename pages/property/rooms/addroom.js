@@ -42,7 +42,7 @@ function Addroom() {
   const [disp, setDisp] = useState(0);
   const [modified, setModified] = useState({})
   const [error, setError] = useState({})
-  const[flag,setFlag] = useState(0)
+  const [flag, setFlag] = useState(0)
   const [allRoomRates, setAllRoomRates] = useState([])
 
   /** Use Effect to fetch details from the Local Storage **/
@@ -71,7 +71,7 @@ function Addroom() {
     firstfun();
     Router.push("./addroom")
   }, [])
- 
+
 
   // Room Types
   const fetchRoomtypes = async () => {
@@ -164,8 +164,13 @@ function Addroom() {
 
   /** To fetch room types and room services **/
   useEffect(() => {
-    fetchRoomtypes();
-    fetchServices();
+    if (JSON.stringify(currentLogged) === 'null') {
+      Router.push(window.location.origin)
+    }
+    else {
+      fetchRoomtypes();
+      fetchServices();
+    }
   }, [])
 
   /*For Room Description*/
@@ -180,7 +185,7 @@ function Addroom() {
     setError({});
     if (allRoomDes.length !== 0) {
       setSpinner(1)
-      const finalData = { ...allRoomDes, status: true, property_id:currentProperty?.property_id }
+      const finalData = { ...allRoomDes, status: true, property_id: currentProperty?.property_id }
       axios.post('/api/room', JSON.stringify(finalData), { headers: { 'content-type': 'application/json' } })
         .then(response => {
           setSpinner(0);
@@ -194,30 +199,16 @@ function Addroom() {
             progress: undefined,
           });
           setRoomId(response.data.room_id)
-          if(allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003'
-          || allRoomDes?.room_type_id === 'rt004' || allRoomDes?.room_type_id === 'rt005')
-          {submitBed(response.data.room_id)}
+          if (allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003'
+            || allRoomDes?.room_type_id === 'rt004' || allRoomDes?.room_type_id === 'rt005') { submitBed(response.data.room_id) }
           submitView(response.data.room_id)
           setAllRoomDes([]);
           setDisp(2);
           setError({});
-          })
-          .catch(error => {
-            setSpinner(0);
-           toast.error("API: Room Description Error! ", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          }
-          )
-        }
-        else{
-          toast.error("App: Please fill the room details ", {
+        })
+        .catch(error => {
+          setSpinner(0);
+          toast.error("API: Room Description Error! ", {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -227,8 +218,21 @@ function Addroom() {
             progress: undefined,
           });
         }
-      }
-  
+        )
+    }
+    else {
+      toast.error("App: Please fill the room details ", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
+
 
   /** For Bed**/
   const BedTemplate = {
@@ -272,7 +276,7 @@ function Addroom() {
         "width": i?.width,
         "unit": "cm",
         "timestamp": currentDateTime
-     }
+      }
     }))
     const final_data = { "beds": data }
     const url = '/api/bed_details'
@@ -293,7 +297,7 @@ function Addroom() {
         setBedData([BedTemplate]?.map((i, id) => { return { ...i, index: id } }));
       })
       .catch((error) => {
-        setSpinner(0); 
+        setSpinner(0);
         toast.error("API: Bed add error", {
           position: "top-center",
           autoClose: 5000,
@@ -347,22 +351,22 @@ function Addroom() {
 
   /** Function to submit room images **/
   const submitRoomImages = () => {
-  const imagedata = imageData?.map((i => {
+    const imagedata = imageData?.map((i => {
       return {
         property_id: currentProperty?.property_id,
         image_link: i.image_link,
         image_title: i.image_title,
         image_description: i.image_description,
         image_category: "room",
-        room_id:roomId
+        room_id: roomId
       }
     }))
-   var result = validateRoomGallery(imagedata);
-   if (result === true) {
-    setSpinner(1);
+    var result = validateRoomGallery(imagedata);
+    if (result === true) {
+      setSpinner(1);
       const finalImage = { "images": imagedata }
       axios.post(`/api/gallery`, finalImage)
-       .then(response => {
+        .then(response => {
           setSpinner(0);
           toast.success(JSON.stringify(response.data.message), {
             position: "top-center",
@@ -377,18 +381,18 @@ function Addroom() {
           setError({});
           setDisp(4);
         })
-          .catch(error => {
-            setSpinner(0)
-            toast.error("API: Gallery error.", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+        .catch(error => {
+          setSpinner(0)
+          toast.error("API: Gallery error.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
+        });
     }
 
     else {
@@ -506,7 +510,7 @@ function Addroom() {
     var final_view_data = []
     viewData.map(item => {
       var temp = {
-        view: item?.view.replaceAll(" ","")
+        view: item?.view.replaceAll(" ", "")
       }
       final_view_data.push(temp)
     });
@@ -558,7 +562,7 @@ function Addroom() {
 
   return (
     <>
-     
+
       <Header Primary={english?.Side1} color={color} />
       <Sidebar Primary={english?.Side1} color={color} Type={currentLogged?.user_type} />
 
@@ -674,7 +678,7 @@ function Addroom() {
                         <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                         <div className={visible === 1 ? 'block' : 'hidden'}>
                           <select
-                            onClick={(e) => setAllRoomDes({ ...allRoomDes, room_type_id: e.target.value,room_type: e.target.value })}
+                            onClick={(e) => setAllRoomDes({ ...allRoomDes, room_type_id: e.target.value, room_type: e.target.value })}
                             className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`} >
                             {roomtypes.length === undefined ? <option value="loading">Loading values</option> :
                               <>
@@ -782,7 +786,7 @@ function Addroom() {
                       <div className="relative w-full mb-3">
                         <label className={`text-sm font-medium ${color?.text} block mb-2`}
                           htmlFor="grid-password">
-                         {language?.viewsfromroom}
+                          {language?.viewsfromroom}
                           <span style={{ color: "#ff0000" }}>*</span>
                         </label>
                         <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
@@ -857,7 +861,7 @@ function Addroom() {
                       <div className="relative w-full mb-3">
                         <label className={`text-sm font-medium ${color?.text} block mb-2`}
                           htmlFor="grid-password">
-                         {language?.roomstyle}
+                          {language?.roomstyle}
                           <span style={{ color: "#ff0000" }}>*</span>
                         </label>
                         <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
@@ -889,7 +893,7 @@ function Addroom() {
                         <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                         <div className={visible === 1 ? 'block' : 'hidden'}>
                           <select className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                               onChange={
+                            onChange={
                               (e) => (
                                 setAllRoomDes({ ...allRoomDes, is_room_sharing: e.target.value })
                               )
@@ -931,71 +935,73 @@ function Addroom() {
                       </div>
                     </div>
 
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center mt-2 justify-end space-x-2 sm:space-x-3 ml-auto">
+                {allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003' || allRoomDes?.room_type_id === 'rt004'
+                  || allRoomDes?.room_type_id === 'rt005' ?
+
+                  <Button Primary={language?.Next} onClick={(e) => {
+                    validationRoomDescription()
+                  }} /> :
+                  <>
+
+                    <div className={spinner === 0 ? 'block' : 'hidden'}>
+                      {allRoomDes?.length !== 0 ?
+                        <Button Primary={language?.Submit} onClick={(e) => {
+                          validationRoomDescription()
+                        }} /> :
+                        <Button Primary={language?.SubmitDisabled} />}
+                    </div>
+                    <div className={spinner === 1 ? 'block' : 'hidden'}>
+                      <Button Primary={language?.Spinnersubmit} /></div>
+                  </>
+                }
               </div>
             </div>
           </div>
-        <div className="flex items-center mt-2 justify-end space-x-2 sm:space-x-3 ml-auto">
-         {allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003'|| allRoomDes?.room_type_id === 'rt004'
-           || allRoomDes?.room_type_id === 'rt005' ?
-          
-                <Button Primary={language?.Next}    onClick={(e)=>{
-                     validationRoomDescription()}}/>   :  
-                     <>
-                    
-                     <div className={spinner === 0? 'block' : 'hidden'}>
-                     { allRoomDes ?.length !== 0 ?
-                     <Button Primary={language?.Submit} onClick={(e)=>{
-                       validationRoomDescription()}}/>:
-                         <Button Primary={language?.SubmitDisabled} />}
-                    </div>
-                    <div className={spinner === 1 ? 'block' : 'hidden'}>
-                  <Button Primary={language?.Spinnersubmit} /></div>
-                  </>
-                    }
-         </div>
-        </div>
-          </div>
-       
-        {/* Room Beds */}
-         <div id='1' className={disp===1?'block':'hidden'}>
-       <div className={`${color?.whitebackground} shadow rounded-lg mt-2 mx-1 px-12 sm:p-6 xl:p-8  2xl:col-span-2`}>
-       <div className="relative before:hidden  before:lg:block before:absolute before:w-[64%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 my-10 sm:px-20">
-            <div className="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <button className="w-10 h-10 rounded-full btn text-white bg-cyan-600 btn-primary">1</button>
-                <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>Room Description</div>
-            </div>
-            
-            <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button className="w-10 h-10 rounded-full btn text-slate-500  bg-slate-100  dark:bg-darkmode-400 dark:border-darkmode-400">2</button>
-                <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.services}</div>
-            </div>
-            <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button className="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">3</button>
-                <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.gallery}</div>
-            </div>
-            <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button className="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">4</button>
-                <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.rates}</div>
-            </div>
-        </div>
-      <h6 className={`${color?.text} text-xl flex leading-none pl-6 pt-2 font-bold  mb-4`}>
-         {language?.room}  {language?.description} 
-         </h6>
-         {allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003'|| allRoomDes?.room_type_id === 'rt004'
-           || allRoomDes?.room_type_id === 'rt005' ?
-           <>
-           {allRoomDes?.room_type_id !== 'rt001' ?
-          <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
-                  <Button Primary={language?.AddLOS}  onClick={addBed} />
-                  </div>:<></>}
-                  
-           <div className="pt-2">
-              <div className=" md:px-4 mx-auto w-full">
-              {BedData?.map((BedData, index) => (
-              <>
-                <div className={BedData?.index === 0 ? "hidden":"block"}>
-                        <div className="flex items-center justify-end space-x-2 sm:space-x-1 ml-auto">
-                          <button className={`${color?.cross} sm:inline-flex  ${color?.crossbg}
+
+          {/* Room Beds */}
+          <div id='1' className={disp === 1 ? 'block' : 'hidden'}>
+            <div className={`${color?.whitebackground} shadow rounded-lg mt-2 mx-1 px-12 sm:p-6 xl:p-8  2xl:col-span-2`}>
+              <div className="relative before:hidden  before:lg:block before:absolute before:w-[64%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 my-10 sm:px-20">
+                <div className="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
+                  <button className="w-10 h-10 rounded-full btn text-white bg-cyan-600 btn-primary">1</button>
+                  <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>Room Description</div>
+                </div>
+
+                <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
+                  <button className="w-10 h-10 rounded-full btn text-slate-500  bg-slate-100  dark:bg-darkmode-400 dark:border-darkmode-400">2</button>
+                  <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.services}</div>
+                </div>
+                <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
+                  <button className="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">3</button>
+                  <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.gallery}</div>
+                </div>
+                <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
+                  <button className="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">4</button>
+                  <div className={`${color.widget} lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.rates}</div>
+                </div>
+              </div>
+              <h6 className={`${color?.text} text-xl flex leading-none pl-6 pt-2 font-bold  mb-4`}>
+                {language?.room}  {language?.description}
+              </h6>
+              {allRoomDes?.room_type_id === 'rt001' || allRoomDes?.room_type_id === 'rt002' || allRoomDes?.room_type_id === 'rt003' || allRoomDes?.room_type_id === 'rt004'
+                || allRoomDes?.room_type_id === 'rt005' ?
+                <>
+                  {allRoomDes?.room_type_id !== 'rt001' ?
+                    <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+                      <Button Primary={language?.AddLOS} onClick={addBed} />
+                    </div> : <></>}
+
+                  <div className="pt-2">
+                    <div className=" md:px-4 mx-auto w-full">
+                      {BedData?.map((BedData, index) => (
+                        <>
+                          <div className={BedData?.index === 0 ? "hidden" : "block"}>
+                            <div className="flex items-center justify-end space-x-2 sm:space-x-1 ml-auto">
+                              <button className={`${color?.cross} sm:inline-flex  ${color?.crossbg}
                      font-semibold border  focus:ring-4 focus:ring-cyan-200 font-semibold 
                      rounded-lg text-sm px-1 py-1 text-center 
                      items-center mb-1 ml-16 ease-linear transition-all duration-150`}
@@ -1020,7 +1026,7 @@ function Addroom() {
                                   <input
                                     type="text"
                                     className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                                    onChange={e => {onChange(e, BedData?.index, 'length');setFlag(1)}}
+                                    onChange={e => { onChange(e, BedData?.index, 'length'); setFlag(1) }}
                                   />
                                   <p className="text-sm text-sm text-red-700 font-light">
                                     {error?.[index]?.length}</p>
@@ -1040,7 +1046,7 @@ function Addroom() {
                                   <input
                                     type="text"
                                     className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                                    onChange={e => {onChange(e, BedData?.index, 'width');setFlag(1)}}
+                                    onChange={e => { onChange(e, BedData?.index, 'width'); setFlag(1) }}
                                   />
                                   <p className="text-sm text-sm text-red-700 font-light">
                                     {error?.[index]?.width}</p>
@@ -1051,18 +1057,18 @@ function Addroom() {
                           </div>
                         </>))}
                       <div className="flex items-center mt-2 justify-end space-x-2 sm:space-x-3 ml-auto">
-                    <div className={spinner === 0? 'block' : 'hidden'}>
-                      {flag === 1 ?
-                          <Button Primary={language?.Submit} onClick={() => {
-                          validationBedData()
-                        }} />:
-                        <Button Primary={language?.SubmitDisabled} />}
-                    </div>
-                    <div className={spinner === 1 ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Spinnersubmit} />
-                      </div>
-                        
-                        
+                        <div className={spinner === 0 ? 'block' : 'hidden'}>
+                          {flag === 1 ?
+                            <Button Primary={language?.Submit} onClick={() => {
+                              validationBedData()
+                            }} /> :
+                            <Button Primary={language?.SubmitDisabled} />}
+                        </div>
+                        <div className={spinner === 1 ? 'block' : 'hidden'}>
+                          <Button Primary={language?.Spinnersubmit} />
+                        </div>
+
+
                       </div>
 
                     </div>
@@ -1107,7 +1113,7 @@ function Addroom() {
                   <div className="align-middle inline-block min-w-full">
                     <div className="shadow overflow-hidden">
                       <table className="table-fixed min-w-full divide-y mx-8 divide-gray-200">
-                        <thead className={`${color.greybackground}` }>
+                        <thead className={`${color.greybackground}`}>
                           <tr >
                             <th
                               scope="col"
@@ -1123,17 +1129,17 @@ function Addroom() {
                             </th>
                           </tr>
                         </thead>
-                        <tbody className={ `${color.text} divide-y divide-gray-200`}>
+                        <tbody className={`${color.text} divide-y divide-gray-200`}>
                           {services?.map((item, idx) => (
                             <tr className={`${color?.hover}`} key={idx}>
                               <td className="py-4 py-2 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
-                                <span className={ `${color.text} py-4 px-2 whitespace-nowrap text-base font-medium capitalize `}>
+                                <span className={`${color.text} py-4 px-2 whitespace-nowrap text-base font-medium capitalize `}>
                                   {"  " +
                                     item?.service_name?.replace(/_+/g, " ")}
                                 </span>
                               </td>
 
-                              <td className={ `${color.text} px-2 py-4 whitespace-nowrap text-base font-normal `}>
+                              <td className={`${color.text} px-2 py-4 whitespace-nowrap text-base font-normal `}>
                                 <div className="flex">
                                   <div className="form-check ml-4 form-check-inline">
                                     <label htmlFor={"default-toggle" + idx} className="inline-flex relative items-center cursor-pointer">
@@ -1172,14 +1178,14 @@ function Addroom() {
                 </div>
               </div>
               <div className="flex items-center mt-4 justify-end space-x-2 sm:space-x-3 ml-auto">
-              <div className={spinner === 0? 'block' : 'hidden'}>
-                          <Button Primary={language?.Submit} onClick={() => { submitServices() }} />
-                    </div>
-                    <div className={spinner === 1 ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Spinnersubmit} />
-                      </div>
+                <div className={spinner === 0 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.Submit} onClick={() => { submitServices() }} />
+                </div>
+                <div className={spinner === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.Spinnersubmit} />
+                </div>
 
-              
+
               </div>
             </div>
 
@@ -1215,7 +1221,7 @@ function Addroom() {
               <div className="mx-4">
                 <div className="sm:flex">
                   <h6 className={`${color?.text} text-base  flex leading-none  pt-2 font-semibold `}>
-                   {language?.room}  {language?.gallery}
+                    {language?.room}  {language?.gallery}
                   </h6> <div className="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0">
                   </div>
                   <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
@@ -1228,87 +1234,87 @@ function Addroom() {
                 <div className=" md:px-2 mx-auto w-full">
                   <div>
                     {imageData?.map((imageData, index) => (
-                      <> 
-                      <button
-                        className="float-right my-8 sm:inline-flex  text-gray-800  
+                      <>
+                        <button
+                          className="float-right my-8 sm:inline-flex  text-gray-800  
         font-semibold border  focus:ring-4 focus:ring-cyan-200 font-semibold bg-gray-200
         rounded-lg text-sm px-1 py-1 text-center 
         items-center mb-1 ml-16 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => removeImage(imageData?.index)}>
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
-                        </path></svg>
-                      </button>
+                          type="button"
+                          onClick={() => removeImage(imageData?.index)}>
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
+                          </path></svg>
+                        </button>
                         <div className="p-6 space-y-6">
                           <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">
-                            <label
-                                  className={`text-sm  font-medium ${color?.text} block mb-2`}
-                                  htmlFor="grid-password"
-                                >
+                              <label
+                                className={`text-sm  font-medium ${color?.text} block mb-2`}
+                                htmlFor="grid-password"
+                              >
                                 {language?.imageupload}
                               </label>
                               <div className="flex">
                                 <input
                                   type="file" name="myImage" accept="image/png, image/gif, image/jpeg, image/jpg"
                                   onChange={e => {
-                                    onChangePhoto(e, imageData?.index, 'imageFile');setFlag(1)
+                                    onChangePhoto(e, imageData?.index, 'imageFile'); setFlag(1)
                                   }}
                                   className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                                 defaultValue="" />
-                                 
+                                  defaultValue="" />
+
                               </div>
                               <div className="col-span-6 mt-2 sm:col-span-3">
-                              <p className="text-sm text-sm text-red-700 font-light">
-                                {error?.[index]?.image_link}</p>
+                                <p className="text-sm text-sm text-red-700 font-light">
+                                  {error?.[index]?.image_link}</p>
                                 <Button Primary={language?.Upload} onClick={() => uploadImage(imageData?.index)} /></div>
                             </div>
                             <div className="col-span-6 sm:col-span-3">
-                            <img  src={imageData?.image_link} alt='ImagePreview' style={{ height: "200px", width: "450px" }} className={`py-2 ${color?.text} `}/>
-                           </div>
+                              <img src={imageData?.image_link} alt='ImagePreview' style={{ height: "200px", width: "450px" }} className={`py-2 ${color?.text} `} />
+                            </div>
                             <div className="col-span-6 sm:col-span-3">
-                            <label
-                                  className={`text-sm  font-medium ${color?.text} block mb-2`}
-                                  htmlFor="grid-password"
-                                >
+                              <label
+                                className={`text-sm  font-medium ${color?.text} block mb-2`}
+                                htmlFor="grid-password"
+                              >
                                 {language?.image} {language?.titl}
                               </label>
                               <input
                                 type="text"
-                               onChange={e => {onChangeImage(e, imageData?.index, 'image_title');setFlag(1)}}
+                                onChange={e => { onChangeImage(e, imageData?.index, 'image_title'); setFlag(1) }}
                                 className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                                />
+                              />
                               <p className="text-sm text-sm text-red-700 font-light">
                                 {error?.[index]?.image_title}</p>
                             </div>
                             <div className="col-span-6 sm:col-span-3">
-                            <label
-                                  className={`text-sm  font-medium ${color?.text} block mb-2`}
-                                  htmlFor="grid-password"
-                                >
-                                {language?.image} {language?.description} 
+                              <label
+                                className={`text-sm  font-medium ${color?.text} block mb-2`}
+                                htmlFor="grid-password"
+                              >
+                                {language?.image} {language?.description}
                               </label>
                               <textarea rows="2" columns="60"
-                                onChange={e => {onChangeImage(e, imageData?.index, 'image_description');setFlag(1)}}
+                                onChange={e => { onChangeImage(e, imageData?.index, 'image_description'); setFlag(1) }}
                                 className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                               defaultValue="" />
-                               <p className="text-sm text-sm text-red-700 font-light">
+                                defaultValue="" />
+                              <p className="text-sm text-sm text-red-700 font-light">
                                 {error?.[index]?.image_description}</p>
-                            
+
                             </div>
 
                           </div>
                         </div></>
                     ))}
                     <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
-                    <div className={spinner === 0 && flag === 1? 'block' : 'hidden'}>
-                    <Button Primary={language?.Submit} onClick={submitRoomImages} />
-                    </div>
-                    <div className={spinner === 0 && flag === 0? 'block' : 'hidden'}>
-                    <Button Primary={language?.SubmitDisabled} />
-                    </div>
-                    <div className={spinner === 1 && flag === 1? 'block' : 'hidden'}>
-                      <Button Primary={language?.Spinnersubmit} />
+                      <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
+                        <Button Primary={language?.Submit} onClick={submitRoomImages} />
+                      </div>
+                      <div className={spinner === 0 && flag === 0 ? 'block' : 'hidden'}>
+                        <Button Primary={language?.SubmitDisabled} />
+                      </div>
+                      <div className={spinner === 1 && flag === 1 ? 'block' : 'hidden'}>
+                        <Button Primary={language?.Spinnersubmit} />
                       </div>
                     </div>
                   </div>
@@ -1425,7 +1431,7 @@ function Addroom() {
                           className={`text-sm font-medium ${color?.text} block mb-2`}
                           htmlFor="grid-password"
                         >
-                          {language?.other} {language?.charges} {language?.amount} 
+                          {language?.other} {language?.charges} {language?.amount}
                         </label>
                         <input
                           type="text"
@@ -1446,16 +1452,16 @@ function Addroom() {
                     </div>
 
                     <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
-                  <div className={(spinner === 0 && allRoomRates?.length === 0) ? 'block' : 'hidden'}>
-                    <Button Primary={language?.SubmitDisabled}  />
-                    </div>  
-                    <div className={(spinner === 0 && allRoomRates?.length != 0)  ? 'block' : 'hidden'}>
-                    <Button Primary={language?.Submit} onClick={validationRates} />
-                    </div>
-                    <div className={spinner === 1 ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Spinnersubmit} />
+                      <div className={(spinner === 0 && allRoomRates?.length === 0) ? 'block' : 'hidden'}>
+                        <Button Primary={language?.SubmitDisabled} />
                       </div>
-                   
+                      <div className={(spinner === 0 && allRoomRates?.length != 0) ? 'block' : 'hidden'}>
+                        <Button Primary={language?.Submit} onClick={validationRates} />
+                      </div>
+                      <div className={spinner === 1 ? 'block' : 'hidden'}>
+                        <Button Primary={language?.Spinnersubmit} />
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -1478,7 +1484,7 @@ function Addroom() {
 
       </div>
 
-      <Footer color={color} Primary={english.Foot1}/>
+      <Footer color={color} Primary={english.Foot1} />
 
     </>
   )

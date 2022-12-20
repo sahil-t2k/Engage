@@ -88,9 +88,13 @@ currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
 }
 
     useEffect(() => { 
+      if(JSON.stringify(currentLogged)==='null'){
+        Router.push(window.location.origin)
+      }    
+      else{
         fetchRooms();
-    }
-        ,[])
+      }
+   },[])
 
         useEffect(()=>{ 
           setColor(DarkModeLogic(darkModeSwitcher))
