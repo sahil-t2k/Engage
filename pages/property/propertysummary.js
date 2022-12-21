@@ -109,7 +109,7 @@ function PropertySummary() {
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
       {/* Body */}
       <div id="main-content"
-         className={`${color?.greybackground} px-4 pt-24 relative overflow-y-auto lg:ml-64` }>
+         className={`${color?.greybackground} px-4 py-2 pt-24 relative overflow-y-auto lg:ml-64` }>
         {/* Navbar */}
         <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-2">
@@ -151,9 +151,9 @@ function PropertySummary() {
         <div>
         </div>
 
-        <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3">
+        <div className=" w-full grid py-2  grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3">
           {/* Basic Details */}
-          <div className={`${color?.whitebackground} shadow rounded-lg p-4  sm:p-6 xl:p-8`} >
+          <div className={`${color?.whitebackground} shadow rounded-lg p-4 sm:p-6 xl:p-8`} >
           <div className="flex items-center justify-between ">
               <div className="flex-shrink-0">
                 <h3 className={ `${color?.text} text-base font-bold  mb-4`}>
@@ -347,11 +347,11 @@ function PropertySummary() {
               </div>
             </div>
           </div>
-        </div>
+        </div> 
 
     {/* Gallery */}
-    <div className="mt-2 grid  grid-flow-row-dense pb-2 md:grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3">
-          <div className= {`${color?.whitebackground} shadow rounded-lg p-2 xl:p-4`}>
+    <div className="w-full grid   my-2 md:grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3">
+          <div className= {`${color?.whitebackground}  shadow rounded-lg p-4 sm:p-6 xl:p-8`}>
             <div className="flex items-center justify-between ">
               <div className="flex-shrink-0">
                 <h3 className={`${color?.text} text-base font-bold  mb-4`}>
@@ -397,9 +397,9 @@ function PropertySummary() {
           </div>
         </div>
 
-      <div className=" grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-1  sm:grid-cols-1 gap-3">
+      <div className=" grid  lg:grid-cols-3 md:grid-cols-1 py-2 sm:grid-cols-1 gap-3">
           {/* Services */}
-          <div className={`${color?.whitebackground} shadow rounded-lg  p-4 sm:p-6 xl:p-8`}>
+          <div className={`${color?.whitebackground} shadow rounded-lg p-4  sm:p-6 xl:p-8`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex-shrink-0">
                 <h3 className={`${color?.text} text-base font-bold mb-4`}>
@@ -485,10 +485,9 @@ function PropertySummary() {
              
             </div>
           </div>
-        
             
           {/* Reviews */}
-          <div className={ `${color?.whitebackground} col-span-2  shadow rounded-lg p-4 sm:p-6 xl:p-8`}>
+          <div className={ `${color?.whitebackground} col-span-2  shadow rounded-lg p-4  sm:p-6 xl:p-8`}>
             <div className="flex items-center justify-between ">
               <div className="flex-shrink-0">
                 <h3 className={`${color?.text} text-base font-bold  mb-4`}>
@@ -548,7 +547,7 @@ function PropertySummary() {
       <Footer color={color}/>
     </div>
     </>
-  );
+  ); 
 
 }
 

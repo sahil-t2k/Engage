@@ -44,9 +44,9 @@ function Signin(args) {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-     const color = JSON.parse(localStorage.getItem("Color"));
-     setColor(color);
-     setDarkModeSwitcher(colorToggle)
+       const color = JSON.parse(localStorage.getItem("Color"));
+       setColor(color);
+       setDarkModeSwitcher(colorToggle)
       locale = localStorage.getItem("Language");
       
       /*checks if language is already there in local storage */
@@ -411,7 +411,7 @@ function Signin(args) {
         draggable
         pauseOnHover
       />
-      <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   />
+      {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   /> */}
     </div>
     </>
 
