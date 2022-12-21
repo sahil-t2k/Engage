@@ -101,19 +101,19 @@ function Room() {
     const url = `/api/${currentProperty.address_province.replace(/\s+/g, '-')}/${currentProperty.address_city}/${currentProperty.property_category}s/${currentProperty.property_id}/${currentroom}`
     axios.get(url)
       .then((response) => {
-        setVisible(1);
+       
         setAllRoomDetails(response.data);
         setRoomDetails(response.data);
-        setFinalView(response?.data?.views);
+       setFinalView(response?.data?.views);
        if (response.data?.room_type == 'Single') {
         setBedDetails( response.data.beds?.[i])
       }
         setAllRoomRates(response.data?.unconditional_rates?.[i]);
         filterCurrency(response.data?.unconditional_rates?.[i]);
-      if (response.data.room_facilities !== undefined) {
+        if (response.data.room_facilities !== undefined) {
           setServices(response.data.room_facilities);
         }
-      
+
         setRoomDetails(response.data);
         if (response.data.room_facilities == undefined) {
           fetchServices();
@@ -176,7 +176,7 @@ function Room() {
       .then((response) => {
         setRoomimages(response.data);
         logger.info("url  to fetch room images hitted successfully")
-       })
+      })
 
       .catch((error) => { logger.error("url to fetch room images, failed") });
   }
@@ -200,9 +200,15 @@ function Room() {
 
   /* Function to load Room Details when page loads */
   useEffect(() => {
-    fetchRoomtypes();
-    fetchImages();
-    fetchDetails();
+    if (JSON.stringify(currentLogged) === 'null') {
+      Router.push(window.location.origin)
+    }
+    else {
+      fetchRoomtypes();
+      fetchImages();
+      fetchDetails();
+
+    }
   }, [])
 
   const onChangePhoto = (e, i) => {
@@ -334,7 +340,7 @@ function Room() {
       })
   }
 
-  
+
 
   /* Function to add images*/
   const submitAddImage = () => {
@@ -663,9 +669,9 @@ function Room() {
       })
   }
 
-  
-   /* Function to add bed */
-   const addBed = () => {
+
+  /* Function to add bed */
+  const addBed = () => {
     var result = validateBedAdd(modified);
     if (result === true) {
       const current = new Date();
@@ -796,7 +802,7 @@ function Room() {
           draggable: true,
           progress: undefined,
         });
-        
+
       }
     }
   }
@@ -836,7 +842,7 @@ function Room() {
       })
       .catch((error) => {
         toast.error("App: Bed update error!", {
-         position: "top-center",
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -880,7 +886,7 @@ function Room() {
       })
   }
 
-// Validation Functions
+  // Validation Functions
 
   // Validate Room Description
   const validationRoomDescription = () => {
@@ -1419,10 +1425,10 @@ function Room() {
                         {
                           (roomDetails?.room_type === 'Studio_Room' || roomDetails?.room_type === 'Semi_Double' || roomDetails?.room_type === 'King'
                             || roomDetails?.room_type === 'Queen' || roomDetails?.room_type === 'Double') ?
-                          setDisp(4)
-                          : roomDetails?.room_type === 'Single' ?
-                            setDisp(5) :
-                            setDisp(1)
+                            setDisp(4)
+                            : roomDetails?.room_type === 'Single' ?
+                              setDisp(5) :
+                              setDisp(1)
                         }
                       }} />
                     </div>
@@ -1468,16 +1474,16 @@ function Room() {
                   edit={editBed} delete={deleteBed}
                   common={language?.common} cols={language?.BedsCols} /> </div>
 
-            <div className="flex items-center mt-2 justify-end space-x-2 sm:space-x-3 ml-auto">
+              <div className="flex items-center mt-2 justify-end space-x-2 sm:space-x-3 ml-auto">
                 <Button Primary={language?.Previous} onClick={() => {
                   setDisp(0)
                 }} />
                 <Button Primary={language?.Next} onClick={() => {
                   setDisp(1)
                 }} />
-              </div>  
+              </div>
             </div>
-            </div>
+          </div>
 
           {/* Single Bed */}
           <div id='5' className={disp === 5 ? 'block' : 'hidden'}>
@@ -1750,9 +1756,9 @@ function Room() {
 
                   <Button Primary={language?.Add} onClick={() => setAddImage(1)} />
                   <a href="#" className={`w-1/2 ${color?.text} ${color?.whitebackground} border border-gray-300  ${color?.hover}  focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
-                            <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
-                            Import
-                        </a>
+                    <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
+                    Import
+                  </a>
                 </div>
               </div>
 
@@ -1769,7 +1775,7 @@ function Room() {
                           <table>
                             <tr>
                               <td className="flex justify-end">
-                                <button onClick={() => { setActionImage(item);setEditImage(1);  }} className="text-gray-500  mt-1 hover:text-gray-900 
+                                <button onClick={() => { setActionImage(item); setEditImage(1); }} className="text-gray-500  mt-1 hover:text-gray-900 
                                            cursor-pointer p-1 hover:bg-gray-100 rounded ">
                                   <svg className=" h-5  w-5 font-semibold "
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
@@ -1936,7 +1942,7 @@ function Room() {
                       <div className="relative w-full mb-3">
                       </div>
                     </div>
-                 <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+                    <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
                       <Button Primary={language?.Previous} onClick={() => { setDisp(2) }} />
                       <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>
                   <Button Primary={language?.UpdateDisabled} />
@@ -1951,7 +1957,7 @@ function Room() {
                       <div className={spinner === 1 ? 'block' : 'hidden'}>
                         <Button Primary={language?.SpinnerUpdate} />
                       </div>
-                  </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1991,7 +1997,7 @@ function Room() {
                     {language?.add} {language?.new} {language?.image}
                   </h3>
                   <button type="button"
-                    onClick={() => { setAddImage(0); setActionImage({});setError({}) }}
+                    onClick={() => { setAddImage(0); setActionImage({}); setError({}) }}
                     className="text-gray-400 bg-transparent
                                  hover:bg-gray-200 
                                  hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -2040,7 +2046,7 @@ function Room() {
                         type="text"
                         onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value },setFlag(1)))}
                         className={`${color?.greybackground} ${color?.text} shadow-sm py-2  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full px-2.5`}
-                        />
+                      />
                       <p className="text-sm text-sm text-red-700 font-light">
                         {error?.image_title}</p>
                     </div>
@@ -2090,7 +2096,7 @@ function Room() {
                     {language?.edit} {language?.image}
                   </h3>
                   <button type="button"
-                    onClick={() => { setEditImage(0);setError({}); }}
+                    onClick={() => { setEditImage(0); setError({}); }}
                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="user-modal">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                   </button>
@@ -2108,7 +2114,7 @@ function Room() {
                         <span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <textarea rows="6" columns="60"
-                      className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                        className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         onChange={
                           (e) => (
                             setActionImage({
@@ -2116,9 +2122,9 @@ function Room() {
                               image_description: e.target.value
                             },setFlag(1))
                           )
-                        }  defaultValue={actionImage?.image_description} />
-                         <p className="text-sm text-sm text-red-700 font-light">
-                          {error?.image_description}</p>
+                        } defaultValue={actionImage?.image_description} />
+                      <p className="text-sm text-sm text-red-700 font-light">
+                        {error?.image_description}</p>
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                       <label
@@ -2139,11 +2145,11 @@ function Room() {
                           )
                         }
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                       />
-                         <p className="text-sm text-sm text-red-700 font-light">
-                          {error?.image_title}</p>
+                      />
+                      <p className="text-sm text-sm text-red-700 font-light">
+                        {error?.image_title}</p>
                     </div>
-                </div>
+                  </div>
                 </div>
                 <div className="items-center p-6 border-t border-gray-200 rounded-b">
                 <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>

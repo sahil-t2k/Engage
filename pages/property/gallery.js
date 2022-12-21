@@ -22,7 +22,7 @@ const logger = require("../../services/logger");
 var language;
 var currentProperty;
 var currentLogged;
-import Router from 'next/router'
+import Router from 'next/router';
 
 
 function Gallery() {
@@ -89,8 +89,13 @@ function Gallery() {
     }  
 
     useEffect(() => {
-        fetchHotelDetails();
-    }, []);
+        if(JSON.stringify(currentLogged)==='null'){
+            Router.push(window.location.origin)
+          }    
+          else{
+            fetchHotelDetails();
+          }
+         }, []);
 
     useEffect(()=>{ 
         setColor(DarkModeLogic(darkModeSwitcher))

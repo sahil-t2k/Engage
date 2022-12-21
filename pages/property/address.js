@@ -13,11 +13,11 @@ import Header  from "../../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
+import Router from 'next/router';
 var language;
 var currentProperty;
 const logger = require("../../services/logger");
 import Link from "next/link";
-import Router from 'next/router'
 import Footer from '../../components/Footer';
 import Loader from "../../components/loaders/loader";
 import english from "../../components/Languages/en"
@@ -94,7 +94,12 @@ function Address() {
 
 
   useEffect(() => {
-    fetchHotelDetails(); 
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
+    }    
+    else{
+      fetchHotelDetails(); 
+    }
   },[]);
 
   useEffect(()=>{ 

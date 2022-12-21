@@ -98,7 +98,12 @@ function Services() {
     }
 
     useEffect(() => {
-        fetchHotelDetails();
+        if(JSON.stringify(currentLogged)==='null'){
+            Router.push(window.location.origin)
+          }    
+          else{
+            fetchHotelDetails();
+          }
     }, [])
 
 
