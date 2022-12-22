@@ -40,6 +40,7 @@ function Gallery() {
     const [updateImage, setUpdateImage] = useState({})
     const [flag, setFlag] = useState([])
     const [addImage, setAddImage] = useState(0)
+    const [addURLImage, setAddURLImage] = useState(0)
     const [enlargeImage, setEnlargeImage] = useState(0)
     const [error, setError] = useState({})
     const [actionEnlargeImage, setActionEnlargeImage] = useState({})
@@ -164,11 +165,20 @@ function Gallery() {
                 fetchHotelDetails();
                 setImage({});
                 setActionImage({})
-                document.getElementById('addgallery').reset();
                 Router.push("./gallery");
+                if(addImage === 1){
                 setAddImage(0)
+                document.getElementById('addgallery').reset();}
+                if(addURLImage === 1){
+                    setAddURLImage(0)
+                    document.getElementById('addurlgallery').reset();
+                }
          }).catch(error => {
-              document.getElementById('addgallery').reset();
+            if(addImage === 1){
+                document.getElementById('addgallery').reset();}
+                if(addURLImage === 1){
+                    document.getElementById('addurlgallery').reset();
+                }
                 setSpinner(0)
                 toast.error(" Gallery Error", {
                     position: "top-center",
@@ -387,10 +397,9 @@ const validationGalleryEdit = () => {
                     </div>
                     <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                         <Button Primary={language?.Add} onClick={() => setAddImage(1)} />
-                        <a href="#" className={`w-1/2 ${color?.text} ${color?.whitebackground} border border-gray-300  ${color?.hover}  focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
-                            <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
-                            Import
-                        </a>
+                        <button onClick={() => setAddURLImage(1)} className={`w-1/2 ${color?.text} ${color?.whitebackground} border border-gray-300  ${color?.hover}  focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
+                            Add from URL
+                        </button>
                     </div>
                 </div>
 
@@ -628,6 +637,109 @@ const validationGalleryEdit = () => {
                                             onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value },setFlag(1)))}
                                             className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg 
                                             focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}placeholder="Image Title" />
+                                     <p className="text-sm text-sm text-red-700 font-light">
+                                    {error?.image_title}</p>
+                                   
+                                    </div>
+                                    <div
+                                     className="col-span-6 sm:col-span-3">
+                                        <label
+
+                                            className={`text-sm ${color?.text} font-medium  block mb-2`}
+                                            htmlFor="grid-password"
+                                        >
+                                            {language?.image} {language?.description}
+                                            <span style={{ color: "#ff0000" }}>*</span>
+                                        </label>
+                                        <textarea rows="2" columns="60"
+                                            onChange={(e) => (setActionImage({ ...actionImage, image_description: e.target.value },setFlag(1)))}
+                                            className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg 
+                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                                            defaultValue="" />
+                                             <p className="text-sm text-sm text-red-700 font-light">
+                                            {error?.image_description}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </form>
+                            <div className="items-center p-6 border-t border-gray-200 rounded-b">
+                     <div className={flag !== 1 && spinner === 0? 'block' : 'hidden'}>
+                      <Button Primary={language?.AddDisabled}  /></div>
+                    <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
+                      <Button Primary={language?.Add} onClick={() => {validationGallery();}} />
+                     </div>
+                     <div className={spinner === 1 && flag === 1? 'block' : 'hidden'}>
+                   <Button Primary={language?.SpinnerAdd} />
+                       </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             {/* Modal Add from url */}
+             <div className={addURLImage === 1 ? 'block' : 'hidden'}>
+                <div className="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 backdrop-blur-xl bg-black/30 md:inset-0 z-50 flex justify-center items-center h-modal sm:h-full">
+                    <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
+                        <div className={`${color?.whitebackground} rounded-lg shadow relative`}>
+                            <div className="flex items-start justify-between p-5 border-b rounded-t">
+                                <h3 className={`${color?.text} text-xl font-semibold`}>
+                                    {language?.addnewimage}
+                                </h3>
+                                <button type="button"
+                                    onClick={() =>{
+                                        setImage({})
+                                        document.getElementById('addurlgallery').reset();
+                                        setAddURLImage(0);
+                                        setImage({})
+                                        setActionImage({});
+                                        setError({});
+                                       
+                                    } }
+                                    className="text-gray-400 bg-transparent
+                                 hover:bg-gray-200 
+                                 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                >
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                                </button>
+                            </div>
+                                <form id='addurlgallery'>
+                            <div className="p-6 space-y-6">
+                                <div className="grid grid-cols-6 gap-6">
+                                <div className="col-span-6 sm:col-span-3">
+                                        <label
+                                            className={`text-sm ${color?.text} capitalize font-medium  block mb-2`}
+                                            htmlFor="grid-password"
+                                        >
+                                            {language?.image} {language?.link}
+                                            <span style={{ color: "#ff0000" }}>*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            onChange={(e) => (setImage({ ...Image, image_link: e.target.value },setFlag(1)))}
+                                            className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg 
+                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`} />
+                                     <p className="text-sm text-sm text-red-700 font-light">
+                                    {error?.image_link}</p>
+                                   
+                                    </div>
+                                    
+                                   <div className="col-span-6 sm:col-span-3">
+                                        <label
+                                            className={`text-sm ${color?.text} capitalize font-medium  block mb-2`}
+                                            htmlFor="grid-password"
+                                        >
+                                            {language?.image} {language?.titl}
+                                            <span style={{ color: "#ff0000" }}>*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value },setFlag(1)))}
+                                            className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg 
+                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}/>
                                      <p className="text-sm text-sm text-red-700 font-light">
                                     {error?.image_title}</p>
                                    

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DarkModeLogic from "./darkmodelogic";
 import english from "./Languages/en";
 import french from "./Languages/fr";
 import arabic from "./Languages/ar";
@@ -8,12 +9,19 @@ var language;
 var currentLogged;
 
 function UserProfileHeader(args) {
+  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [userProfile, setUserProfile] = useState(false)
   const [flag, setFlag] = useState(false)
+  const [modeChanger, setModeChanger] = useState("")
+  const [color, setColor] = useState({})
+
   useEffect(() => {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
-
+        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+        const color = JSON.parse(localStorage.getItem("Color"));
+        setColor(color);
+        setDarkModeSwitcher(colorToggle)
         var locale = localStorage.getItem("Language");
 
         if (locale === "ar") {
@@ -35,6 +43,9 @@ function UserProfileHeader(args) {
   const [smSidebar, setSmSidebar] = useState(false)
   const router = useRouter();
 
+  useEffect(() => {
+    setColor(DarkModeLogic(darkModeSwitcher))
+  }, [darkModeSwitcher])
   return (
     <div>
       {/** Header **/}
