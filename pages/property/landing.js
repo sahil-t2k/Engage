@@ -4,7 +4,6 @@ import UserProfileHeader from "../../components/userprofileheader";
 import { useEffect, useState } from "react";
 import Title from '../../components/title';
 import axios from "axios";
-import mode from '../../components/darkmode'
 import Buttonloader from '../../components/loaders/buttonloader'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,7 +27,7 @@ const  Landing=() =>{
  const [ownerdata, setOwnerdata] = useState([]);
  const [visible, setVisible] = useState(0);
  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
- const [color, setColor] = useState({})
+ const [color, setColor] = useState(JSON.parse(localStorage.getItem("Color")))
  const[modeChanger,setModeChanger] = useState("")
  
   useEffect(()=>{
@@ -42,11 +41,7 @@ const  Landing=() =>{
    
   },[])
 
-  
-  useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
-
+ 
   const firstfun=()=>{
     if (typeof window !== 'undefined'){
      locale = localStorage.getItem("Language");
@@ -63,9 +58,7 @@ const  Landing=() =>{
       if (locale === "fr") {
         language = french;
       }     
-     
       currentUser = JSON.parse(localStorage.getItem("Signin Details"));   
-     
     } 
   }
 
@@ -73,11 +66,17 @@ const  Landing=() =>{
     localStorage.setItem("Mode", props)
    }
 
+    
+  useEffect(()=>{ 
+    setColor(DarkModeLogic(darkModeSwitcher))
+   },[darkModeSwitcher])
+
+
   /** Use Effect to fetch all the properties of Current user **/
   const fetchProperty = async () => { 
     try {
       const l =await localStorage.getItem("Language");
-      console.log("langguage "+l)
+      console.log("language "+l)
       const url = `/api/${l}/properties/${currentUser.id}`;
       logger.info("url" +url)
       const response = await axios.get(url, {
@@ -179,14 +178,7 @@ const  Landing=() =>{
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap space-x-1">
-                                           
-                               <Button Primary={language?.View}  onClick={() => {
-                                alert(JSON.stringify(item))
-                                    LocalProperty({ item});
-                                    
-                                  }} />
-                      
-               
+                               <Button Primary={language?.View}  onClick={() => {LocalProperty({ item});}} />
                               </td>
                             </tr>
                           );

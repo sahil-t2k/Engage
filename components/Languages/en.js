@@ -1,4 +1,5 @@
 export default {
+  changeusername:"Change Username",
   editchildguestcharges:"Edit Child Guest Charges",
   inmeters:"in meters",
   userprofile:"User Profile",

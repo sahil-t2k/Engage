@@ -22,10 +22,7 @@ const UserProfileSidebar = (args) => {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       var locale = localStorage.getItem("Language");
-      const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-      const color = JSON.parse(localStorage.getItem("Color"));
-      setColor(color);
-      setDarkModeSwitcher(colorToggle)
+      
       if (locale === "ar") {
         language = arabic;
       }
@@ -38,9 +35,7 @@ const UserProfileSidebar = (args) => {
     }
   }
 
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
+ 
   return (
     <div
       id="sidebar"

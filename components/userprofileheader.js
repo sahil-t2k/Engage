@@ -18,10 +18,7 @@ function UserProfileHeader(args) {
   useEffect(() => {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-        setColor(color);
-        setDarkModeSwitcher(colorToggle)
+       
         var locale = localStorage.getItem("Language");
 
         if (locale === "ar") {
@@ -43,9 +40,7 @@ function UserProfileHeader(args) {
   const [smSidebar, setSmSidebar] = useState(false)
   const router = useRouter();
 
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
+ 
   return (
     <div>
       {/** Header **/}
