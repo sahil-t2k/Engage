@@ -25,7 +25,7 @@ function Signin(args) {
   const [spinner, setSpinner] = useState(0)
   /** Router for Redirection **/
   const router = useRouter();
-  const { locale } = router;
+  const locale  = router?.locale;
   const [current, setCurrent] = useState(false)
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
@@ -44,12 +44,12 @@ function Signin(args) {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-       const color = JSON.parse(localStorage.getItem("Color"));
-       setColor(color);
-       setDarkModeSwitcher(colorToggle)
-      locale = localStorage.getItem("Language");
-      
-      /*checks if language is already there in local storage */
+
+     const color = JSON.parse(localStorage.getItem("Color"));
+     setColor(color);
+     setDarkModeSwitcher(colorToggle)
+     // locale = localStorage.getItem("Language");
+/*checks if language is already there in local storage */
       if (locale === null) {
         language = english
         setLang("en")
@@ -106,12 +106,14 @@ function Signin(args) {
   }
   /** Function for Internationalisation **/
   const changelanguage = (item) => {
-    const locale = item;
+    if(item!=localStorage.getItem("Language")){
+      const locale = item;
     /** Language selected stored to the localstorage **/
     localStorage.setItem("Language", locale);
     language = locale;
     router.push("/", "/", { locale });
     logger.info("Language fetched: " + locale);
+  }
   };
 
   /** State for Sign In **/
@@ -248,8 +250,9 @@ function Signin(args) {
   }
   return ( 
     <>
-     <Title name="Engage | Sign in"/>
-    <div className={`min-h-screen ${color?.greybackground} p-4 `}>
+     <Title id="title" name="Engage | Sign in"/>
+    <div data-testid='main-div'
+     className={`min-h-screen ${color?.greybackground} p-4 `}>
       <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
 
         <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
@@ -262,7 +265,7 @@ function Signin(args) {
               {language?.title}
             </h2>
             {/** Signin Form **/}
-            <form className="mt-8 space-y-6" action="#">
+            <form data-testid='signin-form' className="mt-8 space-y-6" action="#">
               <div>
                 <label
                   className={`${color?.text} text-base font-semibold block mb-2`}
@@ -273,7 +276,8 @@ function Signin(args) {
                   type="email"
                   name="email"
                   id="email"
-                  className={ `${color?.whitebackground} border border-gray-300 
+                  data-testid="email-field"
+                 className={ `${color?.whitebackground} border border-gray-300 
                   ${color?.text}  sm:text-sm rounded-lg focus:ring-cyan-600
                    focus:border-cyan-600 block w-full p-2.5`}
                   onChange={(e) => {
@@ -301,6 +305,7 @@ function Signin(args) {
                   type="password"
                   name="password"
                   id="password"
+                  data-testid="password-field"
                   onChange={(e) => {
                     setSigninDetails({
                       ...signinDetails,
@@ -312,7 +317,8 @@ function Signin(args) {
                   placeholder={language?.enterpassword}
                   className={`${color.whitebackground} border border-gray-300 
                   ${color?.text}  sm:text-sm rounded-lg focus:ring-cyan-600
-                   focus:border-cyan-600 block w-full p-2.5`} required
+                   focus:border-cyan-600 block w-full p-2.5`} 
+                   required
                 ></input>
                 <p className={`${color.error} font-light` }>
                   {error?.password}
@@ -325,6 +331,7 @@ function Signin(args) {
                     aria-describedby="remember"
                     name="remember"
                     type="checkbox"
+                    data-testid="remember-me"
                     className="bg-gray-50 
                    border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4
                     rounded"
@@ -376,7 +383,7 @@ function Signin(args) {
                 changelanguage("en");
               }}
             >
-              English
+              English   
             </button>|
             <button
               className={lang === "fr" ? "mx-1 text-teal-600 text-sm font-bold" : "mx-1 text-teal-600 text-sm"}
@@ -411,12 +418,10 @@ function Signin(args) {
         draggable
         pauseOnHover
       />
-      {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   /> */}
-    </div>
+{/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   /> */}
+</div>
     </>
-
-   
-  );
+);
 }
 export default Signin;
 
