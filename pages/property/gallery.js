@@ -331,7 +331,7 @@ const validationGalleryEdit = () => {
       
          {/* Body */}
         <div id="main-content"
-            className={`${color?.greybackground} px-4 pt-24 py-2 relative overflow-y-auto lg:ml-64`}>
+            className={`${color?.greybackground} px-4 pt-24 pb-6 relative overflow-y-auto lg:ml-64`}>
             {/* Navbar */}
             <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2">

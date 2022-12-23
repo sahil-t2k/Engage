@@ -1,4 +1,5 @@
 export default {
+  inbox:"Boîte de Réception",
   changeusername:"Change Username",
   editchildguestcharges:"Modifier les frais d'invité enfant",
   settings:"Réglages",

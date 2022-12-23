@@ -13,72 +13,72 @@ import Button from "../../components/Button";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
-const logger = require("../../services/logger");   
+const logger = require("../../services/logger");
 import DarkModeLogic from "../../components/darkmodelogic";
 var language;
 var currentUser;
-const  Landing=() =>{ 
+const Landing = () => {
   var locale;
-  
+
   /** Router for Redirection **/
   const router = useRouter();
 
   /** State Intialisation for storing all Properties of Current User **/
- const [ownerdata, setOwnerdata] = useState([]);
- const [visible, setVisible] = useState(0);
- const [darkModeSwitcher, setDarkModeSwitcher] = useState()
- const [color, setColor] = useState({})
- const[modeChanger,setModeChanger] = useState("")
- 
-  useEffect(()=>{
+  const [ownerdata, setOwnerdata] = useState([]);
+  const [visible, setVisible] = useState(0);
+  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
+  const [color, setColor] = useState({})
+  const [modeChanger, setModeChanger] = useState("")
+
+  useEffect(() => {
     firstfun();
-    if(JSON.stringify(currentUser)==='null'){
+    if (JSON.stringify(currentUser) === 'null') {
       router.push(window.location.origin)
-    }    
-    else{
+    }
+    else {
       fetchProperty();
     }
-   
-  },[])
 
- 
-  const firstfun=()=>{
-    if (typeof window !== 'undefined'){
-     locale = localStorage.getItem("Language");
-     const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-     const color = JSON.parse(localStorage.getItem("Color"));
-     setColor(color);
-     setDarkModeSwitcher(colorToggle)
-        if (locale === "ar") {
-      language = arabic;
+  }, [])
+
+
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      locale = localStorage.getItem("Language");
+      const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+      const color = JSON.parse(localStorage.getItem("Color"));
+      setColor(color);
+      setDarkModeSwitcher(colorToggle)
+      if (locale === "ar") {
+        language = arabic;
       }
       if (locale === "en") {
-      language=english;
+        language = english;
       }
       if (locale === "fr") {
         language = french;
-      }     
-      currentUser = JSON.parse(localStorage.getItem("Signin Details"));   
-    } 
+      }
+      currentUser = JSON.parse(localStorage.getItem("Signin Details"));
+    }
   }
 
   const changeTheme = (props) => {
     localStorage.setItem("Mode", props)
-   }
+  }
 
-    
-  useEffect(()=>{ 
+
+  useEffect(() => {
     setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
+  }, [darkModeSwitcher])
 
 
   /** Use Effect to fetch all the properties of Current user **/
-  const fetchProperty = async () => { 
+  const fetchProperty = async () => {
     try {
       const l = localStorage.getItem("Language");
-      console.log("language "+l)
+      console.log("language " + l)
       const url = `/api/${l}/properties/${currentUser.id}`;
-      logger.info("url" +url)
+      logger.info("url" + url)
       const response = await axios.get(url, {
         headers: { accept: "application/json" },
       });
@@ -94,127 +94,128 @@ const  Landing=() =>{
   };
 
   /**Function to save Current property to be viewed to Local Storage**/
-  const LocalProperty = ({ item }) => {  
+  const LocalProperty = ({ item }) => {
     localStorage.setItem("property", JSON.stringify(item));
     router.push('./propertysummary');
   };
 
-  return ( 
+  return (
     <>
-     <Title name={`Engage |  ${language?.landing}`}/>
-     <UserProfileHeader color={color}/>
-     <UserProfileSidebar  color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}/>
- 
-     <div className={`min-h-screen ${color?.greybackground} p-4 `}>
-     <div id="main-content"
-            className={`px-4 pt-24 py-2 relative overflow-y-auto lg:pl-96`}>
-        <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
-        <div className="p-4 sm:py-8 sm:px-2 lg:p-space-y-2">
-          <div className="text-center mt-16">
-             <div className={visible === 0 ? ' block w-32 h-8 my-2 flex justify-center' : 'hidden'}><></></div>
-          <div className={visible === 1? ' block' : 'hidden'}>
-            <p className="capitalize font-semibold text-3xl font-sans sm:mt-4 mx-10 mt-2 mb-6 text-cyan-500">
-           {language?.welcome} {currentUser?.name}
-            </p></div>
-          </div>
-          <div className={visible === 0 ? ' block w-36 h-8 my-2 flex justify-center' : 'hidden'}><Buttonloader /></div>
-          <div className={visible === 1? ' block' : 'hidden'}>
-          <p className={ `${color.text} font-semibold mb-2 text-lg `}>{language?.List} {language?.ofproperties}</p>
-          </div>
-          <form className=" space-y-1" action="#">
-            <div className="flex flex-col">
-              <div className="overflow-x-auto">
-                <div className="align-middle inline-block min-w-full">
-                  <div className="shadow overflow-hidden">
-                  <div className={visible === 0 ? 'block' : 'hidden'}><Landingloader /></div>
-                      <div className={visible === 1 ? 'block' : 'hidden'}>
-                    <table className="table-fixed min-w-full divide-y divide-gray-200">
-                      <thead className={`${color.greybackground}` }>
-                        <tr>
-                          <th
-                            scope="col"
-                            className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
-                            }> {language?.property} {language?.name}</th>
-                          <th
-                            scope="col"
-                            className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
-                           }
-                          >
-                            {language?.property} {language?.category}
-                          </th>
-                          <th
-                            scope="col"
-                            className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
-                            }
-                          >
-                            {language?.Status}
-                          </th>
-                          <th
-                            scope="col"
-                            className={ `${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
-                            }
-                          >
-                            {language?.action}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody  className={ `${color.text} divide-y divide-gray-200`
+      <Title name={`Engage |  ${language?.landing}`} />
+      <UserProfileHeader color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+      <UserProfileSidebar color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+
+      <div className={`min-h-screen ${color?.greybackground} p-4 `}>
+        <div id="main-content"
+          className={`px-4 pt-24 py-2 relative overflow-y-auto lg:pl-96`}>
+          <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
+            <div className="p-4 sm:py-8 sm:px-2 lg:p-space-y-2">
+              <div className="text-center mt-16">
+                <div className={visible === 0 ? ' block w-32 h-8 my-2 flex justify-center' : 'hidden'}><></></div>
+                <div className={visible === 1 ? ' block' : 'hidden'}>
+                  <p className="capitalize font-semibold text-3xl font-sans sm:mt-4 mx-10 mt-2 mb-6 text-cyan-500">
+                    {language?.welcome} {currentUser?.name}
+                  </p></div>
+              </div>
+              <div className={visible === 0 ? ' block w-36 h-8 my-2 flex justify-center' : 'hidden'}><Buttonloader /></div>
+              <div className={visible === 1 ? ' block' : 'hidden'}>
+                <p className={`${color.text} font-semibold mb-2 text-lg `}>{language?.List} {language?.ofproperties}</p>
+              </div>
+              <form className=" space-y-1" action="#">
+                <div className="flex flex-col">
+                  <div className="overflow-x-auto">
+                    <div className="align-middle inline-block min-w-full">
+                      <div className="shadow overflow-hidden">
+                        <div className={visible === 0 ? 'block' : 'hidden'}><Landingloader /></div>
+                        <div className={visible === 1 ? 'block' : 'hidden'}>
+                          <table className="table-fixed min-w-full divide-y divide-gray-200">
+                            <thead className={`${color.greybackground}`}>
+                              <tr>
+                                <th
+                                  scope="col"
+                                  className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
+                                  }> {language?.property} {language?.name}</th>
+                                <th
+                                  scope="col"
+                                  className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
+                                  }
+                                >
+                                  {language?.property} {language?.category}
+                                </th>
+                                <th
+                                  scope="col"
+                                  className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
+                                  }
+                                >
+                                  {language?.Status}
+                                </th>
+                                <th
+                                  scope="col"
+                                  className={`${color.text} px-1 py-4 text-left text-sm font-semibold  uppercase `
+                                  }
+                                >
+                                  {language?.action}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className={`${color.text} divide-y divide-gray-200`
                             }>
-                        {Object.keys(ownerdata).length!=0?ownerdata?.map((item, idx) => {
-                          return (
-                            <tr className={`${color?.hover}`} key={idx}>
-                              <td 
-                              className={ `${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}
-                              >
-                                {item?.property_name}
-                              </td>
-                              <td className={ `${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}>
-                                {item?.property_category}
-                              </td>
-                              <td className={ `${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}>
-                                <div className="flex items-center">
-                                  <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                                  {language?.active}
-                                </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap space-x-1">
-                               <Button Primary={language?.View}  onClick={() => {LocalProperty({ item});}} />
-                              </td>
-                            </tr>
-                          );
-                        }):<></>}
-                      </tbody>
-                    </table>
-                   </div>
+                              {Object.keys(ownerdata).length != 0 ? ownerdata?.map((item, idx) => {
+                                return (
+                                  <tr className={`${color?.hover}`} key={idx}>
+                                    <td
+                                      className={`${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}
+                                    >
+                                      {item?.property_name}
+                                    </td>
+                                    <td className={`${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}>
+                                      {item?.property_category}
+                                    </td>
+                                    <td className={`${color.text} p-1 whitespace-nowrap text-base font-medium  capitalize`}>
+                                      <div className="flex items-center">
+                                        <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
+                                        {language?.active}
+                                      </div>
+                                    </td>
+                                    <td className="p-2 whitespace-nowrap space-x-1">
+                                      <Button Primary={language?.View} onClick={() => { LocalProperty({ item }); }} />
+                                    </td>
+                                  </tr>
+                                );
+                              }) : <></>}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-   </div>
-    <ToastContainer
-      position="top-center"
-      autoClose={10000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-    />
- 
-  </>
+      
+      <ToastContainer
+        position="top-center"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
+    </>
   );
 }
 export default Landing;
-Landing.getLayout = function PageLayout(page){
-  return(
+Landing.getLayout = function PageLayout(page) {
+  return (
     <>
-    {page}
+      {page}
     </>
   )
-  }
+}

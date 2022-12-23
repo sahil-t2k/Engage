@@ -191,6 +191,8 @@ export default function BasicDetails() {
         setError(result)
        }
 }
+
+
   return (
     <>
     <Title name={`Engage |  ${language?.basicdetails}`}/>
@@ -200,7 +202,7 @@ export default function BasicDetails() {
         <Sidebar color={color} Primary={english.Side} Type={currentLogged?.user_type} />
 
         <div id="main-content"
-          className={`${color?.greybackground} px-4 pt-24 relative overflow-y-auto lg:ml-64` }>
+          className={`${color?.greybackground} px-4 pt-24 pb-2 relative overflow-y-auto lg:ml-64` }>
           {/* Navbar */}
           <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2">
@@ -235,7 +237,7 @@ export default function BasicDetails() {
           </nav>
 
           {/* Basic Details Form */}
-          <div className={`${color?.whitebackground} shadow rounded-lg px-12 sm:p-6 xl:p-8  2xl:col-span-2`}>
+          <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
             <h6 className={`${color?.text} text-xl flex leading-none pl-6 lg:pt-2 pt-6  font-bold`}>
               {language?.basicdetails}
               </h6>

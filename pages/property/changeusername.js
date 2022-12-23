@@ -146,7 +146,7 @@ const ChangeUsername = () => {
   return (
     <>
       <Title name={`Engage |  ${language?.landing}`} />
-      <UserProfileHeader color={color} />
+      <UserProfileHeader color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}/>
       <UserProfileSidebar color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
       <div className={`min-h-screen ${color?.greybackground} p-4 `}>
         <div id="main-content" className={`${color?.greybackground} px-4 pt-24 py-2 relative overflow-y-auto lg:ml-96`}>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Title from "../components/title";
-import mode from '../components/darkmode'
 import Axios from "axios";
 import bcrypt from "bcryptjs";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,7 +10,6 @@ import Button from "../components/Button";
 import english from "../components/Languages/en"
 import french from "../components/Languages/fr"
 import arabic from "../components/Languages/ar";
-import DarkModeToggle from "../components/darkmodetoggle";
 import DarkModeLogic from "../components/darkmodelogic";
 import { Router } from "react-router";
 const logger = require("../services/logger");
