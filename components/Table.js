@@ -117,10 +117,10 @@ const Table = (args) => {
                                     rounded-lg text-sm px-5 py-2 text-center 
                               items-center ease-linear transition-all duration-150" onClick={args?.add} >
                                 {args?.common?.Add}</button>
-                            <span className={`w-1/2 ${args?.color?.text} ${args?.color?.whitebackground} border border-gray-300 ${args?.color?.hover} focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
+                            {/* <span className={`w-1/2 ${args?.color?.text} ${args?.color?.whitebackground} border border-gray-300 ${args?.color?.hover} focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
                                 <svg className="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd"></path></svg>
                                 {args?.common?.Import}
-                            </span>
+                            </span> */}
                         </div> : <>
                         </>}
                         {args?.name === "ARI"  ?
@@ -141,7 +141,7 @@ const Table = (args) => {
                 </div>
             </div>
             {/* Table */}
-            <div className="flex flex-col mt-8">
+            <div className="flex flex-col mt-8 lg:-mr-20 sm:mr-0">
                 <div className="overflow-x-auto">
                     <div className="align-middle inline-block min-w-full">
                         <div className="shadow overflow-hidden">
@@ -154,8 +154,8 @@ const Table = (args) => {
                                                     <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
                                                         name="allSelect" checked={args?.gen?.filter(item => item?.isChecked !== true).length < 1}
                                                         onChange={(e) => { handlecheckbox(e); setViewDel(1); }}
-                                                        className={`${args?.color?.greybackground} border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4
-                                                      rounded`}/>
+                                                        className="w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                        dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                 </div>
                                             </th> : <></>}
@@ -176,7 +176,7 @@ const Table = (args) => {
                                         </th> 
                                     </tr>
                                 </thead>
-                                <tbody className={` ${args?.color?.whitebackground} divide-y divide-gray-200`} id="TableList" >
+                                <tbody className={` ${args?.color?.whitebackground} divide-y  divide-gray-200`} id="TableList" >
                                     {displayData?.map((item, idx) => (
                                         <>
                                             {update?.edit === 1 && update?.id === idx? 
@@ -186,7 +186,8 @@ const Table = (args) => {
                                                         {args?.name != "Services" ?
                                                             <td className="p-4 w-4">
                                                                 <span className="flex items-center">
-                                                                    <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox" className={`${args?.color?.greybackground} border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded`} />
+                                                                    <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox" className="w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                        dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                                                     <label htmlFor="checkbox-1" className="sr-only">checkbox</label>
                                                                 </span>
                                                             </td> : <></>}
@@ -398,26 +399,30 @@ const Table = (args) => {
                                                                     onClick={() => { setDel({ ...del, delete: 0, id: '' }) }} >{args?.common?.Cancel}</button>
                                                             </td>
                                                             :
-                                                            <td className="p-4 whitespace-nowrap capitalize space-x-2">
+                                                            <td className="py-4 whitespace-nowrap capitalize">
                                
                                                               
                                                          {
                                                                 (args?.name != "Rooms") && (args?.name != "Packages") &&(args?.name != "ARI")&&(args?.name != "Inventory")?
-                                                                 <div>
+                                                                 <>
                                                              
                                                           
                                                                         <button className="bg-gradient-to-r bg-cyan-600 hover:bg-cyan-700 text-white  sm:inline-flex font-semibold rounded-lg text-sm px-5 py-2 text-center items-center ease-linear transition-all duration-150" onClick={() => {
                                                                             setEditContact(item);
                                                                             setUpdateContact(item);
                                                                             setUpdate({ ...update, edit: 1, id: idx })
-                                                                        }}>{args?.common?.Edit}</button>
+                                                                        }}>{args?.common?.Edit} </button>
+
+
                                                                         {args?.name != "Services" ?
-                                                                            <button className="bg-gradient-to-r mx-2 bg-red-600 hover:bg-red-700 text-white  sm:inline-flex font-semibold rounded-lg text-sm px-5 py-2 text-center items-center ease-linear transition-all duration-150"
+                                                                            <button className="bg-gradient-to-r ml-2 bg-red-600 hover:bg-red-700 text-white  sm:inline-flex font-semibold rounded-lg text-sm px-5 py-2 text-center items-center ease-linear transition-all duration-150"
                                                                                 onClick={() => {
                                                                                     setDeleteContact(item);
                                                                                     setDel({ ...del, delete: 1, id: idx })
-                                                                                }} >{args?.common?.Delete}</button> : <></>}
-                                            </div>
+                                                                                }} >
+                                                                                    
+                                                                                    {args?.common?.Delete}</button> : <></>}
+                                            </>
                                                                 
                                                                    
                                                                     :
@@ -429,7 +434,7 @@ const Table = (args) => {
                                                                                     args.edit(item)
                                                                                 }}>
                                                                                     {args?.name !== "ARI" && args?.name !== "Inventory" ?
-                                                                                    <>{args?.common?.Edit}</> : args?.name === "Inventory"?<>{args?.name}</>:<>{args?.lang?.availability}</>}
+                                                                                    <>{args?.common?.Edit} </> : args?.name === "Inventory"?<>{args?.name}</>:<>{args?.lang?.availability}</>}
                                                                                     </button>
                                                                  {args?.name !== "ARI" && args?.name !== "Inventory" ?
                                                                         <button className="bg-gradient-to-r mx-2 bg-red-600 hover:bg-red-700 text-white  sm:inline-flex font-semibold rounded-lg text-sm px-5 py-2 text-center items-center ease-linear transition-all duration-150"

@@ -6,57 +6,55 @@ const validateAddress = (data) => {
    
   if (data.address_street_address === "") {
     flag.push(false)
-    error.address_street_address = "App: The street address is required"
+    error.address_street_address = "APP: The street address is required"
   }
 
   if (data.address_landmark === "") {
     flag.push(false)
-    error.address_landmark = "App: The address landmark is required"
+    error.address_landmark = "APP: The address landmark is required"
   }
 
   if (data.address_city === "") {
     flag.push(false)
-    error.address_city = "App: The address city is required"
+    error.address_city = "APP: The address city is required"
   }
 
   if (data.address_province === "") {
     flag.push(false)
-    error.address_province = "App: The address province is required"
+    error.address_province = "APP: The address province is required"
   }
 
   if (data.address_latitude === "") {
     flag.push(false)
-    error.address_latitude = "App: The address latitude is required"
+    error.address_latitude = "APP: The address latitude is required"
   }
 
 
   if (data.address_longitude === '') {
     flag.push(false)
-    error.address_longitude = "App: The address longitude is required"
+    error.address_longitude = "APP: The address longitude is required"
   }
 
 
   if (data.address_zipcode === '') {
     flag.push(false)
-    error.address_zipcode = "App: The address postal code is required"
+    error.address_zipcode = "APP: The address postal code is required"
   }
 
 
   if (data.address_precision === '') {
     flag.push(false)
-    error.address_precision = "App: The address precision is required"
+    error.address_precision = "APP: The address precision is required"
   }
 
   if (data?.address_precision != "" || data?.address_precision != undefined) {
     if (!(/^(?=(\D*\d\D*){0,5}$)-?\d*(\.\d{0,2})?$/.test(data?.address_precision))) {
       {
         flag.push(false)
-        error.address_precision = "App: Invalid address precision format."
+        error.address_precision = "APP: Invalid address precision format."
       }
     }
   }
-
-
 
   //check latitudes 
   if (data.address_latitude !== '') {

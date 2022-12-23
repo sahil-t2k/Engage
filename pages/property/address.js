@@ -128,6 +128,7 @@ function Address() {
       {
       setSpinner(1)
     const final_data = {
+      property_id:currentProperty?.property_id,
       address_id: address?.address_id,
       address_street_address: allHotelDetails.address_street_address,
       address_longitude: allHotelDetails.address_longitude,
@@ -139,6 +140,7 @@ function Address() {
       address_province: allHotelDetails.address_province?.toLowerCase(),
       address_country: allHotelDetails.address_country,
     };
+   
     const url = "/api/address";
     axios
       .put(url, final_data, { header: { "content-type": "application/json" } })
@@ -157,6 +159,16 @@ function Address() {
         });
         setError({})
         fetchHotelDetails(); 
+        localStorage.setItem("property",JSON.stringify({
+          "property_id": currentProperty?.property_id,
+          "user_id": currentProperty?.user_id,
+          "property_name": currentProperty?.property_name,
+          "address_province":allHotelDetails.address_province?.toLowerCase(), 
+          "address_city":allHotelDetails.address_city?.toLowerCase(),
+          "property_category": currentProperty?.property_category,
+          "status": currentProperty?.status,
+          "language": currentProperty?.language
+        }))
         Router.push("./address");
        
         setAllHotelDetails([])

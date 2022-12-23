@@ -8,20 +8,20 @@ const validateContactEdit = (data,props) =>{
     if(data.name==="" || data.name===undefined)
     {
         flag.push(false)
-        error.name="App: The contact type is required"
+        error.name="APP: The contact type is required"
     }
 
     if(data.type==="" || data.type===undefined)
     {
         flag.push(false)
-        error.type="App: The contact data is required."
+        error.type="APP: The contact data is required."
     }
 
     if(data.name !== "" && data.name!== undefined){
         if(data.name === "Email"){  
     if((!data.type?.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/))){
         flag.push(false)
-        error.type="App: The email is invalid."
+        error.type="APP: The email is invalid."
     }
 }
     }
@@ -30,7 +30,7 @@ const validateContactEdit = (data,props) =>{
         if(data.name === "Tdd Number"){  
         if((!data.type?.match(/^([1-9]+[0-9]*)$/))){
             flag.push(false)
-            error.type="App: The tdd number is invalid."
+            error.type="APP: The tdd number is invalid."
         }
     }
         }
@@ -38,7 +38,7 @@ const validateContactEdit = (data,props) =>{
             if(data.name === "Toll Free Number"){  
             if((!data.type?.match(/^([1-9]+[0-9]*)$/))){
                 flag.push(false)
-                error.type="App: The toll free number is invalid."
+                error.type="APP: The toll free number is invalid."
             }
         }
      }

@@ -1,4 +1,5 @@
 export default {
+  changeusername:"Change Username",
   editchildguestcharges:"Modifier les frais d'invité enfant",
   settings:"Réglages",
   inmeters:"en mètres",

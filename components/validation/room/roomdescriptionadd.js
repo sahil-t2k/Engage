@@ -6,72 +6,72 @@ const validateRoom = (data,props) =>{
      if(props?.length === 0)
      {
          flag.push(false)
-         error.view="App: The views are required."
+         error.view="APP: The views are required."
      }
    if(data?.room_name==="" || data?.room_name===undefined)
    {
        flag.push(false)
-       error.room_name="App: The room name is required."
+       error.room_name="APP: The room name is required."
    }
      if(data?.room_type==="" || data?.room_type===undefined)
      {
          flag.push(false)
-         error.room_type="App: The room type is required."
+         error.room_type="APP: The room type is required."
      }
      if(data?.room_description==="" || data?.room_description===undefined)
      {
          flag.push(false)
-         error.room_description="App: The room description is required."
+         error.room_description="APP: The room description is required."
      }
      if(data?.room_capacity==="" || data?.room_capacity===undefined)
      {
          flag.push(false)
-         error.room_capacity="App: The room description is required."
+         error.room_capacity="APP: The room description is required."
      }
      if(data?.maximum_number_of_occupants==="" || data?.maximum_number_of_occupants===undefined)
      {
          flag.push(false)
-         error.maximum_number_of_occupants="App: The maximum number of occupants is required."
+         error.maximum_number_of_occupants="APP: The maximum number of occupants is required."
      }
      if(data?.minimum_number_of_occupants==="" || data?.minimum_number_of_occupants===undefined)
      {
          flag.push(false)
-         error.minimum_number_of_occupants="App: The minimum number of occupants is required."
+         error.minimum_number_of_occupants="APP: The minimum number of occupants is required."
      }
      if(data?.minimum_age_of_occupants==="" || data?.minimum_age_of_occupants===undefined)
      {
          flag.push(false)
-         error.minimum_age_of_occupants="App: The minimum age of occupants is required."
+         error.minimum_age_of_occupants="APP: The minimum age of occupants is required."
      }
      if(data?.room_length == "" || data?.room_length == undefined)
      {
          flag.push(false)
-         error.room_length="App: The room length is required."
+         error.room_length="APP: The room length is required."
      }
      if(data?.room_width == "" || data?.room_width == undefined)
      {
          flag.push(false)
-         error.room_width="App: The room width is required."
+         error.room_width="APP: The room width is required."
      }
      if(data?.room_height==="" || data?.room_height===undefined)
      {
          flag.push(false)
-         error.room_height="App: The room height is required."
+         error.room_height="APP: The room height is required."
      }
      if(data?.room_style==="" || data?.room_style===undefined)
      {
          flag.push(false)
-         error.room_style="App: The room style is required."
+         error.room_style="APP: The room style is required."
      }
      if(data?.is_room_sharing==="" || data?.is_room_sharing===undefined)
      {
          flag.push(false)
-         error.is_room_sharing="App: The room shared is required."
+         error.is_room_sharing="APP: The room shared is required."
      }
      if(data?.is_room==="" || data?.is_room===undefined)
      {
          flag.push(false)
-         error.is_room="App: The is room field is required."
+         error.is_room="APP: The is room field is required."
      }
 
      if(data?.room_capacity!=="" && data?.room_capacity!==undefined)
@@ -79,7 +79,7 @@ const validateRoom = (data,props) =>{
         if(!(/^([1-9]+[0-9]*)$/.test(data.room_capacity)))
         {
          flag.push(false)
-         error.room_capacity="App: The room capacity accepts only numbers."
+         error.room_capacity="APP: The room capacity accepts only numbers."
      }
     }
      if(data?.maximum_number_of_occupants!=="" && data?.maximum_number_of_occupants!==undefined)
@@ -87,12 +87,12 @@ const validateRoom = (data,props) =>{
         if(!(/^([1-9]+[0-9]*)$/.test(data.maximum_number_of_occupants)))
         {
          flag.push(false)
-         error.maximum_number_of_occupants="App: The maximum number of occupants accepts only numbers."
+         error.maximum_number_of_occupants="APP: The maximum number of occupants accepts only numbers."
      }
      if(data?.maximum_number_of_occupants <= data?.minimum_number_of_occupants )
      {
         flag.push(false)
-        error.maximum_number_of_occupants="App: The maximum number of occupants must be greater than minimum number of occupants."
+        error.maximum_number_of_occupants="APP: The maximum number of occupants must be greater than minimum number of occupants."
      }
     }
      if(data?.minimum_number_of_occupants!=="" && data?.minimum_number_of_occupants!==undefined)
@@ -100,11 +100,11 @@ const validateRoom = (data,props) =>{
         if(!(/^([1-9]+[0-9]*)$/.test(data.minimum_number_of_occupants)))
         {
          flag.push(false)
-         error.minimum_number_of_occupants="App: The minimum number of occupants accepts only numbers."
+         error.minimum_number_of_occupants="APP: The minimum number of occupants accepts only numbers."
      }
       if(data?.minimum_number_of_occupants >= data?.maximum_number_of_occupants ){
         flag.push(false)
-        error.minimum_number_of_occupants="App: The minimum number of occupants must be less than maximum number of occupants."
+        error.minimum_number_of_occupants="APP: The minimum number of occupants must be less than maximum number of occupants."
      }
      }
      if(data?.minimum_age_of_occupants!=="" && data?.minimum_age_of_occupants!==undefined)
@@ -112,7 +112,7 @@ const validateRoom = (data,props) =>{
         if(!(/^([1-9]+[0-9]*)$/.test(data.minimum_age_of_occupants)))
         {
          flag.push(false)
-         error.minimum_age_of_occupants="App: The minimum age of occupants accepts only numbers."
+         error.minimum_age_of_occupants="APP: The minimum age of occupants accepts only numbers."
      }
     }
      if(data?.room_length != "" && data?.room_length != undefined)
@@ -120,7 +120,7 @@ const validateRoom = (data,props) =>{
         if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.room_length))){
            
          flag.push(false)
-         error.room_length="App: The room length accepts only numbers and decimal values."
+         error.room_length="APP: The room length accepts only numbers and decimal values."
      }
     }
      if(data?.room_width != "" && data?.room_width != undefined){
@@ -128,7 +128,7 @@ const validateRoom = (data,props) =>{
        
      {
          flag.push(false)
-         error.room_width="App: The room width accepts only numbers and decimal values. "
+         error.room_width="APP: The room width accepts only numbers and decimal values. "
      }
     }
      if(data?.room_height != "" && data?.room_height != undefined)
@@ -136,7 +136,7 @@ const validateRoom = (data,props) =>{
         if(!(/^([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/.test(data?.room_height))){
             {
          flag.push(false)
-         error.room_height="App: The room height accepts only numbers and decimal values."
+         error.room_height="APP: The room height accepts only numbers and decimal values."
      }
     }
     }
