@@ -27,7 +27,7 @@ const  Landing=() =>{
  const [ownerdata, setOwnerdata] = useState([]);
  const [visible, setVisible] = useState(0);
  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
- const [color, setColor] = useState(JSON.parse(localStorage.getItem("Color")))
+ const [color, setColor] = useState({})
  const[modeChanger,setModeChanger] = useState("")
  
   useEffect(()=>{
