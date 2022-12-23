@@ -75,9 +75,7 @@ const  Landing=() =>{
   /** Use Effect to fetch all the properties of Current user **/
   const fetchProperty = async () => { 
     try {
-      if (typeof window !== 'undefined') {
       const l = localStorage.getItem("Language");
-      }
       console.log("language "+l)
       const url = `/api/${l}/properties/${currentUser.id}`;
       logger.info("url" +url)
