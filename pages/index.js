@@ -28,7 +28,6 @@ function Signin(args) {
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
   const[modeChanger,setModeChanger] = useState("")
-
   /** State for internationalization **/
   useEffect(() => {
     firstfun()
@@ -42,12 +41,12 @@ function Signin(args) {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-
      const color = JSON.parse(localStorage.getItem("Color"));
      setColor(color);
      setDarkModeSwitcher(colorToggle)
      // locale = localStorage.getItem("Language");
-/*checks if language is already there in local storage */
+      
+      /*checks if language is already there in local storage */
       if (locale === null) {
         language = english
         setLang("en")
@@ -81,7 +80,7 @@ function Signin(args) {
       }     
   }
 }
-  //Write into cookies
+  //write into cookies
   function setCookieData(checked) {
     if (checked) {
       Cookies.set("email", signinDetails.email, { expires: 30 })
@@ -92,7 +91,7 @@ function Signin(args) {
       Cookies.remove("password")
     }
   }
-  //Read from cookies
+  //read from cookies
   function getCookieData() {
     var mail = Cookies.get("email");
     var pass = Cookies.get("password")
@@ -229,18 +228,17 @@ function Signin(args) {
     }
 
   }
-
   //Checking Form Data for Validations
   const checkFormData = (signinDetails) => {
     var error = {};
     if (signinDetails?.email === "" || signinDetails.email === undefined) {
-      error.email = "APP: The email field is required."
+      error.email = "The email field is required."
     }
     if ((!signinDetails?.email?.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) && (signinDetails?.email != "" && signinDetails.email != undefined))) {
-      error.email = "APP: The email field is in invalid format."
+      error.email = "The email field is in invalid format."
     }
     if (signinDetails?.password === "" || signinDetails.password === undefined) {
-      error.password = "APP: The password field is required"
+      error.password = "The password field is required"
     }
 
     return Object.keys(error).length === 0 ? true : error;
@@ -252,7 +250,6 @@ function Signin(args) {
     <div data-testid='main-div'
      className={`min-h-screen ${color?.greybackground} p-4 `}>
       <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
-
         <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
           enGage 
         </span>
@@ -353,7 +350,7 @@ function Signin(args) {
                 </a>
               </div>
               <div className={spinner === 0 ? 'block' : 'hidden'}>
-                <Button Primary={language?.Signin} onClick={(e) => {
+                <Button testid='submitbtn' Primary={language?.Signin} onClick={(e) => {
                   submitSignIn(e);
 
                 }} />
@@ -371,8 +368,7 @@ function Signin(args) {
             </form>
           </div>
         </div>
-
-        <div className="mx-64 mt-2 text-teal-600">
+        <div className=" mx-64 mt-2 text-teal-600">
           <div>
             <button
               className={lang === "en" ? "text-teal-600 text-sm font-bold mx-1 " : "mx-1 text-teal-600 text-sm"}
@@ -416,10 +412,12 @@ function Signin(args) {
         draggable
         pauseOnHover
       />
-{/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher}   /> */}
-</div>
+      <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+    </div>
     </>
-);
+
+   
+  );
 }
 export default Signin;
 
