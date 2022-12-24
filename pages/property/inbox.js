@@ -48,8 +48,8 @@ function Inbox() {
             <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
             <div
                 id="main-content"
-                className={`${color?.whitebackground} min-h-screen pt-24 px-2 relative overflow-y-auto lg:ml-64`}>
-                 <div className={`${color?.whitebackground} sticky sm:flex items-center w-full sm:justify-between bottom-0 right-0 `}>
+                className={`${color?.whitebackground} min-h-screen pt-24  relative overflow-y-auto lg:ml-64`}>
+                 <div className={`${color?.whitebackground} px-4 sticky sm:flex items-center w-full sm:justify-between bottom-0 right-0 `}>
          
                     <div className="flex space-x-1 pl-0 sm:pl-2  sm:mt-0">
                     <div className="border-r   border-gray-200">
@@ -80,9 +80,8 @@ function Inbox() {
                         </div>
                     </div>
 
-
-
                     <div className="flex items-center mr-2 mb-4 sm:mb-0">
+                    <svg className="w-6 h-6 text-gray-600 flex-shrink-0 hover:bg-gray-100 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                         <a href="#" className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                             <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
                         </a>
@@ -92,38 +91,191 @@ function Inbox() {
                         <span className="text-sm font-normal text-gray-500">Showing <span className="text-gray-900 font-semibold">1-20</span> of <span className="text-gray-900 font-semibold">2290</span></span>
                     </div>
                 </div>
+<div className='hover:bg-gray-100 divide-y mt-4 border-t border-gray-200'>
 
-{/* <tr className="hover:bg-gray-100">
-<td className="py-2 w-4">
-<div className="flex items-center">
-<input id="checkbox-7" aria-describedby="checkbox-1" type="checkbox" className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"/>
-<label htmlFor="checkbox-7" className="sr-only">checkbox</label>
 </div>
-</td>
-<td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
-<img className="h-10 w-10 rounded-full" src="https://demo.themesberg.com/windster/images/users/helene-engels.png" alt="Helene Engels avatar"/>
-<div className="text-sm font-normal text-gray-500">
-<div className="text-base font-semibold text-gray-900">Helene Engels</div>
-<div className="text-sm font-normal text-gray-500">
-    </div>
+
+<ul role="list" className="divide-y divide-gray-200 ">
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 whitespace-nowrap">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0 whitespace-nowrap">
+<img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image"/>
 </div>
-</td>
-<td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">Product owner</td>
-<td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">Canada</td>
 
-<td className="p-4 whitespace-nowrap space-x-2">
-<button type="button" data-modal-toggle="user-modal" className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-<svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-Edit user
-</button>
-<button type="button" data-modal-toggle="delete-user-modal" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-<svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-Delete user
-</button>
-</td>
-</tr> */}
-            </div>
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+Neil Sims
+</p>
 
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-semibold text-gray-900">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/michael-gough.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+Michael Gough
+</p>
+
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-semibold text-gray-900">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/bonnie-green.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+Anne Frank
+</p>
+
+<p className="text-md px-4 font-semibold whitespace-nowrap text-gray-900">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-semibold text-gray-900">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/thomas-lean.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+Neil Sims
+</p>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-normal text-gray-600">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+Neil Sims
+</p>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-normal text-gray-600">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/thomas-lean.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+Neil Sims
+</p>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-normal text-gray-600">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+<div className="flex items-center space-x-4 ">
+<input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                          dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
+                       
+                       
+ <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
+                    fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+<div className="flex-shrink-0">
+<img className="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image"/>
+</div>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+Neil Sims
+</p>
+
+<p className="text-md px-4  whitespace-nowrap font-normal text-gray-600">
+ Am no an listening depending up believing. Enough around remove to barton agreed regret in...
+</p>
+<div className="inline-flex px-4 items-center text-md whitespace-nowrap font-normal text-gray-600">
+10 April at 15.28 PM
+</div>
+</div>
+</li>
+
+</ul>
+
+           </div>
+           
         </>
     )
 }

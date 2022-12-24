@@ -122,7 +122,7 @@ const Landing = () => {
                 <p className={`${color.text} font-semibold mb-2 text-lg `}>{language?.List} {language?.ofproperties}</p>
               </div>
               <form className=" space-y-1" action="#">
-                <div className="flex flex-col">
+                <div className="flex flex-col">y
                   <div className="overflow-x-auto">
                     <div className="align-middle inline-block min-w-full">
                       <div className="shadow overflow-hidden">
