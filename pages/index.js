@@ -412,7 +412,7 @@ function Signin(args) {
         draggable
         pauseOnHover
       />
-      <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+      {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} /> */}
     </div>
     </>
 

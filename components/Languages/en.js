@@ -529,7 +529,8 @@ packages:'../addpackage',
 roombundles:'./addroombundles',
 raterules:'../../property/addraterule',
 propertyxml:'../../property/propertyxml',
-roomsxml:'../../property/roomsxml'
+roomsxml:'../../property/roomsxml',
+inbox:'../../property/inbox'
 },
 "AddRateRule" :{
   label: "Add Rate Rule",
@@ -768,7 +769,8 @@ availability:'./availability',
 inventory:'./inventories',
 promotion:'./promotions',
 modification:'./modifications',
-extraguestcharge:'./extraguestcharges'
+extraguestcharge:'./extraguestcharges',
+inbox:'./inbox'
 },
 
 
@@ -795,7 +797,8 @@ availability:'../availability',
 inventory:'../inventories',
 promotion:'../promotions',
 modification:'../modifications',
-extraguestcharge:'../extraguestcharges'
+extraguestcharge:'../extraguestcharges',
+inbox:'../inbox'
  },
  
  "Side2":{
@@ -821,7 +824,8 @@ availability:'../../availability',
 inventory:'../../inventories',
 promotion:'../../promotions',
 modification:'../../modifications',
-extraguestcharge:'../../extraguestcharges'
+extraguestcharge:'../../extraguestcharges',
+inbox:'../../inbox'
  },
  "Foot":{
   termsandconditions:'./termsandconditions',

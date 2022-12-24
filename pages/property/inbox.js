@@ -46,9 +46,8 @@ function Inbox() {
 
             <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
             <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
-            <div
-                id="main-content"
-                className={`${color?.whitebackground} min-h-screen pt-24  relative overflow-y-auto lg:ml-64`}>
+
+            <div id="main-content" className={`${color?.whitebackground} min-h-screen pt-24  relative overflow-y-auto lg:ml-64`}>
                  <div className={`${color?.whitebackground} px-4 sticky sm:flex items-center w-full sm:justify-between bottom-0 right-0 `}>
          
                     <div className="flex space-x-1 pl-0 sm:pl-2  sm:mt-0">
@@ -90,19 +89,19 @@ function Inbox() {
                         </a>
                         <span className="text-sm font-normal text-gray-500">Showing <span className="text-gray-900 font-semibold">1-20</span> of <span className="text-gray-900 font-semibold">2290</span></span>
                     </div>
+
+                 </div>
+
+                <div className='hover:bg-gray-100 divide-y mt-4 border-t border-gray-200'>
+
                 </div>
-<div className='hover:bg-gray-100 divide-y mt-4 border-t border-gray-200'>
 
-</div>
-
-<ul role="list" className="divide-y divide-gray-200 ">
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                 <ul role="list" className="divide-y divide-gray-200 ">
+                  <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 whitespace-nowrap">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
-                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                       
-                       
+                        <label htmlFor="checkbox-all" className="sr-only">checkbox</label>        
  <svg xmlns="http://www.w3.org/2000/svg"  className={`w-6 h-6 mx-2 hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
                     fill="currentColor"  viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
 <div className="flex-shrink-0 whitespace-nowrap">
@@ -120,8 +119,8 @@ Neil Sims
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                  </li>
+                  <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -145,8 +144,8 @@ Michael Gough
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                  </li>
+                   <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -170,8 +169,8 @@ Anne Frank
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                    </li>
+                   <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -195,8 +194,8 @@ Neil Sims
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                  </li>
+                 <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -220,8 +219,8 @@ Neil Sims
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+                </li>
+                <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -245,8 +244,8 @@ Neil Sims
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-<li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
+               </li>
+               <li  className={`${color.sidebar} py-2 px-6  sm:py-4 whitespace-nowrap`}>
 <div className="flex items-center space-x-4 ">
 <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2   dark:bg-gray-700 dark:border-gray-600"/>
@@ -270,14 +269,13 @@ Neil Sims
 10 April at 15.28 PM
 </div>
 </div>
-</li>
-
-</ul>
+               </li>
+               </ul>
 
            </div>
            
         </>
-    )
+    ) 
 }
 
 export default Inbox
