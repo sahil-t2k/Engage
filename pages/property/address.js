@@ -65,10 +65,20 @@ function Address() {
       } 
     }
     firstfun();
-   Router.push("./address");
   },[])
 
-  
+  useEffect(()=>{ 
+    setColor(DarkModeLogic(darkModeSwitcher))
+   },[darkModeSwitcher])
+
+  useEffect(() => {
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
+    }    
+    else{
+      fetchHotelDetails(); 
+    }
+  },[]);
 
   /* Function call to fetch Current Property Details when page loads */
   const fetchHotelDetails = async () => { 
@@ -91,20 +101,6 @@ function Address() {
     })
     .catch((error)=>{logger.error("url to fetch property details, failed")});  
 }
-
-
-  useEffect(() => {
-    if(JSON.stringify(currentLogged)==='null'){
-      Router.push(window.location.origin)
-    }    
-    else{
-      fetchHotelDetails(); 
-    }
-  },[]);
-
-  useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
 
   /* Edit Address Function */
   const submitAddressEdit = () => {

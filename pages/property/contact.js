@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import Router from 'next/router';
 import axios from "axios";
 import Title from "../../components/title";
+import LoaderDarkTable from "../../components/loaders/darktableloader";
 import validateContact from "../../components/validation/contact/contactadd";
 import validateContactEdit from "../../components/validation/contact/contactedit";
 import Sidebar from "../../components/Sidebar";
@@ -24,6 +25,7 @@ import LoaderTable from "../../components/loadertable";
 const logger = require("../../services/logger");
 var currentLogged;
 var i=0;
+var colorToggle;
 
 function Contact() {
   const [gen, setGen] = useState([]) 
@@ -44,7 +46,7 @@ function Contact() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+         colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
         const color = JSON.parse(localStorage.getItem("Color"));
          setColor(color);
          setDarkModeSwitcher(colorToggle)
@@ -63,11 +65,21 @@ function Contact() {
       }
     }
     firstfun();
-
-    Router.push("./contact");
   }, [])
 
+  useEffect(()=>{ 
+    setColor(DarkModeLogic(darkModeSwitcher))
+   },[darkModeSwitcher])
 
+   useEffect(() => {
+    if(JSON.stringify(currentLogged)==='null'){
+      Router.push(window.location.origin)
+    }    
+    else{
+      fetchHotelDetails();
+    }
+   }, []);
+   
 // Fetch Hotel Details
   const fetchHotelDetails = async () => {
     var genData = [];
@@ -100,18 +112,9 @@ function Contact() {
 
   }
 
-  useEffect(() => {
-    if(JSON.stringify(currentLogged)==='null'){
-      Router.push(window.location.origin)
-    }    
-    else{
-      fetchHotelDetails();
-    }
-   }, []);
+ 
 
-  useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
+ 
 
   /* Function Add Contact*/
   function submitContactAdd() {
@@ -329,7 +332,8 @@ function Contact() {
             </ol>
           </nav>
         {/* Header */}
-        <div className={visible === 0 ? 'block' : 'hidden'}><LoaderTable /></div>
+        <div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
+        <div className={(visible === 0 && colorToggle == true ? 'block' : 'hidden')}><LoaderDarkTable /></div>
          <div className={visible === 1 ? 'block' : 'hidden'}>
         <Table  gen={gen} setGen={setGen} add={()=> setView(1)} edit={submitContactEdit} 
         delSpin={language?.SpinnerDelete} saveSpinner={language?.SpinnerSave} spinner={spinner}

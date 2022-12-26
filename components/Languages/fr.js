@@ -2,7 +2,12 @@ export default {
   inbox:"Boîte de Réception",
   changeusername:"Change Username",
   editchildguestcharges:"Modifier les frais d'invité enfant",
+  imagelink:"Lien Image",
   settings:"Réglages",
+  "AddfromURL" :{
+    label:"Ajouter à partir de l'url",
+     color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
+  },
   inmeters:"en mètres",
   userprofile:"Profil de L'utilisateur",
   addchildguestcharges:"Ajouter des frais d'invité enfant",
