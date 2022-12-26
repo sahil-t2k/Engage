@@ -1,4 +1,5 @@
 export default {
+  inbox:"صندوق الوارد",
   changeusername:"Change Username",
   editchildguestcharges:"تحرير رسوم ضيف الأطفال",
   inmeters:"بالأمتار",

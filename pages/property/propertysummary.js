@@ -151,7 +151,7 @@ function PropertySummary() {
         <div>
         </div>
 
-        <div className=" w-full grid py-2  grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3">
+        <div className={`${color?.greybackground} w-full grid py-2  grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3`}>
           {/* Basic Details */}
           <div className={`${color?.whitebackground} shadow rounded-lg p-4 sm:p-6 xl:p-8`} >
           <div className="flex items-center justify-between ">
@@ -350,7 +350,7 @@ function PropertySummary() {
         </div> 
 
     {/* Gallery */}
-    <div className="w-full grid   my-2 md:grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3">
+    <div className={`${color?.greybackground} relative overflow-y-auto py-2 w-full grid  md:grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-3`}>
           <div className= {`${color?.whitebackground}  shadow rounded-lg p-4 sm:p-6 xl:p-8`}>
             <div className="flex items-center justify-between ">
               <div className="flex-shrink-0">
@@ -397,7 +397,7 @@ function PropertySummary() {
           </div>
         </div>
 
-      <div className=" grid  lg:grid-cols-3 md:grid-cols-1 py-2 sm:grid-cols-1 gap-3">
+      <div className={`${color?.greybackground}  grid  lg:grid-cols-3 md:grid-cols-1 py-2 sm:grid-cols-1 gap-3`}>
           {/* Services */}
           <div className={`${color?.whitebackground} shadow rounded-lg p-4  sm:p-6 xl:p-8`}>
             <div className="flex items-center justify-between mb-4">
