@@ -9,9 +9,7 @@ import { useRouter } from "next/router";
 import Classic from "./themes/classic";
 import ClassicDark from './themes/classic-dark'
 const logger = require("../services/logger");
-
 var language;
-
 function Page() {
  
   const [allHotelDetails, setAllHotelDetails] = useState([]);
@@ -67,7 +65,7 @@ function Page() {
         logger.info("url  to fetch property details hitted successfully")
       })
       .catch((error) => { 
-        document.getElementById('datanotfound').innerHTML='Error 404 Page Not Found'
+        router.push('./404');
         logger.error("url to fetch property details, failed") });
   }
 
@@ -83,8 +81,8 @@ function Page() {
       fetchProperty(url);
     }
     else{
-      document.getElementById('datanotfound').innerHTML='Error 404 Page Not Found'
-    }
+      router.push('./404');
+     }
       
     }
     else
@@ -120,7 +118,14 @@ function Page() {
   },[router.query.page]);
 
 
-  return (<>{disp === 0?<h1 id='datanotfound' className="text-blue-900 text-4xl  h-96 grid content-center mx-24">LOADING.....</h1>:
+  return (<>{disp === 0?
+    <>
+    <div className="h-screen bg-white">
+<div className="flex justify-center items-center h-full">
+  <img className="h-32 w-32" src="https://icons8.com/preloaders/preloaders/1488/Iphone-spinner-2.gif" alt=""/>
+</div>
+</div>
+    </>:
     <div>
     {/* Classic Theme */}
     { theme === "Classic" ?
@@ -128,19 +133,14 @@ function Page() {
     <Classic language={language} allHotelDetails={allHotelDetails} 
     allRooms={allRooms} allPackages={allPackages} services={services}
     phone={phone} email={email}/></div>:<div className="sticky"></div>}
- 
-    {/* Classic Dark */}
+ {/* Classic Dark */}
     { theme === "Classic-Dark" ?
     <div className="sticky">
     <ClassicDark language={language} allHotelDetails={allHotelDetails} 
     allRooms={allRooms} allPackages={allPackages} services={services}
     phone={phone} email={email}/></div>:<div className="sticky"></div>}
-
-   
-    </div>
-
-
-  }</>
+</div>
+}</>
    
   );
 }
