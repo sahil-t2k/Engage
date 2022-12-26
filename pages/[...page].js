@@ -65,7 +65,7 @@ function Page() {
         logger.info("url  to fetch property details hitted successfully")
       })
       .catch((error) => { 
-        document.getElementById('datanotfound').innerHTML='Error 404 Page Not Found'
+        router.push('./404');
         logger.error("url to fetch property details, failed") });
   }
 
@@ -81,10 +81,8 @@ function Page() {
       fetchProperty(url);
     }
     else{
-      
       router.push('./404');
-     // document.getElementById('datanotfound').innerHTML='Error 404 Page Not Found'
-    }
+     }
       
     }
     else
@@ -135,19 +133,14 @@ function Page() {
     <Classic language={language} allHotelDetails={allHotelDetails} 
     allRooms={allRooms} allPackages={allPackages} services={services}
     phone={phone} email={email}/></div>:<div className="sticky"></div>}
- 
-    {/* Classic Dark */}
+ {/* Classic Dark */}
     { theme === "Classic-Dark" ?
     <div className="sticky">
     <ClassicDark language={language} allHotelDetails={allHotelDetails} 
     allRooms={allRooms} allPackages={allPackages} services={services}
     phone={phone} email={email}/></div>:<div className="sticky"></div>}
-
-   
-    </div>
-
-
-  }</>
+</div>
+}</>
    
   );
 }
