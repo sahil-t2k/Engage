@@ -89,7 +89,7 @@ function ComposeMessage() {
                 </div>
 
 
-             <div className='px-10 my-6'>
+                       <div className='px-10 my-6'>
                 <input
                           type="text"
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}

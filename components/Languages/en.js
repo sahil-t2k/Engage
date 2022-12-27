@@ -86,6 +86,7 @@ export default {
    contactus:"Contact us",
    overallrating:"Overall Rating",
   quicklinks:"Quick Links",
+  imagelink:"Image Link",
   legal:"Legal",
   accomodation:"Accomodation",
   poweredby:"Powered By",
@@ -235,6 +236,11 @@ export default {
    color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
 },
 
+"AddfromURL" :{
+  label:"Add from URL",
+   color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
+},
+
 editraterules:'Edit Rate Rule',
 //Validation
 required:'This field is required',
@@ -264,6 +270,7 @@ yesdelete:"Yes,Delete",
 Edit: "Edit",
 Delete:"Delete",
 Add:"Add",
+addfromurl:"Add from URL",
 Search:"Search",
 Previous:"Previous",
 Next:"Next",

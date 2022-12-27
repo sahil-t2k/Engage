@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import validateAdditionalServices from '../../components/validation/additionalservices/additionalservicesadd';
 import validateAdditionalServicesEdit from '../../components/validation/additionalservices/additionalservicesedit';
+import LoaderDarkTable from "../../components/loaders/darktableloader";
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
@@ -21,6 +22,7 @@ var language;
 var currentProperty;
 var currentLogged;
 import Router from 'next/router';
+var colorToggle;
 
 function AdditionalServices() {
         const [visible,setVisible]=useState(0); 
@@ -41,7 +43,7 @@ function AdditionalServices() {
         const firstfun = () => {
             if (typeof window !== 'undefined') {
                 var locale = localStorage.getItem("Language");
-                const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+                 colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
                 const color = JSON.parse(localStorage.getItem("Color"));
                 setColor(color);
                 setDarkModeSwitcher(colorToggle)
@@ -345,7 +347,8 @@ useEffect(()=>{
                </nav>
 
             
-                <div className={visible === 0 ? 'block' : 'hidden'}><LoaderTable /></div>
+               <div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
+               <div className={(visible === 0 && colorToggle == true ? 'block' : 'hidden')}><LoaderDarkTable /></div>
                  <div className={visible === 1 ? 'block' : 'hidden'}>
                 <Table  gen={gene} setGen={setGene} add={()=> setView(1)} name="Additional Services"
                 edit={editAdditionalServices} color={color}

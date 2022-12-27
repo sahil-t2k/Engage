@@ -66,12 +66,25 @@ function Gallery() {
                 /** Current Property Details fetched from the local storage **/
                 currentProperty = JSON.parse(localStorage.getItem("property"));
                 currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-
+                 
             }
         }
         firstfun();
-        Router.push("./gallery");
     }, [])
+
+    useEffect(()=>{ 
+        setColor(DarkModeLogic(darkModeSwitcher))
+       },[darkModeSwitcher])
+
+       useEffect(() => {
+        if(JSON.stringify(currentLogged)==='null'){
+            Router.push(window.location.origin)
+          }    
+          else{
+            fetchHotelDetails();
+          }
+         }, []);
+
 
     /* Function call to fetch Current Property Details when page loads */
     const fetchHotelDetails = async () => {
@@ -89,19 +102,8 @@ function Gallery() {
             .catch((error) => { logger.error("url to fetch property details, failed") });
     }  
 
-    useEffect(() => {
-        if(JSON.stringify(currentLogged)==='null'){
-            Router.push(window.location.origin)
-          }    
-          else{
-            fetchHotelDetails();
-          }
-         }, []);
-
-    useEffect(()=>{ 
-        setColor(DarkModeLogic(darkModeSwitcher))
-       },[darkModeSwitcher])
-
+    
+   
     const onChangePhoto = (e, imageFile) => {
         setImage({ ...image, imageFile: e.target.files[0] })
     }
@@ -323,7 +325,7 @@ const validationGalleryEdit = () => {
 }
     return (
         <> 
-          <Title name={`Engage |  ${language?.gallery}`}/>
+     <Title name={`Engage |  ${language?.gallery}`}/>
      {/* Header   */}
      <Header color={color} Primary={english.Side} Type={currentLogged?.user_type}/>
      {/* Sidebar */}
@@ -397,9 +399,7 @@ const validationGalleryEdit = () => {
                     </div>
                     <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                         <Button Primary={language?.Add} onClick={() => setAddImage(1)} />
-                        <button onClick={() => setAddURLImage(1)} className={`w-1/2 ${color?.text} ${color?.whitebackground} border border-gray-300  ${color?.hover}  focus:ring-4 focus:ring-cyan-200 font-semibold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto`}>
-                            Add from URL
-                        </button>
+                        <Button Primary={language?.AddfromURL} onClick={() => setAddURLImage(1)} />
                     </div>
                 </div>
 
@@ -714,7 +714,7 @@ const validationGalleryEdit = () => {
                                             className={`text-sm ${color?.text} capitalize font-medium  block mb-2`}
                                             htmlFor="grid-password"
                                         >
-                                            {language?.image} {language?.link}
+                                            {language?.imagelink} 
                                             <span style={{ color: "#ff0000" }}>*</span>
                                         </label>
                                         <input

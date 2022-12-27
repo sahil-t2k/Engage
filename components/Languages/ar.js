@@ -12,8 +12,13 @@ export default {
   extraguestcharge:"رسوم ضيف إضافية",
   countbasecomponent:"عد مكون القاعدة",
   charges:"شحنة",
+  imagelink:"رابط الصورة",
   extraguestcharge:"رسوم ضيف إضافية",
   name:"اسم",
+  "AddfromURL" :{
+    label:"إضافة من رابط",
+     color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
+  },
  //Promotions
  promotions:"الترقيات",
  freestaynights:"ليالي إقامة مجانية",

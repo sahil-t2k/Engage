@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
+import LoaderDarkTable from "../../components/loaders/darktableloader";
 import DarkModeLogic from "../../components/darkmodelogic";
 import Header from "../../components/Header";
 import Link from "next/link";
@@ -19,7 +20,8 @@ var propertyId;
 import Router from 'next/router';
 import arabic from "../../components/Languages/ar";
 var currentLogged;
-import objChecker from "lodash"
+import objChecker from "lodash";
+var colorToggle;
 
 function Services() {
     const [visible, setVisible] = useState(0)
@@ -40,7 +42,7 @@ function Services() {
         const firstfun = () => {
             if (typeof window !== 'undefined') {
                 var locale = localStorage.getItem("Language");
-                const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+               colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
                 const color = JSON.parse(localStorage.getItem("Color"));
                  setColor(color);
                  setDarkModeSwitcher(colorToggle)
@@ -200,7 +202,8 @@ function Services() {
               </li>
             </ol>
           </nav>
-                <div className={visible === 0 ? 'block' : 'hidden'}><LoaderTable /></div>
+          <div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
+        <div className={(visible === 0 && colorToggle == true ? 'block' : 'hidden')}><LoaderDarkTable /></div>
                 <div className={visible === 1 ? 'block' : 'hidden'}>
                     <Table gen={gen} setGen={setGen} color={color}
                         edit={updateServices} common={language?.common} cols={language?.ServicesCols}

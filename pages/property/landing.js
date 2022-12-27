@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Landingloader from "../../components/loaders/landingloader";
 import { useRouter } from "next/router";
 import Button from "../../components/Button";
+import LoaderDarkTable from "../../components/loaders/darktableloader";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
