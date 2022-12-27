@@ -15,6 +15,7 @@ import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
 var currentUser;
+let user=false;
 
 
 function Signin(args) {
@@ -23,7 +24,7 @@ function Signin(args) {
   const [spinner, setSpinner] = useState(0)
   /** Router for Redirection **/
   const router = useRouter();
-  const locale  = router?.locale;
+  let locale  = router?.locale;
   const [current, setCurrent] = useState(false)
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
@@ -104,11 +105,11 @@ function Signin(args) {
   /** Function for Internationalisation **/
   const changelanguage = (item) => {
     if(item!=localStorage.getItem("Language")){
-      const locale = item;
+      let locale = item;
     /** Language selected stored to the localstorage **/
     localStorage.setItem("Language", locale);
     language = locale;
-    router.push("/", "/", { locale });
+    router?.push("/", "/", { locale });
     logger.info("Language fetched: " + locale);
   }
   };
@@ -132,8 +133,7 @@ function Signin(args) {
       var item = {
         user_email: signinDetails.email,
       };
-
-      /** API POST call to send Sign Details **/
+     /** API POST call to send Sign Details **/
       Axios.post("/api/signin/user", item, {
         headers: { "content-type": "application/json" },
       })
@@ -142,6 +142,7 @@ function Signin(args) {
           const salt = response.data.salt;
           const EncryptedPass = await bcrypt.hash(signinDetails.password, salt);
           if (EncryptedPass === response.data.password) {
+           
             /** Toast emitter Sign in Successfull **/
             logger.info("Login Successful!");
             const whoIsLogged = {
@@ -152,6 +153,8 @@ function Signin(args) {
               admin_type: response.data?.admin_type,
               user_type: response.data?.user_type
             };
+           
+            
             {/*To re-direct to required module*/ }
             if (response.data.id.match(/admin00.[0-9]*/g)) {
               LocalSignin(whoIsLogged);
@@ -161,7 +164,6 @@ function Signin(args) {
               LocalSignin(whoIsLogged);
               router.push("./property/landing");
             }
-
           } else {
             setSpinner(0)
             /** Toast emitter for error wrong email password combination  **/
@@ -371,6 +373,7 @@ function Signin(args) {
         <div className=" mx-64 mt-2 text-teal-600">
           <div>
             <button
+              data-testid="en-btn"
               className={lang === "en" ? "text-teal-600 text-sm font-bold mx-1 " : "mx-1 text-teal-600 text-sm"}
               onClick={() => {
                 setLang("en");
@@ -380,6 +383,7 @@ function Signin(args) {
               English   
             </button>|
             <button
+              data-testid="fr-btn"
               className={lang === "fr" ? "mx-1 text-teal-600 text-sm font-bold" : "mx-1 text-teal-600 text-sm"}
               onClick={() => {
                 setLang("fr");
@@ -389,6 +393,7 @@ function Signin(args) {
               Français
             </button>|
             <button
+              data-testid="ar-btn"
               className={lang === "ar" ? "text-teal-600 text-sm font-bold mx-1" : "mx-1 text-teal-600 text-sm"}
               onClick={() => {
                 setLang("ar");
@@ -413,6 +418,9 @@ function Signin(args) {
         pauseOnHover
       />
       {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} /> */}
+      <span data-testid="result" id="result" className={user===false?"not logged":"logged"}>
+        {user===true?<h6>logged in</h6>:<>not</>}
+      </span>
     </div>
     </>
 
