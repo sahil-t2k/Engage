@@ -1,4 +1,16 @@
 export default {
+  changepassword:"تغيير كلمة المرور",
+  listofproperties:"قائمة الخصائص",
+  currentpassword:"كلمة المرور الحالية",
+  passwordrequirements:"متطلبات كلمة المرور",
+  newpassword:"كلمة مرور جديدة",
+  confirmpassword:"تأكيد كلمة المرور",
+  previouspassword:"كلمة المرور السابقة",
+  alertsandnotifications:"التنبيهات والإخطارات",
+  emailnotifications:"اشعارات البريد الالكتروني",
+  userprofilesettings:"إعدادات ملف تعريف المستخدم",
+  darkmode:"الوضع المظلم",
+  lightmode:"وضع الضوء",
   inbox:"صندوق الوارد",
   changeusername:"Change Username",
   editchildguestcharges:"تحرير رسوم ضيف الأطفال",
@@ -18,6 +30,13 @@ export default {
   "AddfromURL" :{
     label:"إضافة من رابط",
      color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
+  },
+  listofproperties:"قائمة الخصائص",
+  "LandingCols":{
+    name:"قائمة الخصائص",
+   col1 : "اسم الخاصية",
+   col2 : "نوع الملكية", 
+   search: "بحث"
   },
  //Promotions
  promotions:"الترقيات",

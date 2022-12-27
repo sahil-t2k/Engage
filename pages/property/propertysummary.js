@@ -53,7 +53,7 @@ function PropertySummary() {
   setColor(DarkModeLogic(darkModeSwitcher))
  },[darkModeSwitcher])
 
- const firstfun = () => {
+   const firstfun = () => {
   if (typeof window !== 'undefined') {
     var locale = localStorage.getItem("Language");
     const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
@@ -76,8 +76,7 @@ function PropertySummary() {
     currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
 
   }
-}
-
+   }
 
   /* Function call to fetch Current Property Details when page loads */
     const fetchHotelDetails = async () => {

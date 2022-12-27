@@ -25,7 +25,7 @@ import LoaderTable from "../../components/loadertable";
 const logger = require("../../services/logger");
 var currentLogged;
 var i=0;
-var colorToggle;
+let colorToggle;
 
 function Contact() {
   const [gen, setGen] = useState([]) 

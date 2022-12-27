@@ -22,7 +22,7 @@ var language;
 var currentProperty;
 var currentLogged;
 import Router from 'next/router';
-var colorToggle;
+let colorToggle;
 
 function AdditionalServices() {
         const [visible,setVisible]=useState(0); 

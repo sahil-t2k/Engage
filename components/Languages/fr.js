@@ -1,4 +1,16 @@
 export default {
+  changepassword:"Changer le mot de Passe",
+  listofproperties:"Liste des propriétés",
+  passwordrequirements:"Exigences relatives au mot de passe",
+  currentpassword:"Mot de passe actuel",
+  newpassword:"Nouveau mot de Passe",
+  confirmpassword:"Confirmez le mot de Passe",
+  previouspassword:"Mot de Passe Précédent",
+  alertsandnotifications:"Alertes et Notifications",
+  emailnotifications:"Notifications par Email",
+  userprofilesettings:"Paramètres du Profil Utilisateur",
+  darkmode:"Mode Sombre",
+  lightmode:"Mode Lumière",
   inbox:"Boîte de Réception",
   changeusername:"Change Username",
   editchildguestcharges:"Modifier les frais d'invité enfant",
@@ -7,6 +19,13 @@ export default {
   "AddfromURL" :{
     label:"Ajouter à partir de l'url",
      color: "bg-cyan-600 hover:bg-cyan-700 text-white ",
+  },
+ listofproperties:"Liste des Propriétés",
+  "LandingCols":{
+    name:"Liste des Propriétés",
+   col1 : "Nom de la Propriété",
+   col2 : "Type de Propriété", 
+   search: "Chercher"
   },
   inmeters:"en mètres",
   userprofile:"Profil de L'utilisateur",

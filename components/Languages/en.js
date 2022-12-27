@@ -1,4 +1,16 @@
 export default {
+  listofproperties:"List of Properties",
+  changepassword:"Change Password",
+  passwordrequirements:"Password Requirements",
+  currentpassword:"Change  Password",
+  previouspassword:"Previous Password",
+  confirmpassword:"Confirm Password",
+  newpassword:"New Password",
+  alertsandnotifications:"Alerts & Notifications",
+  emailnotifications:"Email Notifications",
+  userprofilesettings:"User Profile Settings",
+  darkmode:"Dark Mode",
+  lightmode:"Light Mode",
   inbox:"Inbox",
   changeusername:"Change Username",
   editchildguestcharges:"Edit Child Guest Charges",
@@ -253,6 +265,12 @@ salename:'Point of Sale Name',
   name:"Contact",
  col1 : "Contact Type",
  col2 : "Contact Details", 
+ search: "Search"
+},
+"LandingCols":{
+  name:"List of Properties",
+ col1 : "Property Name",
+ col2 : "Property Type", 
  search: "Search"
 },
   

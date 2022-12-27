@@ -11,6 +11,7 @@ function Navbar(args) {
   const [ari, setAri] = useState(false)
   const [services, setServices] = useState(false)
   const [flag, setFlag] = useState(false)
+
   useEffect(() => {
       const firstfun = () => {
       if (typeof window !== 'undefined') {
@@ -59,7 +60,7 @@ function Navbar(args) {
               <li className="text-2xl text-cyan-600 font-bold flex items-center lg:ml-2.5">
                 <span className="self-center whitespace-nowrap">enGage</span>
               </li>
-              <form action="#" method="GET" className="hidden lg:block lg:pl-40">
+              {/* <form action="#" method="GET" className="hidden lg:block lg:pl-40">
                 <label htmlFor="topbar-search" className="sr-only">{language?.search}</label>
                 <div className="mt-1 relative lg:w-64">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -70,7 +71,7 @@ function Navbar(args) {
                   <input type="text" name="email" id="topbar-search" className={`${args?.color?.greybackground} border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5`}
                     placeholder={language?.search} />
                 </div>
-              </form>
+              </form> */}
             </div>
 
 
@@ -110,7 +111,9 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
     </div>
     <ul className={`${args?.color?.crossbg} py-1 text-sm`} >
       <li>
-        <a href="#" className={`${args?.color?.sidebar} block py-2 px-4  ${args?.color?.footerhover}`}>User Profile</a>
+      <Link href={"./userprofilesettings"}>
+        <a href="#" className={`${args?.color?.sidebar} block py-2 px-4  ${args?.color?.footerhover}`}>
+         {language?.userprofilesettings}</a></Link>
       </li>
       <li>
         <a className={`${args?.color?.sidebar} block py-2 px-4 ${args?.color?.footerhover}`}>
@@ -120,7 +123,7 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                      localStorage.removeItem("Signin Details");  
                     //localStorage.clear();
                   }} >
-        Sign out</button></a>
+        {language?.signout}</button></a>
       </li>
     </ul>
   

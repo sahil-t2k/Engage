@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LoaderDarkTable from '../../components/loaders/darktableloader';
 import DarkModeLogic from '../../components/darkmodelogic';
 import Sidebar  from "../../components/Sidebar";
 import Header  from "../../components/Header";
@@ -15,6 +16,7 @@ import Headloader from "../../components/loaders/headloader";
 var language;
 var currentProperty;
 var currentLogged;
+let colorToggle;
 import Router from "next/router";
 
 function Rooms() {
@@ -27,7 +29,7 @@ function Rooms() {
     const firstfun=()=>{
         if (typeof window !== 'undefined'){
           var locale = localStorage.getItem("Language");
-          const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+          colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
         const color = JSON.parse(localStorage.getItem("Color"));
          setColor(color);
          setDarkModeSwitcher(colorToggle)
@@ -177,8 +179,9 @@ currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
           </nav>
     
 {/* Rooms Table */}
-<div className={visible === 0 ? 'block' : 'hidden'}><LoaderTable /></div>
- <div className={visible === 1 ? 'block' : 'hidden'}>
+<div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
+        <div className={(visible === 0 && colorToggle == true ? 'block' : 'hidden')}><LoaderDarkTable /></div>
+        <div className={visible === 1 ? 'block' : 'hidden'}>
 <Table  gen={gen} setGen={setGen} add={addRoom} 
       edit={currentRoom} color={color}
         delete={deleteRooms} common={language?.common} cols={language?.RoomCols} name="Rooms"/>

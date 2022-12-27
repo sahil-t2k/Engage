@@ -21,7 +21,7 @@ import Router from 'next/router';
 import arabic from "../../components/Languages/ar";
 var currentLogged;
 import objChecker from "lodash";
-var colorToggle;
+let colorToggle;
 
 function Services() {
     const [visible, setVisible] = useState(0)
