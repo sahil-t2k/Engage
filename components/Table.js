@@ -1,5 +1,9 @@
 import React, { useState, useMemo } from "react";
-import Router from 'next/router';
+import Button from "./Button";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+var checked=[];
 
 const Table = (args) => {
    const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -7,6 +11,7 @@ const Table = (args) => {
     const [error, setError] = useState({});
     const [viewDel, setViewDel] = useState(0);
     const [flag, setFlag] = useState([]);
+    
 
     const [update, setUpdate] = useState({
         "edit": 0,
@@ -48,7 +53,9 @@ const Table = (args) => {
     function ItemShow(event) {
     setItemsPerPage(event.target.value) ;
     }
+
     const handlecheckbox = (e) => {
+        console.log(e.target)
         const { name, checked } = e.target;
         setViewDel(1);
         if (name === "allSelect") {
@@ -56,25 +63,43 @@ const Table = (args) => {
                 return { ...item, isChecked: checked }
             });
             args?.setGen(tempCon)
-            console.log(args?.gen)
         }
         else {
             let tempCon = args?.gen.map((item) =>
                 item.id === name ? { ...item, isChecked: checked } : item
             );
             args?.setGen(tempCon)
-            console.log(args?.gen)
         }
+       
     }
 
     const allDelete = async () => {
-        console.log(args?.gen)
-        const checked = args?.gen.filter(i => i.isChecked === true).map(j => { return (j.id) })
+        checked= [];
+         checked = args?.gen.filter(i => i.isChecked === true).map(j => { return (j.id) })
+         if(checked?.length > 0){
+        setDeleteMultiple(1);
+          }
+        else
+        {
+          toast.warn("No contact selected", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }      
     }
+
     const [editContact, setEditContact] = useState({});
     const [updateContact, setUpdateContact] = useState({});
-    const [deleteContact, setDeleteContact] = useState({});
+    const [deleteContact, setDeleteContact] = useState();
+    const [deleteMultiple, setDeleteMultiple] = useState(0);
+    const[spinner,setSpinner]=useState(0)
    
+  
     return (
 
         <>
@@ -95,12 +120,12 @@ const Table = (args) => {
                             <span className={`${args?.color?.textgray} hover:${args?.color?.text} cursor-pointer p-1 ${args?.color?.hover} rounded inline-flex justify-center`}>
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"></path></svg>
                             </span>
-                            {viewDel === 1 ?
+                            
                                 <button onClick={allDelete} data-tooltip="Delete" aria-label="Delete" className={`${args?.color?.textgray} hover:${args?.color?.text} cursor-pointer p-1 ${args?.color?.hover} rounded inline-flex justify-center`}>
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
                                 </button>
 
-                                : <></>}
+                               
 
                             <span className={`${args?.color?.textgray} hover:${args?.color?.text} cursor-pointer p-1 ${args?.color?.hover} rounded inline-flex justify-center`}>
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
@@ -483,15 +508,10 @@ const Table = (args) => {
                        
                 </div>
               
-                <div className="flex items-center w-44 space-x-3">
+                <div className="flex items-center w-42 space-x-3">
                 <span className={`text-sm font-normal ${args?.color?.textgray}`}>Entries per page</span>
-              
-                <select
-                         onChange={(e) =>
-                            ItemShow(e)
-                          }
-                        className={`shadow-sm ${args?.color?.greybackground} border border-gray-300 ${args?.color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block mr-2 w-12  py-1`}>
-                         <option selected disabled>{itemsPerPage}</option>
+                <select onChange={(e) => ItemShow(e)} className={`shadow-sm ${args?.color?.greybackground} border border-gray-300 ${args?.color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block mr-2 w-12 px-3  py-1`}>
+                      <option selected disabled>{itemsPerPage}</option>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -500,6 +520,50 @@ const Table = (args) => {
                   
                 </div>
             </div>
+
+              {/* Modal Delete */}
+          <div className={deleteMultiple === 1 ? 'block' : 'hidden'}>
+                <div className="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 backdrop-blur-xl bg-black/30 md:inset-0 z-50 flex justify-center items-center h-modal sm:h-full">
+                    <div className="relative w-full max-w-md px-4 h-full md:h-auto">
+                        <div className={`rounded-lg shadow relative ${args?.color?.whitebackground}`}>
+                            <div className="flex justify-end p-2">
+                                <button
+                                    onClick={() => setDeleteMultiple(0)}
+                                    type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="delete-user-modal">
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                                </button>
+                            </div>
+
+                            <div className="p-6 pt-0 text-center">
+                                <svg className="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 className={`text-base font-normal ${args?.color?.deltext} mt-5 mb-6`}>
+                                    {args?.language?.areyousureyouwanttodelete}
+                                </h3>
+                               
+                               {spinner === 0 ?
+                                <>
+                                <Button Primary={args?.language?.Delete} onClick={()=>{ args?.deleteAll(checked,setDeleteMultiple) }}/>
+                                <Button Primary={args?.language?.Cancel}   onClick={() => setDeleteMultiple(0)}/>
+                               </>
+                              :
+                               <Button Primary={args?.language?.SpinnerDelete} />}
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         </>
     )
 }

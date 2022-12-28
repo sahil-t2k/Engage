@@ -41,6 +41,7 @@ function Contact() {
   const [view, setView] = useState(0);
   const [flag, setFlag] = useState([]);
   const [contact, setContact] = useState([]);
+  const [deleteMultiple, setDeleteMultiple] = useState(0);
  
   useEffect(() => {
     const firstfun = () => {
@@ -111,7 +112,48 @@ function Contact() {
 
 
   }
+ /* Function Add Contact*/
+ function contactDeleteMultiple(checked,setDeleteMultiple) {
+ const data = checked?.map((item)=>{return ({contact_id:item,property_id:currentProperty?.property_id})})
+  setSpinner(1);
+    const contactdata = data;
+    const finalContact = { contacts: contactdata };
+    axios
+      .post(`/api/deleteall/contacts`,finalContact, {
+        headers: { "content-type": "application/json" },
+      })
+      .then((response) => {
+        setSpinner(0)
+        toast.success("API: Contact delete success.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        fetchHotelDetails();
+        Router.push("./contact");
+        setDeleteMultiple(0);
+      })
+      .catch((error) => {
+        setSpinner(0)
+        toast.error("API: Contact add error.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setDeleteMultiple(0);
+       
+      });
+  
 
+}
  
 
  
@@ -337,9 +379,9 @@ function Contact() {
          <div className={visible === 1 ? 'block' : 'hidden'}>
         <Table  gen={gen} setGen={setGen} add={()=> setView(1)} edit={submitContactEdit} 
         delSpin={language?.SpinnerDelete} saveSpinner={language?.SpinnerSave} spinner={spinner}
-        setSpinner={setSpinner} color={color}
-        spin={spin} 
-        delete={submitContactDelete} common={language?.common} cols={language?.ContactCols}
+        setSpinner={setSpinner} color={color} language={language} deleteAll={contactDeleteMultiple}
+        spin={spin} property_id={currentProperty?.property_id}
+        delete={submitContactDelete} common={language?.common} cols={language?.ContactCols} 
         name="Contact"/> 
         </div>
 
@@ -452,6 +494,8 @@ function Contact() {
           </div>
         </div>
 
+        
+
         {/* Toast Container */}
         <ToastContainer
           position="top-center"
@@ -464,7 +508,7 @@ function Contact() {
           draggable
           pauseOnHover
         />
-
+         
       </div>
 
     </>
