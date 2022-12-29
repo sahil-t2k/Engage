@@ -1,4 +1,5 @@
 export default {
+  basicservices:"Services de base",
   changepassword:"Changer le mot de Passe",
   listofproperties:"Liste des propriétés",
   passwordrequirements:"Exigences relatives au mot de passe",

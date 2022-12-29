@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LoaderDarkTable from '../../../components/loaders/darktableloader';
 import validateRoomRates from '../../../components/validation/room/roomratesadd';
 import validateRoom from '../../../components/validation/room/roomdescriptionadd';
 import validateRoomGallery from '../../../components/validation/room/roomgalleryadd';
@@ -25,6 +26,7 @@ var addroom;
 import Router from 'next/router'
 const logger = require("../../../services/logger");
 var currentLogged;
+let colorToggle;
 
 function Addroom() {
   const [allRoomDetails, setAllRoomDetails] = useState([])
@@ -50,7 +52,7 @@ function Addroom() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
+        colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
         const color = JSON.parse(localStorage.getItem("Color"));
         setColor(color);
         setDarkModeSwitcher(colorToggle)
@@ -628,7 +630,7 @@ function Addroom() {
               <div className="relative before:hidden  before:lg:block before:absolute before:w-[64%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 my-10 sm:px-20">
                 <div className="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                   <button className="w-10 h-10 rounded-full btn text-white bg-cyan-600 btn-primary">1</button>
-                  <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>Room Description</div>
+                  <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.description}</div>
                 </div>
 
                 <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
@@ -968,7 +970,7 @@ function Addroom() {
               <div className="relative before:hidden  before:lg:block before:absolute before:w-[64%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 my-10 sm:px-20">
                 <div className="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
                   <button className="w-10 h-10 rounded-full btn text-white bg-cyan-600 btn-primary">1</button>
-                  <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>Room Description</div>
+                  <div className={`${color.crossbg} lg:w-32 font-medium  text-base lg:mt-3 ml-3 lg:mx-auto`}>{language?.room} {language?.description}</div>
                 </div>
 
                 <div className="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
@@ -1108,11 +1110,11 @@ function Addroom() {
               <h6 className={`${color?.text} text-xl flex leading-none pl-6 pt-2 font-bold  mb-8`}>
                 {language?.room} {language?.services}
               </h6>
-              <div className="flex flex-col my-4">
+              <div className="flex flex-col my-4 ">
                 <div className="overflow-x-auto">
                   <div className="align-middle inline-block min-w-full">
                     <div className="shadow overflow-hidden">
-                      <table className="table-fixed min-w-full divide-y mx-8 divide-gray-200">
+                      <table className="table-fixed min-w-full divide-y mx-8 divide-gray-200 ">
                         <thead className={`${color.greybackground}`}>
                           <tr >
                             <th
@@ -1123,7 +1125,7 @@ function Addroom() {
                             </th>
                             <th
                               scope="col"
-                              className={`${color.text} py-4 px-2 text-left text-xs font-semibold uppercase`}
+                              className={`${color.text} py-4 px-6 text-left text-xs font-semibold uppercase`}
                             >
                               {language?.service} {language?.edit}
                             </th>
@@ -1178,6 +1180,7 @@ function Addroom() {
                 </div>
               </div>
               <div className="flex items-center mt-4 justify-end space-x-2 sm:space-x-3 ml-auto">
+              <Button Primary={language?.Skip} onClick={() => { setDisp(3) }} />
                 <div className={spinner === 0 ? 'block' : 'hidden'}>
                   <Button Primary={language?.Submit} onClick={() => { submitServices() }} />
                 </div>
@@ -1307,6 +1310,7 @@ function Addroom() {
                         </div></>
                     ))}
                     <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+                    <Button Primary={language?.Skip} onClick={() => { setDisp(3) }} />
                       <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
                         <Button Primary={language?.Submit} onClick={submitRoomImages} />
                       </div>

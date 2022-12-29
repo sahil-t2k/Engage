@@ -17,14 +17,14 @@ const validateContactEdit = (data,props) =>{
         error.type="APP: The contact data is required."
     }
 
-    if(data.name !== "" && data.name!== undefined){
-        if(data.name === "Email"){  
-    if((!data.type?.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/))){
+   
+    if(data.name === "Email"){  
+    if((!data.type?.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))){
         flag.push(false)
         error.type="APP: The email is invalid."
     }
 }
-    }
+    
    
     if(data.name !== "" && data.name !== undefined){
         if(data.name === "Tdd Number"){  

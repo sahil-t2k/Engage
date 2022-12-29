@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from "next/router";
 import Title from '../../components/title';
 import objChecker from "lodash";
 import DarkModeLogic from "../../components/darkmodelogic";
@@ -8,7 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import axios from 'axios';
 import Link from "next/link";
-import Router from 'next/router';
+import { useRouter } from "next/router";
 import english from "../../components/Languages/en";
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
@@ -26,6 +25,7 @@ const logger = require("../../services/logger");
 
 
 export default function BasicDetails() {
+  const router = useRouter();
   const [visible, setVisible] = useState(0);
   const [spinner, setSpinner] = useState(0)
   const [basicDetails, setBasicDetails] = useState([]);
@@ -61,7 +61,6 @@ export default function BasicDetails() {
       }
     }
     firstfun();
-    Router.push("./basicdetails");
   }, [])
 
   const fetchBasicDetails = async () => {
@@ -83,7 +82,7 @@ export default function BasicDetails() {
   /* Function call to fetch Current Property Details when page loads */
   useEffect(() => {
     if(JSON.stringify(currentLogged)==='null'){
-      Router.push(window.location.origin)
+      router?.push(window.location.origin)
     }    
     else{
       fetchBasicDetails();
@@ -144,7 +143,7 @@ export default function BasicDetails() {
             progress: undefined,
           });
           fetchBasicDetails();
-          Router.push("./basicdetails");
+          router.push("./basicdetails");
           setAllHotelDetails([])
           setFlag([]);
         })
@@ -248,23 +247,21 @@ export default function BasicDetails() {
                     <div className="relative w-full mb-3">
                       <label
                         className={`text-sm font-medium ${color?.text} block mb-2`}
-                        htmlFor="grid-password"
-                      >
+                        htmlFor="grid-password">
                         {language?.propertyname}
                         <span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
                         <input
-                          type="text"
+                          type="text" data-testid="test_property_name"
                           className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                          defaultValue={basicDetails?.property_name}
+                          defaultValue={basicDetails?.property_name} required
                           onChange={
                             (e) => (
                               setAllHotelDetails({ ...allHotelDetails, property_name: e.target.value },setFlag(1))
                             )
-                          }
-                        />
+                          }/>
                          <p className="text-sm text-sm text-red-700 font-light">
                           {error?.property_name}</p>
                         </div>
@@ -279,15 +276,14 @@ export default function BasicDetails() {
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                        <select className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-
-                          onChange={
+                        <select data-testid="test_property_category" className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                         onChange={
                             (e) => (
                               setAllHotelDetails({ ...allHotelDetails, property_category: e.target.value },setFlag(1))
                             )
-                          }
+                          } required
                         >
-                           <option selected disabled >{basicDetails?.property_category}</option>
+                           <option selected disabled>{basicDetails?.property_category}</option>
                            <option value="hotel" >Hotel</option>
                           <option value="resort">Resort</option>
                           <option value="motel">Motel</option>
@@ -309,7 +305,7 @@ export default function BasicDetails() {
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
                         <input
-                          type="text"
+                          type="text" data-testid="test_property_brand"
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                           defaultValue={basicDetails?.property_brand}
                           onChange={
@@ -336,9 +332,9 @@ export default function BasicDetails() {
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
                         <input
-                          type="Date"
+                          type="Date" data-testid="test_established_year"
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                          defaultValue={basicDetails?.established_year}
+                          defaultValue={basicDetails?.established_year} required
                           max={descriptionDate}
                           onChange={
                             (e) => (
@@ -362,8 +358,8 @@ export default function BasicDetails() {
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                      <select className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                          onChange={
+                      <select data-testid="test_star_rating" className={`shadow-sm ${color?.greybackground} capitalize border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
+                         required onChange={
                                (e) => (
                                   setAllHotelDetails({ ...allHotelDetails, star_rating: parseInt(e.target.value) },setFlag(1))
                           )
@@ -392,10 +388,10 @@ export default function BasicDetails() {
                       </label>
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                        <input
+                        <input data-testid="test_description_title"
                           type="text"
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                          defaultValue={basicDetails?.description_title}
+                           required  defaultValue={basicDetails?.description_title}
                           onChange={
                             (e) => (
                               setAllHotelDetails({ ...allHotelDetails, description_title: e.target.value },setFlag(1))
@@ -418,7 +414,7 @@ export default function BasicDetails() {
                       </label>
                       <div className={visible === 0 ? 'block w-auto' : 'hidden'}><Textboxloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                        <textarea rows="5" columns="50"
+                        <textarea rows="5" columns="50" data-testid="test_description_body"
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                           onChange={
                             (e) => (
@@ -426,6 +422,7 @@ export default function BasicDetails() {
                             )
                           }
                           defaultValue={basicDetails?.description_body}
+                          required
                         />
                          <p className="text-sm text-sm text-red-700 font-light">
                           {error?.description_body}</p></div>
@@ -444,21 +441,21 @@ export default function BasicDetails() {
 
                       <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                       <div className={visible === 1 ? 'block' : 'hidden'}>
-                        <input type="text" readOnly
+                        <input type="text" readOnly data-testid="test_description_date" required
                           className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                           defaultValue={descriptionDate}
                         /></div>
                     </div>
                   </div>
 
-                  <div id="btn" className="flex mr-2 items-center justify-end space-x-2 sm:space-x-3 ml-auto">
+                  <div className="flex mr-2 items-center justify-end space-x-2 sm:space-x-3 ml-auto">
                   <div className={flag !== 1 && spinner === 0? 'block' : 'hidden'}>
-                      <Button Primary={language?.UpdateDisabled}  /></div>
-                    <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Update} onClick={validationBasicDetails} />
+                      <Button testid="test_button_disabled" Primary={language?.UpdateDisabled}  /></div>
+                    <div  className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
+                      <Button testid="test_button" Primary={language?.Update} onClick={validationBasicDetails} />
                      </div>
                      <div className={spinner === 1 && flag === 1? 'block' : 'hidden'}>
-                   <Button Primary={language?.SpinnerUpdate} />
+                   <Button testid="test_button_spinner" Primary={language?.SpinnerUpdate} />
                        </div>
                   </div>
 

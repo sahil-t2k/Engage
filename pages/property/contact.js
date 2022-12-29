@@ -155,9 +155,6 @@ function Contact() {
 
 }
  
-
- 
-
   /* Function Add Contact*/
   function submitContactAdd() {
     if(flag === 1){
@@ -228,7 +225,7 @@ function Contact() {
   else{
     setError({})
     var result = validateContactEdit(props,countryCode)
-       if(result===true)
+     if(result===true)
        {
         submitContactAdd();
       
@@ -237,7 +234,7 @@ function Contact() {
     contact_data: props.type,
     status: props.status
   };
-  const url = "/api/contact";
+   const url = "/api/contact";
   axios
     .put(url, final_data, { header: { "content-type": "application/json" } })
     .then((response) => {

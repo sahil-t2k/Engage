@@ -7,7 +7,7 @@ import getConfig from 'next/config';
 import generatedGitInfo from './generatedGitInfo.json';
 var language;
 const gitCommand = "git rev-parse HEAD";
-const { publicRuntimeConfig } = getConfig();
+const publicRuntimeConfig  = getConfig();
 
 function Footer(args) {
     useEffect(()=>{
@@ -49,7 +49,7 @@ function Footer(args) {
         {language?.cookiepolicy}</span></Link></li>
         <li> <Link href={{pathname:args?.Primary?.contactus, query: { id: 1 }}}><span className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline mr-4 md:mr-6`}>
        {language?.contact}</span></Link></li>
-        <li><span href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline`}>v:{publicRuntimeConfig?.version}#{generatedGitInfo.gitBranch}@{generatedGitInfo.gitCommitHash}
+        <li><span href="#" className={`text-sm font-normal ${args?.color?.textgray} hover:cursor-pointer hover:underline`}>v:{publicRuntimeConfig?.version}#{generatedGitInfo?.gitBranch}@{generatedGitInfo?.gitCommitHash}
           
           </span></li>
         </ul>

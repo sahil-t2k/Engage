@@ -1,4 +1,5 @@
 export default {
+  basicservices:"الخدمات الأساسية",
   changepassword:"تغيير كلمة المرور",
   listofproperties:"قائمة الخصائص",
   currentpassword:"كلمة المرور الحالية",

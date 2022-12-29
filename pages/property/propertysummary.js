@@ -543,7 +543,7 @@ function PropertySummary() {
         draggable
         pauseOnHover />
      </div>
-      <Footer color={color}/>
+      <Footer color={color} Primary={english.Foot}/>
     </div>
     </>
   ); 

@@ -11,7 +11,7 @@ import english from "../components/Languages/en"
 import french from "../components/Languages/fr"
 import arabic from "../components/Languages/ar";
 import DarkModeLogic from "../components/darkmodelogic";
-import { Router } from "react-router";
+//import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
 var currentUser;
@@ -352,10 +352,7 @@ function Signin(args) {
                 </a>
               </div>
               <div className={spinner === 0 ? 'block' : 'hidden'}>
-                <Button testid='submitbtn' Primary={language?.Signin} onClick={(e) => {
-                  submitSignIn(e);
-
-                }} />
+                <Button testid='submitbtn' Primary={language?.Signin} onClick={(e) => { submitSignIn(e); }} />
               </div>
               <div className={spinner === 1 ? 'block' : 'hidden'}>
                 <Button Primary={language?.SpinnerSignin} />

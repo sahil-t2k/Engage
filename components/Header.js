@@ -274,7 +274,7 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
 						<li className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}
      >
 							<Link  href={{pathname:args?.Primary?.services, query: { id: 1 }}}>
-            	<a>Basic Services</a></Link>
+            	<a>{language?.basicservices}</a></Link>
 						</li>
 						<li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.additionalservices, query: { id: 1 }}}>

@@ -101,7 +101,6 @@ function Room() {
     const url = `/api/${currentProperty.address_province.replace(/\s+/g, '-')}/${currentProperty.address_city}/${currentProperty.property_category}s/${currentProperty.property_id}/${currentroom}`
     axios.get(url)
       .then((response) => {
-       
         setAllRoomDetails(response.data);
         setRoomDetails(response.data);
        setFinalView(response?.data?.views);
@@ -134,7 +133,7 @@ function Room() {
           }
         }
         logger.info("url  to fetch room hitted successfully");
-       
+       setVisible(1)
       })
       .catch((error) => { logger.error("url to fetch room, failed") });
   }
@@ -1628,7 +1627,7 @@ function Room() {
                             </th>
                             <th
                               scope="col"
-                              className={`${color.text} py-4 px-2 text-left text-xs font-semibold uppercase`}
+                              className={`${color.text} py-4 px-6 text-left text-xs font-semibold uppercase`}
                             >
                               {language?.service} {language?.edit}
                             </th>
@@ -1644,7 +1643,7 @@ function Room() {
                                 </span>
                               </td>
 
-                              <td className={`${color.text} px-2 py-4 whitespace-nowrap text-base font-normal `}>
+                              <td className={`${color.text} px-4 py-4 whitespace-nowrap text-base font-normal `}>
                                 <div className="flex">
                                   <div className="form-check ml-4 form-check-inline">
 

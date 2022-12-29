@@ -118,7 +118,7 @@ export default {
   itinerary:"Itinerary",
   customer:"Customer",
   booking:"Booking",
-
+  basicservices:"Basic Services",
   addimages:"Add Images",
    addroom:"Add Room",
   addbasicdetails:"Add Basic Details",
