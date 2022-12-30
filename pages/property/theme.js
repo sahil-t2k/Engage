@@ -1,5 +1,6 @@
 import Sidebar from "../../components/Sidebar";
 import Head from "next/head";
+import colorFile from "../../components/color";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -8,7 +9,6 @@ import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
 import Router, { useRouter } from "next/router";
-import DarkModeLogic from "../../components/darkmodelogic";
 const logger = require("../../services/logger");
 import { ToastContainer, toast } from "react-toastify";
 import Classic from "../themes/classic";
@@ -43,20 +43,26 @@ function Theme() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         locale = localStorage.getItem("Language");
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-        setColor(color);
-        setDarkModeSwitcher(colorToggle)
-        if (locale === "ar") {
-          language = arabic;
+        const colorToggle = localStorage.getItem("colorToggle");
+        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
         }
-        if (locale === "en") {
-          language = english;
-        }
-        if (locale === "fr") {
-          language = french;
+        else if (colorToggle === "true" || colorToggle === "false") {
+          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
         }
 
+        {
+          if (locale === "ar") {
+            language = arabic;
+          }
+          if (locale === "en") {
+            language = english;
+          }
+          if (locale === "fr") {
+            language = french;
+          }
+
+        }
         currentUser = JSON.parse(localStorage.getItem("Signin Details"));
         /** Current Property Details fetched from the local storage **/
         currentProperty = JSON.parse(localStorage.getItem("property"));
@@ -71,9 +77,7 @@ function Theme() {
     router.push("./theme");
   }, [])
 
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
+
 
   /* Function call to fetch Current Property Details when page loads */
   useEffect(() => {
@@ -93,20 +97,20 @@ function Theme() {
       .then((response) => {
         setThemeName(response.data.theme)
         setAllHotelDetails(response.data);
-        response.data.contacts.map(i => { if (i.contact_type === 'Phone') { setPhone(i) } });   
-        var ser =[];
-        response.data.services.map(i => { 
-          if (i.service_value !== "no") 
-          if(i.service_value !== "Not available")
-          {{
-            ser.push(i)
-           } 
-          }
-           setServices(ser)
-          }
-           
-           );
-          
+        response.data.contacts.map(i => { if (i.contact_type === 'Phone') { setPhone(i) } });
+        var ser = [];
+        response.data.services.map(i => {
+          if (i.service_value !== "no")
+            if (i.service_value !== "Not available") {
+              {
+                ser.push(i)
+              }
+            }
+          setServices(ser)
+        }
+
+        );
+
         response.data.contacts.map(i => { if (i.contact_type === 'Email') { setEmail(i) } });
         logger.info("url  to fetch property details hitted successfully")
       })
@@ -203,7 +207,7 @@ function Theme() {
 
   return (
     <>
-   
+
       <Header color={color} Primary={english?.Side} />
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
       {/* Body */}
@@ -262,7 +266,7 @@ function Theme() {
                   ></path>
                 </svg>
                 <span className={`${color?.textgray} text-sm   font-medium hover:text-gray-900 ml-1 md:ml-2`}>
-                  Themes 
+                  Themes
                 </span>
               </div>
             </li>

@@ -11,6 +11,7 @@ import DarkModeLogic from "../../components/darkmodelogic";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar";
+import colorFile from "../../components/color";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -45,29 +46,32 @@ function PropertySummary() {
     } 
     else
     {fetchHotelDetails();}
-    
-    // router.push("./propertysummary");
   }, [])
 
- useEffect(()=>{ 
-  setColor(DarkModeLogic(darkModeSwitcher))
- },[darkModeSwitcher])
+//  useEffect(()=>{ 
+//   setColor(DarkModeLogic(darkModeSwitcher))
+//  },[darkModeSwitcher])
 
    const firstfun = () => {
   if (typeof window !== 'undefined') {
     var locale = localStorage.getItem("Language");
-    const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-    const color = JSON.parse(localStorage.getItem("Color"));
-     setColor(color);
-     setDarkModeSwitcher(colorToggle)
-    if (locale === "ar") {
-      language = arabic;
+    const colorToggle =localStorage.getItem("colorToggle");
+    if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+       window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
     }
-    if (locale === "en") {
-      language = english;
+    else if(colorToggle === "true" || colorToggle === "false") {
+      setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
     }
-    if (locale === "fr") {
-      language = french;
+    {
+      if (locale === "ar") {
+        language = arabic;
+      }
+      if (locale === "en") {
+        language = english;
+      }
+      if (locale === "fr") {
+        language = french;
+      }
     }
     currentUser = JSON.parse(localStorage.getItem("Signin Details"));
        

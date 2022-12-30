@@ -1,4 +1,6 @@
 export default {
+  systemprefrence:"Préférences de Système",
+  colorscheme:"Schéma de Couleur",
   basicservices:"Services de base",
   changepassword:"Changer le mot de Passe",
   listofproperties:"Liste des propriétés",

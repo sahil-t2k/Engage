@@ -4,6 +4,7 @@ import Axios from "axios";
 import bcrypt from "bcryptjs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import colorFile from "../components/color";
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie';
 import Button from "../components/Button";
@@ -15,7 +16,7 @@ import DarkModeLogic from "../components/darkmodelogic";
 const logger = require("../services/logger");
 var language;
 var currentUser;
-let user=false;
+let user = false;
 
 
 function Signin(args) {
@@ -24,62 +25,66 @@ function Signin(args) {
   const [spinner, setSpinner] = useState(0)
   /** Router for Redirection **/
   const router = useRouter();
-  let locale  = router?.locale;
+  let locale = router?.locale;
   const [current, setCurrent] = useState(false)
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
-  const[modeChanger,setModeChanger] = useState("")
+  const [modeChanger, setModeChanger] = useState("")
   /** State for internationalization **/
   useEffect(() => {
     firstfun()
     getCookieData();
   }, [locale])
 
-  useEffect(()=>{ 
-   setColor(DarkModeLogic(darkModeSwitcher))
-  },[darkModeSwitcher])
+  
 
-  const firstfun = () => {
-    if (typeof window !== 'undefined') {
-      const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-     const color = JSON.parse(localStorage.getItem("Color"));
-     setColor(color);
-     setDarkModeSwitcher(colorToggle)
-     // locale = localStorage.getItem("Language");
-      
-      /*checks if language is already there in local storage */
-      if (locale === null) {
-        language = english
+  // first fun
+ const firstfun = () => {
+  if (typeof window !== 'undefined') {
+    const colorToggle =localStorage.getItem("colorToggle");
+    locale = localStorage.getItem("Language");
+   if(colorToggle === "" || undefined ||  null || "system"){
+    window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+  }
+  else {
+    setColor(colorToggle=== true ? colorFile?.dark: colorFile?.light);
+  }
+    /*Checks if language is already there in local storage */
+    if (locale === null) {
+      language = english
+      setLang("en")
+      localStorage.setItem("Language", "en")
+    }
+    else {
+      if (locale === "ar") {
+        language = arabic;
+        setLang("ar")
+        localStorage.setItem("Language", "ar")
+      }
+      else if (locale === "en") {
+        language = english;
         setLang("en")
         localStorage.setItem("Language", "en")
       }
-      else {
-        if (locale === "ar") {
-          language = arabic;
-          setLang("ar")
-        }
-        if (locale === "en") {
-          language = english;
-          setLang("en")
-        }
-        if (locale === "fr") {
-          language = french;
-          setLang("fr")
-        }
+      else if (locale === "fr") {
+       language = french;
+        setLang("fr")
+        localStorage.setItem("Language", "fr")
       }
-      currentUser = JSON.parse(localStorage.getItem("Signin Details")); 
-      if(JSON.stringify(currentUser)!='null'){
-        if(currentUser?.id.match('user00.[0-9]*'))
-        {
-          router.push('./property/landing')
-        }
-        else if(currentUser?.id.match('admin00.[0-9]*'))
-        {
-          router.push('./admin/AdminLanding');
-        }
+    }
+    currentUser = JSON.parse(localStorage.getItem("Signin Details")); 
+    if(JSON.stringify(currentUser)!='null'){
+      if(currentUser?.id.match('user00.[0-9]*'))
+      {
+        router.push('./property/landing')
+      }
+      else if(currentUser?.id.match('admin00.[0-9]*'))
+      {
+        router.push('./admin/AdminLanding');
+      }
 
-      }     
-  }
+    }     
+}
 }
   //write into cookies
   function setCookieData(checked) {
@@ -104,14 +109,14 @@ function Signin(args) {
   }
   /** Function for Internationalisation **/
   const changelanguage = (item) => {
-    if(item!=localStorage.getItem("Language")){
+    if (item != localStorage.getItem("Language")) {
       let locale = item;
-    /** Language selected stored to the localstorage **/
-    localStorage.setItem("Language", locale);
-    language = locale;
-    router?.push("/", "/", { locale });
-    logger.info("Language fetched: " + locale);
-  }
+      /** Language selected stored to the localstorage **/
+      localStorage.setItem("Language", locale);
+      language = locale;
+      router?.push("/", "/", { locale });
+      logger.info("Language fetched: " + locale);
+    }
   };
 
   /** State for Sign In **/
@@ -133,7 +138,7 @@ function Signin(args) {
       var item = {
         user_email: signinDetails.email,
       };
-     /** API POST call to send Sign Details **/
+      /** API POST call to send Sign Details **/
       Axios.post("/api/signin/user", item, {
         headers: { "content-type": "application/json" },
       })
@@ -142,7 +147,7 @@ function Signin(args) {
           const salt = response.data.salt;
           const EncryptedPass = await bcrypt.hash(signinDetails.password, salt);
           if (EncryptedPass === response.data.password) {
-           
+
             /** Toast emitter Sign in Successfull **/
             logger.info("Login Successful!");
             const whoIsLogged = {
@@ -153,8 +158,8 @@ function Signin(args) {
               admin_type: response.data?.admin_type,
               user_type: response.data?.user_type
             };
-           
-            
+
+
             {/*To re-direct to required module*/ }
             if (response.data.id.match(/admin00.[0-9]*/g)) {
               LocalSignin(whoIsLogged);
@@ -216,7 +221,7 @@ function Signin(args) {
     }
   };
 
-  
+
   // Validation Function
   const validation = (signinDetails) => {
     var Result = checkFormData(signinDetails);
@@ -246,182 +251,182 @@ function Signin(args) {
     return Object.keys(error).length === 0 ? true : error;
 
   }
-  return ( 
+  return (
     <>
-     <Title id="title" name="Engage | Sign in"/>
-    <div data-testid='main-div'
-     className={`min-h-screen ${color?.greybackground} p-4 `}>
-      <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
-        <span className={ `${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap` }>
-          enGage 
-        </span>
+      <Title id="title" name="Engage | Sign in" />
+      <div data-testid='main-div'
+        className={`min-h-screen ${color?.greybackground} p-4 `}>
+        <div className="mx-auto  flex flex-col justify-center items-center px-4 pt-8 pt:mt-0">
+          <span className={`${color.text} self-center text-3xl  mb-4 mt-2 tracking-normal font-bold  whitespace-nowrap`}>
+            enGage
+          </span>
 
-        <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
-          <div className="p-4 sm:p-8 lg:p-16 space-y-8">
-            <h2 className={ `${color.text} text-2xl lg:text-3xl capitalize font-bold` }  >
-              {language?.title}
-            </h2>
-            {/** Signin Form **/}
-            <form data-testid='signin-form' className="mt-8 space-y-6" action="#">
-              <div>
-                <label
-                  className={`${color?.text} text-base font-semibold block mb-2`}
-                >
-                  {language?.email}
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  data-testid="email-field"
-                 className={ `${color?.whitebackground} border border-gray-300 
+          <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
+            <div className="p-4 sm:p-8 lg:p-16 space-y-8">
+              <h2 className={`${color.text} text-2xl lg:text-3xl capitalize font-bold`}  >
+                {language?.title}
+              </h2>
+              {/** Signin Form **/}
+              <form data-testid='signin-form' className="mt-8 space-y-6" action="#">
+                <div>
+                  <label
+                    className={`${color?.text} text-base font-semibold block mb-2`}
+                  >
+                    {language?.email}
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    data-testid="email-field"
+                    className={`${color?.whitebackground} border border-gray-300 
                   ${color?.text}  sm:text-sm rounded-lg focus:ring-cyan-600
                    focus:border-cyan-600 block w-full p-2.5`}
-                  onChange={(e) => {
-                    setSigninDetails({
-                      ...signinDetails,
-                      email: e.target.value,
-                    }),
-                    setError({ ...error, email: '' })
-                  }
-                  }
-                  placeholder={language?.enteremail}
-                  required
-                ></input>
-                <p className={`${color.error} font-light` }>
-                  {error?.email}
-                </p>
-              </div>
-              <div>
-                <label
-                  className={ `${color?.text} text-base font-semibold block mb-2`}
-                >
-                  {language?.password}
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  data-testid="password-field"
-                  onChange={(e) => {
-                    setSigninDetails({
-                      ...signinDetails,
-                      password: e.target.value,
-                    })
-                    setError({ ...error, password: '' })
-                  }
-                  }
-                  placeholder={language?.enterpassword}
-                  className={`${color.whitebackground} border border-gray-300 
-                  ${color?.text}  sm:text-sm rounded-lg focus:ring-cyan-600
-                   focus:border-cyan-600 block w-full p-2.5`} 
-                   required
-                ></input>
-                <p className={`${color.error} font-light` }>
-                  {error?.password}
-                </p>
-              </div>
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
+                    onChange={(e) => {
+                      setSigninDetails({
+                        ...signinDetails,
+                        email: e.target.value,
+                      }),
+                        setError({ ...error, email: '' })
+                    }
+                    }
+                    placeholder={language?.enteremail}
+                    required
+                  ></input>
+                  <p className={`${color.error} font-light`}>
+                    {error?.email}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    className={`${color?.text} text-base font-semibold block mb-2`}
+                  >
+                    {language?.password}
+                  </label>
                   <input
-                    id="remember"
-                    aria-describedby="remember"
-                    name="remember"
-                    type="checkbox"
-                    data-testid="remember-me"
-                    className="bg-gray-50 
+                    type="password"
+                    name="password"
+                    id="password"
+                    data-testid="password-field"
+                    onChange={(e) => {
+                      setSigninDetails({
+                        ...signinDetails,
+                        password: e.target.value,
+                      })
+                      setError({ ...error, password: '' })
+                    }
+                    }
+                    placeholder={language?.enterpassword}
+                    className={`${color.whitebackground} border border-gray-300 
+                  ${color?.text}  sm:text-sm rounded-lg focus:ring-cyan-600
+                   focus:border-cyan-600 block w-full p-2.5`}
+                    required
+                  ></input>
+                  <p className={`${color.error} font-light`}>
+                    {error?.password}
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="remember"
+                      aria-describedby="remember"
+                      name="remember"
+                      type="checkbox"
+                      data-testid="remember-me"
+                      className="bg-gray-50 
                    border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4
                     rounded"
-                    onClick={() => { setCookieData(!current); setCurrent(!current) }}
+                      onClick={() => { setCookieData(!current); setCurrent(!current) }}
 
-                  />
-                </div>
-                <div className="text-sm ml-3">
-                  <label
-                    className={`${color.text} text-sm font-semibold ` }
-                  >
-                    {language?.remember}
-                  </label>
-                </div>
-                <a
-                  href=""
-                  className="text-sm font-semibold
+                    />
+                  </div>
+                  <div className="text-sm ml-3">
+                    <label
+                      className={`${color.text} text-sm font-semibold `}
+                    >
+                      {language?.remember}
+                    </label>
+                  </div>
+                  <a
+                    href=""
+                    className="text-sm font-semibold
                    text-teal-500 hover:underline  ml-auto"
-                >
-                  {language?.lost}
-                </a>
-              </div>
-              <div className={spinner === 0 ? 'block' : 'hidden'}>
-                <Button testid='submitbtn' Primary={language?.Signin} onClick={(e) => { submitSignIn(e); }} />
-              </div>
-              <div className={spinner === 1 ? 'block' : 'hidden'}>
-                <Button Primary={language?.SpinnerSignin} />
-              </div>
+                  >
+                    {language?.lost}
+                  </a>
+                </div>
+                <div className={spinner === 0 ? 'block' : 'hidden'}>
+                  <Button testid='submitbtn' Primary={language?.Signin} onClick={(e) => { submitSignIn(e); }} />
+                </div>
+                <div className={spinner === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.SpinnerSignin} />
+                </div>
 
-              <div className={`${color?.text} text-base font-semibold` }>
-                {language?.remember}
-                <a href="" className="text-teal-500 hover:underline px-2">
-                  {language?.create}
-                </a>
-              </div>
-            </form>
+                <div className={`${color?.text} text-base font-semibold`}>
+                  {language?.remember}
+                  <a href="" className="text-teal-500 hover:underline px-2">
+                    {language?.create}
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className=" mx-64 mt-2 text-teal-600">
+            <div>
+              <button
+                data-testid="en-btn"
+                className={lang === "en" ? "text-teal-600 text-sm font-bold mx-1 " : "mx-1 text-teal-600 text-sm"}
+                onClick={() => {
+                  setLang("en");
+                  changelanguage("en");
+                }}
+              >
+                English
+              </button>|
+              <button
+                data-testid="fr-btn"
+                className={lang === "fr" ? "mx-1 text-teal-600 text-sm font-bold" : "mx-1 text-teal-600 text-sm"}
+                onClick={() => {
+                  setLang("fr");
+                  changelanguage("fr");
+                }}
+              >
+                Français
+              </button>|
+              <button
+                data-testid="ar-btn"
+                className={lang === "ar" ? "text-teal-600 text-sm font-bold mx-1" : "mx-1 text-teal-600 text-sm"}
+                onClick={() => {
+                  setLang("ar");
+                  changelanguage("ar");
+                }}
+              >
+                عربى
+              </button>
+            </div>
           </div>
         </div>
-        <div className=" mx-64 mt-2 text-teal-600">
-          <div>
-            <button
-              data-testid="en-btn"
-              className={lang === "en" ? "text-teal-600 text-sm font-bold mx-1 " : "mx-1 text-teal-600 text-sm"}
-              onClick={() => {
-                setLang("en");
-                changelanguage("en");
-              }}
-            >
-              English   
-            </button>|
-            <button
-              data-testid="fr-btn"
-              className={lang === "fr" ? "mx-1 text-teal-600 text-sm font-bold" : "mx-1 text-teal-600 text-sm"}
-              onClick={() => {
-                setLang("fr");
-                changelanguage("fr");
-              }}
-            >
-              Français
-            </button>|
-            <button
-              data-testid="ar-btn"
-              className={lang === "ar" ? "text-teal-600 text-sm font-bold mx-1" : "mx-1 text-teal-600 text-sm"}
-              onClick={() => {
-                setLang("ar");
-                changelanguage("ar");
-              }}
-            >
-              عربى
-            </button>
-          </div>
-        </div>
+        {/** Toast Container **/}
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} /> */}
+        <span data-testid="result" id="result" className={user === false ? "not logged" : "logged"}>
+          {user === true ? <h6>logged in</h6> : <>not</>}
+        </span>
       </div>
-      {/** Toast Container **/}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} /> */}
-      <span data-testid="result" id="result" className={user===false?"not logged":"logged"}>
-        {user===true?<h6>logged in</h6>:<>not</>}
-      </span>
-    </div>
     </>
 
-   
+
   );
 }
 export default Signin;

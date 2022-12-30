@@ -1,4 +1,6 @@
 export default {
+  systemprefrences:"System Prefrences",
+  colorscheme:"Color Scheme",
   listofproperties:"List of Properties",
   changepassword:"Change Password",
   passwordrequirements:"Password Requirements",
@@ -772,6 +774,7 @@ inbox:'../../property/inbox'
 },
 
 "Side":{
+ dashboard:'./dashboard',
  basicdetails:'./basicdetails',
  address:'./address',
  contact:'./contact',
@@ -800,6 +803,7 @@ inbox:'./inbox'
 
 
 "Side1":{
+  dashboard:'../dashboard',
   basicdetails:'../basicdetails',
   address:'../address',
   contact:'../contact',
@@ -827,6 +831,7 @@ inbox:'../inbox'
  },
  
  "Side2":{
+  dashboard:'../../dashboard',
   basicdetails:'../../basicdetails',
   address:'../../address',
   contact:'../../contact',

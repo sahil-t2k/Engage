@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import Router from 'next/router';
 import axios from "axios";
 import Title from "../../components/title";
+import colorFile from "../../components/color";
 import LoaderDarkTable from "../../components/loaders/darktableloader";
 import validateContact from "../../components/validation/contact/contactadd";
 import validateContactEdit from "../../components/validation/contact/contactedit";
@@ -20,7 +21,6 @@ var language;
 var currentProperty;
 var propertyName;
 import Headloader from "../../components/loaders/headloader";
-import DarkModeLogic from "../../components/darkmodelogic";
 import LoaderTable from "../../components/loadertable";
 const logger = require("../../services/logger");
 var currentLogged;
@@ -29,7 +29,6 @@ let colorToggle;
 
 function Contact() {
   const [gen, setGen] = useState([]) 
-  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
   const [spinner, setSpinner] = useState(0)
@@ -47,10 +46,13 @@ function Contact() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-         colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-         setColor(color);
-         setDarkModeSwitcher(colorToggle)
+         colorToggle = localStorage.getItem("colorToggle");
+        if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+       }
+       else if(colorToggle === "true" || colorToggle === "false") {
+         setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+       } 
         if (locale === "ar") {
           language = arabic;
         }
@@ -68,9 +70,6 @@ function Contact() {
     firstfun();
   }, [])
 
-  useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
 
    useEffect(() => {
     if(JSON.stringify(currentLogged)==='null'){

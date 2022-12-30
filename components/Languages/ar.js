@@ -1,4 +1,6 @@
 export default {
+  systemprefrences:"تفضيلات النظام",
+  colorscheme:"نظام الألوان",
   basicservices:"الخدمات الأساسية",
   changepassword:"تغيير كلمة المرور",
   listofproperties:"قائمة الخصائص",

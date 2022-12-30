@@ -12,6 +12,7 @@ import Headloader from '../../../components/loaders/headloader';
 import Lineloader from '../../../components/loaders/lineloader';
 import Button from '../../../components/Button';
 import { ToastContainer, toast } from 'react-toastify';
+import colorFile from '../../../components/color';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "next/link";
 import english from "../../../components/Languages/en";
@@ -52,11 +53,14 @@ function Addroom() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-        setColor(color);
-        setDarkModeSwitcher(colorToggle)
-        if (locale === "ar") {
+        const colorToggle = localStorage.getItem("colorToggle");
+        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        }
+        else if (colorToggle === "true" || colorToggle === "false") {
+            setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        }
+       { if (locale === "ar") {
           language = arabic;
         }
         if (locale === "en") {
@@ -64,7 +68,7 @@ function Addroom() {
         }
         if (locale === "fr") {
           language = french;
-        }
+        }}
         /** Current Property Details fetched from the local storage **/
         currentProperty = JSON.parse(localStorage.getItem("property"));
         currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
@@ -178,9 +182,6 @@ function Addroom() {
   /*For Room Description*/
   const [allRoomDes, setAllRoomDes] = useState([]);
 
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
 
   /**  Submit Function for Room Description **/
   function submitRoomDescription() {

@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Headloader from "../../components/loaders/headloader";
 import LoaderTable from "../../components/loadertable";
 import Table from "../../components/Table";
 import UserProfileSidebar from "../../components/userprofilesidebar";
@@ -8,18 +7,15 @@ import UserProfileHeader from "../../components/userprofileheader";
 import { useEffect, useState } from "react";
 import Title from '../../components/title';
 import axios from "axios";
-import Buttonloader from '../../components/loaders/buttonloader'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Landingloader from "../../components/loaders/landingloader";
 import { useRouter } from "next/router";
-import Button from "../../components/Button";
 import LoaderDarkTable from "../../components/loaders/darktableloader";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
 const logger = require("../../services/logger");
-import DarkModeLogic from "../../components/darkmodelogic";
+import colorFile from '../../components/color'
 var language;
 var currentUser;
 let currentLogged;
@@ -50,43 +46,38 @@ const Landing = () => {
 
   }, [])
 
-
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       locale = localStorage.getItem("Language");
-       colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-      const color = JSON.parse(localStorage.getItem("Color"));
-      setColor(color);
-      setDarkModeSwitcher(colorToggle)
-      if (locale === "ar") {
-        language = arabic;
+       colorToggle =localStorage.getItem("colorToggle");
+      if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
       }
-      if (locale === "en") {
-        language = english;
+      else if(colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
       }
-      if (locale === "fr") {
-        language = french;
+      
+        {
+        if (locale === "ar") {
+          language = arabic;
+        }
+        if (locale === "en") {
+          language = english;
+        }
+        if (locale === "fr") {
+          language = french;
+        }
+        
       }
       currentUser = JSON.parse(localStorage.getItem("Signin Details"));
       currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
     }
   }
 
-  const changeTheme = (props) => {
-    localStorage.setItem("Mode", props)
-  }
-
-
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
-
-
   /** Use Effect to fetch all the properties of Current user **/
   const fetchProperty = async () => {
     try {
       var genData = [];
-      
       const l = localStorage.getItem("Language");
       console.log("language " + l)
       const url = `/api/${l}/properties/${currentUser.id}`;
@@ -126,6 +117,21 @@ const Landing = () => {
       }
     }
   };
+  const colorToggler = (newColor) =>{
+    alert("new color is"+newColor)
+    if (newColor === 'system'){
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light)
+      localStorage.setItem("colorToggle",newColor)
+    }
+    else if(newColor === 'light'){
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle",false)
+    }
+    else if(newColor === 'dark'){
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle",true)
+    }
+  }
 
   /**Function to save Current property to be viewed to Local Storage**/
   const LocalProperty = ( props ) => {
@@ -136,8 +142,8 @@ const Landing = () => {
   return (
     <>
       <Title name={`Engage |  ${language?.landing}`} />
-      <UserProfileHeader color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
-      <UserProfileSidebar color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+      <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} />
+      <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} />
 
       <div
         id="main-content"

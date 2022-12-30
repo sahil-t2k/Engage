@@ -102,7 +102,7 @@ function Navbar(args) {
   </button>
   </div> 
   
-  <div className="ml-0 flex justify-end ">
+  <div className="ml-auto mr-0 flex justify-end ">
 <div id="dropdownInformation" className={flag === true ?`${args?.color?.whitebackground} absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow 
 dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
     <div className= {`${args?.color?.text} py-3 px-4 text-sm `}>
@@ -152,7 +152,7 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     </div>
                   </form>
                 </li>
-                <li className={`${args?.color?.text} ${args?.color?.sidebarhover} group text-base font-normal rounded-lg flex items-center p-2`}>
+                <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2`}>
                   <svg
                     className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0 ${args?.color?.iconhover} transition duration-75  `}
                     fill="currentColor"
@@ -162,9 +162,11 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg>
-                  <span className="ml-3">{language?.dashboard}  </span>
+                  <span className="ml-3">
+                  <Link href={{pathname:args?.Primary?.dashboard, query: { id: 1 }}}><a>{language?.dashboard} </a></Link>
+                   </span>
                 </li>
-                <li className={`${args?.color?.text} ${args?.color?.sidebarhover} group text-base font-normal rounded-lg flex items-center p-2`}>
+                <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2`}>
                 <svg className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0 ${args?.color?.iconhover} transition duration-75  `} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
                 
                   <span className="ml-3"><Link href={{pathname:args?.Primary?.inbox, query: { id: 1 }}}><a>{language?.inbox} </a></Link> </span>
@@ -188,16 +190,13 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                   </span>
                 </li>
                 <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 `}>
-                  <svg
-                    className={`w-7 h-7  ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
+                  <svg className={`w-7 h-7  ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
                     fill="currentColor"
                     viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                    xmlns="http://www.w3.org/2000/svg" >
                     <path
                       d="M16,3C10.5,3,6,7.5,6,13c0,8.4,9,15.5,9.4,15.8c0.2,0.1,0.4,0.2,0.6,0.2s0.4-0.1,0.6-0.2C17,28.5,26,21.4,26,13
-	C26,7.5,21.5,3,16,3z M16,17c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,17,16,17z"
-                    ></path>
+	                    C26,7.5,21.5,3,16,3z M16,17c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,17,16,17z"></path>
                   </svg>
                   <span className="ml-3 flex-1 whitespace-nowrap">
                   <Link href={{pathname:args?.Primary?.address, query: { id: 1 }}}><a>{language?.address}</a></Link></span>

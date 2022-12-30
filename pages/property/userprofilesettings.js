@@ -15,7 +15,7 @@ import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
 const logger = require("../../services/logger");
-import DarkModeLogic from "../../components/darkmodelogic";
+import colorFile from '../../components/color';
 var language;
 var currentUser;
 var currentLogged;
@@ -54,10 +54,15 @@ function UserProfileSettings() {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       locale = localStorage.getItem("Language");
-      const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-      const color = JSON.parse(localStorage.getItem("Color"));
-      setColor(color);
-      setDarkModeSwitcher(colorToggle)
+      const colorToggle =localStorage.getItem("colorToggle");
+      if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+      }
+      else if(colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+      }
+      
+        {
       if (locale === "ar") {
         language = arabic;
       }
@@ -66,7 +71,7 @@ function UserProfileSettings() {
       }
       if (locale === "fr") {
         language = french;
-      }
+      }}
 
       fetchUserDetails();
       currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
@@ -75,12 +80,22 @@ function UserProfileSettings() {
     }
   }
 
+  const colorToggler = (newColor) =>{
+    if (newColor === 'system'){
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light)
+      localStorage.setItem("colorToggle",newColor)
+    }
+    else if(newColor === 'light'){
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle",false)
+    }
+    else if(newColor === 'dark'){
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle",true)
+    }
+  }
 
-
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
-
+ 
   const fetchUserDetails = async () => {
     var item = {
       user_email: JSON.parse(localStorage.getItem("Signin Details"))?.email
@@ -183,8 +198,8 @@ function UserProfileSettings() {
     <>
       <Title name={`Engage |  ${language?.propertysummary}`} />
       <div>
-        <UserProfileHeader color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
-        <UserProfileSidebar color={color} Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} />
+        <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} />
+        <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} />
         {/* Body */}
         <div id="main-content"
           className={`${color?.greybackground} min-h-screen px-4 py-2 pt-24 relative overflow-y-auto lg:ml-64`}>

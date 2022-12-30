@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import validateBedData from '../../../components/validation/room/roombedadd';
 import validateRoom from '../../../components/validation/room/roomdescriptionadd';
 import validateSingleBedEdit from '../../../components/validation/room/roomsinglebededit';
+import colorFile from '../../../components/color';
 import validateEditGallery from '../../../components/validation/room/roomgalleryedit';
 import validateRoomRates from '../../../components/validation/room/roomratesadd';
 import validateBedAdd from '../../../components/validation/room/roomsinglebedadd';
 import LoaderTable from '../../../components/loadertable';
 import objChecker from "lodash"
 import Table from '../../../components/Table';
-import DarkModeLogic from "../../../components/darkmodelogic";
 import Multiselect from 'multiselect-react-dropdown';
 import lang from '../../../components/GlobalData'
 import axios from "axios";
@@ -72,11 +72,14 @@ function Room() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-        setColor(color);
-        setDarkModeSwitcher(colorToggle)
-        if (locale === "ar") {
+        const colorToggle = localStorage.getItem("colorToggle");
+        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        }
+        else if (colorToggle === "true" || colorToggle === "false") {
+            setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        }
+       { if (locale === "ar") {
           language = arabic;
         }
         if (locale === "en") {
@@ -84,7 +87,7 @@ function Room() {
         }
         if (locale === "fr") {
           language = french;
-        }
+        }}
         /** Current Property Basic Details fetched from the local storage **/
         currentroom = localStorage.getItem('RoomId');
         /** Current Property Details fetched from the local storage **/
@@ -103,10 +106,10 @@ function Room() {
       .then((response) => {
         setAllRoomDetails(response.data);
         setRoomDetails(response.data);
-       setFinalView(response?.data?.views);
-       if (response.data?.room_type == 'Single') {
-        setBedDetails( response.data.beds?.[i])
-      }
+        setFinalView(response?.data?.views);
+        if (response.data?.room_type == 'Single') {
+          setBedDetails(response.data.beds?.[i])
+        }
         setAllRoomRates(response.data?.unconditional_rates?.[i]);
         filterCurrency(response.data?.unconditional_rates?.[i]);
         if (response.data.room_facilities !== undefined) {
@@ -117,7 +120,7 @@ function Room() {
         if (response.data.room_facilities == undefined) {
           fetchServices();
         }
-        
+
         if (response.data?.room_type == 'Semi_Double' || 'King' || 'Queen' || 'Studio_Room' || 'Double') {
           var genData = [];
           {
@@ -133,7 +136,7 @@ function Room() {
           }
         }
         logger.info("url  to fetch room hitted successfully");
-       setVisible(1)
+        setVisible(1)
       })
       .catch((error) => { logger.error("url to fetch room, failed") });
   }
@@ -144,17 +147,6 @@ function Room() {
     });
     setAllRoomRates({ ...allRoomRates, currency: currency?.[i]?.currency_name })
   }
-
-  // const filterView = () => {
-  //   resView = lang?.Views.filter(el => {
-  //     return props.find(element => {
-  //       return element.view === el.view;
-  //    });
-
-  // });
-  // setFinalView(resView)
-  // }
-
 
   // Room Services
   const fetchServices = async () => {
@@ -191,11 +183,6 @@ function Room() {
       })
       .catch((error) => { logger.error("url to fetch roomtypes, failed") });
   }
-
-  useEffect(() => {
-    setColor(DarkModeLogic(darkModeSwitcher))
-  }, [darkModeSwitcher])
-
 
   /* Function to load Room Details when page loads */
   useEffect(() => {
@@ -515,8 +502,8 @@ function Room() {
           setError({});
           setAllRoomRates([]);
           Router.push("./editroom");
-         
-       
+
+
         })
         .catch((error) => {
           setSpinner(0);
@@ -831,7 +818,7 @@ function Room() {
           draggable: true,
           progress: undefined,
         });
-       
+
         fetchDetails();
         Router.push("./editroom");
         setError({});
@@ -1411,13 +1398,13 @@ function Room() {
                       </div>
                     </div>
                     <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
-                    <div className={(spinner === 0  && (flag !== 1 && roomView != 1))? 'block' : 'hidden'}>
-                        <Button Primary={language?.UpdateDisabled}  />
+                      <div className={(spinner === 0 && (flag !== 1 && roomView != 1)) ? 'block' : 'hidden'}>
+                        <Button Primary={language?.UpdateDisabled} />
                       </div>
-                      <div className={(spinner === 0 && (flag === 1 || roomView === 1))? 'block' : 'hidden'}>
+                      <div className={(spinner === 0 && (flag === 1 || roomView === 1)) ? 'block' : 'hidden'}>
                         <Button Primary={language?.Update} onClick={() => { validationRoomDescription() }} />
                       </div>
-                      <div className={spinner === 1  ? 'block' : 'hidden'}>
+                      <div className={spinner === 1 ? 'block' : 'hidden'}>
                         <Button Primary={language?.SpinnerUpdate} />
                       </div>
                       <Button Primary={language?.Next} onClick={() => {
@@ -1526,7 +1513,7 @@ function Room() {
                         className={`shadow-sm ${color?.greybackground} ${color?.text}  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         onChange={
                           (e) => (
-                            setBedDetails({ ...bedDetails, bed_length: e.target.value },setFlag(1))
+                            setBedDetails({ ...bedDetails, bed_length: e.target.value }, setFlag(1))
                           )
                         }
                       />
@@ -1551,7 +1538,7 @@ function Room() {
                         defaultValue={bedDetails?.bed_width}
                         onChange={
                           (e) => (
-                            setBedDetails({ ...bedDetails, bed_width: e.target.value },setFlag(1))
+                            setBedDetails({ ...bedDetails, bed_width: e.target.value }, setFlag(1))
                           )
                         }
                       />
@@ -1567,13 +1554,14 @@ function Room() {
                   setDisp(0)
                 }} />
 
-                <div className={(spinner === 0  && flag !== 1 )? 'block' : 'hidden'}>
-                  <Button Primary={language?.UpdateDisabled}/></div>
-                  <div className={(spinner === 0 && flag === 1)? 'block' : 'hidden'}>
+                <div className={(spinner === 0 && flag !== 1) ? 'block' : 'hidden'}>
+                  <Button Primary={language?.UpdateDisabled} /></div>
+                <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
                   <Button Primary={language?.Update} onClick={() => {
-                    validationBedData();}} />
+                    validationBedData();
+                  }} />
                 </div>
-                <div className={(spinner === 1 && flag === 1)? 'block' : 'hidden'}>
+                <div className={(spinner === 1 && flag === 1) ? 'block' : 'hidden'}>
                   <Button Primary={language?.SpinnerUpdate} />
                 </div>
                 <Button Primary={language?.Next} onClick={() => {
@@ -1846,7 +1834,7 @@ function Room() {
                           <select className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                             onChange={
                               (e) => (
-                                setAllRoomRates({ ...allRoomRates, currency: e.target.value },setFlag(1))
+                                setAllRoomRates({ ...allRoomRates, currency: e.target.value }, setFlag(1))
                               )
                             }>
                             <option selected disabled>{allRoomRates?.currency}</option>
@@ -1879,7 +1867,7 @@ function Room() {
                             defaultValue={roomDetails?.unconditional_rates?.[0]?.baserate_amount}
                             onChange={
                               (e) => (
-                                setAllRoomRates({ ...allRoomRates, baserate_amount: e.target.value },setFlag(1))
+                                setAllRoomRates({ ...allRoomRates, baserate_amount: e.target.value }, setFlag(1))
                               )
                             }
                           />
@@ -1906,7 +1894,7 @@ function Room() {
                             defaultValue={roomDetails?.unconditional_rates?.[0]?.tax_amount}
                             onChange={
                               (e) => (
-                                setAllRoomRates({ ...allRoomRates, tax_amount: e.target.value, un_rate_id: allRoomDetails?.unconditional_rates?.[0]?.un_rate_id },setFlag(1))
+                                setAllRoomRates({ ...allRoomRates, tax_amount: e.target.value, un_rate_id: allRoomDetails?.unconditional_rates?.[0]?.un_rate_id }, setFlag(1))
                               )
                             } />
                           <p className="text-sm text-sm text-red-700 font-light">
@@ -1930,7 +1918,7 @@ function Room() {
                             defaultValue={roomDetails?.unconditional_rates?.[0]?.otherfees_amount}
                             onChange={
                               (e) => (
-                                setAllRoomRates({ ...allRoomRates, otherfees_amount: e.target.value },setFlag(1))
+                                setAllRoomRates({ ...allRoomRates, otherfees_amount: e.target.value }, setFlag(1))
                               )
                             } />
                           <p className="text-sm text-sm text-red-700 font-light">
@@ -1943,16 +1931,16 @@ function Room() {
                     </div>
                     <div className="flex items-center justify-end space-x-2 sm:space-x-3 ml-auto">
                       <Button Primary={language?.Previous} onClick={() => { setDisp(2) }} />
-                      <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>
-                  <Button Primary={language?.UpdateDisabled} />
-                </div>
-                    <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Update}  onClick={() => {
+                      <div className={(spinner === 0 && flag !== 1) ? 'block' : 'hidden'}>
+                        <Button Primary={language?.UpdateDisabled} />
+                      </div>
+                      <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
+                        <Button Primary={language?.Update} onClick={() => {
                           validationRates();
-                        }}  />
-                    </div>
+                        }} />
+                      </div>
 
-                    
+
                       <div className={spinner === 1 ? 'block' : 'hidden'}>
                         <Button Primary={language?.SpinnerUpdate} />
                       </div>
@@ -2043,7 +2031,7 @@ function Room() {
                       </label>
                       <input
                         type="text"
-                        onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value },setFlag(1)))}
+                        onChange={(e) => (setActionImage({ ...actionImage, image_title: e.target.value }, setFlag(1)))}
                         className={`${color?.greybackground} ${color?.text} shadow-sm py-2  border border-gray-300  sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full px-2.5`}
                       />
                       <p className="text-sm text-sm text-red-700 font-light">
@@ -2058,7 +2046,7 @@ function Room() {
                         <span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <textarea rows="2" columns="60"
-                        onChange={(e) => (setActionImage({ ...actionImage, image_description: e.target.value },setFlag(1)))}
+                        onChange={(e) => (setActionImage({ ...actionImage, image_description: e.target.value }, setFlag(1)))}
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                         defaultValue="" />
                       <p className="text-sm text-sm text-red-700 font-light">
@@ -2069,13 +2057,13 @@ function Room() {
                 </div>
                 <div className="items-center p-6 border-t border-gray-200 rounded-b">
 
-                <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>
-                  <Button Primary={language?.AddDisabled} />
-                </div>
-                    <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Add} onClick={() => { validationImage(); }} />
-                    </div>
-                 
+                  <div className={(spinner === 0 && flag !== 1) ? 'block' : 'hidden'}>
+                    <Button Primary={language?.AddDisabled} />
+                  </div>
+                  <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
+                    <Button Primary={language?.Add} onClick={() => { validationImage(); }} />
+                  </div>
+
                   <div className={spinner === 1 ? 'block' : 'hidden'}>
                     <Button Primary={language?.SpinnerAdd} />
                   </div>
@@ -2119,7 +2107,7 @@ function Room() {
                             setActionImage({
                               ...actionImage,
                               image_description: e.target.value
-                            },setFlag(1))
+                            }, setFlag(1))
                           )
                         } defaultValue={actionImage?.image_description} />
                       <p className="text-sm text-sm text-red-700 font-light">
@@ -2140,7 +2128,7 @@ function Room() {
                             setActionImage({
                               ...actionImage,
                               image_title: e.target.value
-                            },setFlag(1))
+                            }, setFlag(1))
                           )
                         }
                         className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
@@ -2151,14 +2139,14 @@ function Room() {
                   </div>
                 </div>
                 <div className="items-center p-6 border-t border-gray-200 rounded-b">
-                <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>
-                  <Button Primary={language?.UpdateDisabled} />
-                </div>
-                    <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
-                      <Button Primary={language?.Update} onClick={validationImage}  />
-                    </div>
+                  <div className={(spinner === 0 && flag !== 1) ? 'block' : 'hidden'}>
+                    <Button Primary={language?.UpdateDisabled} />
+                  </div>
+                  <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
+                    <Button Primary={language?.Update} onClick={validationImage} />
+                  </div>
 
-                 
+
                   <div className={spinner === 1 ? 'block' : 'hidden'}>
                     <Button Primary={language?.SpinnerUpdate} />
                   </div>
@@ -2250,9 +2238,9 @@ function Room() {
 
                   <div className="items-center p-6 border-t border-gray-200 rounded-b">
 
-                  <div className={(spinner === 0 && flag !== 1)? 'block' : 'hidden'}>
-                  <Button Primary={language?.AddDisabled} />
-                </div>
+                    <div className={(spinner === 0 && flag !== 1) ? 'block' : 'hidden'}>
+                      <Button Primary={language?.AddDisabled} />
+                    </div>
                     <div className={(spinner === 0 && flag === 1) ? 'block' : 'hidden'}>
                       <Button Primary={language?.Add} onClick={() => { addBed() }} />
                     </div>

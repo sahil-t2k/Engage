@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import LoaderDarkTable from "../../components/loaders/darktableloader";
-import DarkModeLogic from "../../components/darkmodelogic";
+import colorFile from "../../components/color";
 import Header from "../../components/Header";
 import Link from "next/link";
 import Table from '../../components/Table';
@@ -27,8 +27,6 @@ function Services() {
     const [visible, setVisible] = useState(0)
     const [services, setServices] = useState([])
     const [edit, setEdit] = useState(0)
-    const [actionService, setActionService] = useState([])
-    const [darkModeSwitcher, setDarkModeSwitcher] = useState()
     const [color, setColor] = useState({})
     const [view, setView] = useState(0);
     const [modified, setModified] = useState([])
@@ -42,11 +40,14 @@ function Services() {
         const firstfun = () => {
             if (typeof window !== 'undefined') {
                 var locale = localStorage.getItem("Language");
-               colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-                const color = JSON.parse(localStorage.getItem("Color"));
-                 setColor(color);
-                 setDarkModeSwitcher(colorToggle)
-                if (locale === "ar") {
+                colorToggle = localStorage.getItem("colorToggle");
+                if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+                  window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+               }
+               else if(colorToggle === "true" || colorToggle === "false") {
+                 setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+               } 
+               { if (locale === "ar") {
                     language = arabic;
                 }
                 if (locale === "en") {
@@ -54,14 +55,13 @@ function Services() {
                 }
                 if (locale === "fr") {
                     language = french;
-                }
+                }}
                 /** Current Property Details fetched from the local storage **/
                 currentProperty = JSON.parse(localStorage.getItem("property"));
                 currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
             }
         }
         firstfun();
-        Router.push("./services")
     }, [])
 
     /* Function call to fetch Current Property Details when page loads */
@@ -109,9 +109,6 @@ function Services() {
     }, [])
 
 
-    useEffect(()=>{ 
-        setColor(DarkModeLogic(darkModeSwitcher))
-       },[darkModeSwitcher])
        
     /* Function to edit services*/
     const updateServices = (props,noChange) => {

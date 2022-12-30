@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import objChecker from "lodash";
 import StarRatings from 'react-star-ratings';
+import colorFile from "../../components/color";
 import axios from 'axios';
 import Link from "next/link";
 import Headloader from "../../components/loaders/headloader";
@@ -14,7 +15,6 @@ import Button from "../../components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import reviewImage from '../../public/review.png';
-import DarkModeLogic from "../../components/darkmodelogic";
 var currentLogged;
 var language;
 var currentProperty;
@@ -75,10 +75,15 @@ function Reviews() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        const colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-        const color = JSON.parse(localStorage.getItem("Color"));
-         setColor(color);
-         setDarkModeSwitcher(colorToggle)
+        const colorToggle = localStorage.getItem("colorToggle");
+        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        }
+        else if (colorToggle === "true" || colorToggle === "false") {
+            setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        }
+
+        {
         if (locale === "ar") {
           language = arabic;
         }
@@ -88,13 +93,13 @@ function Reviews() {
         if (locale === "fr") {
           language = french;
         }
+      }
         /** Current Property Details fetched from the local storage **/
         currentProperty = JSON.parse(localStorage.getItem("property"));
         currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
       }
     }
     firstfun();
-    Router.push("./reviews");
   }, [])
 
   useEffect(() => {
@@ -106,9 +111,6 @@ function Reviews() {
     }
  }, []);
 
-  useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
 
   const fetchReviews = async () => {
     const url = `/api/${currentProperty.address_province.replace(

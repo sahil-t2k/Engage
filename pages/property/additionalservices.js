@@ -3,6 +3,7 @@ import validateAdditionalServices from '../../components/validation/additionalse
 import validateAdditionalServicesEdit from '../../components/validation/additionalservices/additionalservicesedit';
 import LoaderDarkTable from "../../components/loaders/darktableloader";
 import axios from "axios";
+import colorFile from "../../components/color";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import Link from "next/link";
@@ -28,7 +29,6 @@ function AdditionalServices() {
         const [visible,setVisible]=useState(0); 
         const [spinner, setSpinner] = useState(0)
         const [additionalServices, setAdditionalServices] = useState({})
-        const [darkModeSwitcher, setDarkModeSwitcher] = useState()
         const [error, setError] = useState({})
         const [color, setColor] = useState({})
         const [services, setServices] = useState([])
@@ -43,11 +43,13 @@ function AdditionalServices() {
         const firstfun = () => {
             if (typeof window !== 'undefined') {
                 var locale = localStorage.getItem("Language");
-                 colorToggle = JSON.parse(localStorage.getItem("ColorToggle"));
-                const color = JSON.parse(localStorage.getItem("Color"));
-                setColor(color);
-                setDarkModeSwitcher(colorToggle)
-                if (locale === "ar") {
+                if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+                    window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+                 }
+                 else if(colorToggle === "true" || colorToggle === "false") {
+                   setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+                 } 
+               { if (locale === "ar") {
                     language = arabic;
                 }
                 if (locale === "en") {
@@ -55,6 +57,7 @@ function AdditionalServices() {
                 }
                 if (locale === "fr") {
                     language = french;
+                }
                 }
                /** Current Property Details fetched from the local storage **/
                 currentProperty = JSON.parse(localStorage.getItem("property"));
@@ -131,10 +134,6 @@ function AdditionalServices() {
         })
         .catch((error) => { logger.error("url to fetch property details, failed") });
 }
-
-useEffect(()=>{ 
-    setColor(DarkModeLogic(darkModeSwitcher))
-   },[darkModeSwitcher])
 
     /* Function to edit additional services */
       const editAdditionalServices = (props,noChange) => { 
