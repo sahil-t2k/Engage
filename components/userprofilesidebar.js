@@ -106,8 +106,11 @@ const UserProfileSidebar = (args) => {
             </button>
            <div className={colorMode === true ? 'block' : 'hidden'}>
 					<ul  className="py-2 space-y-2">
+
 						<li onClick={()=>args?.Sec("system")} className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}
-             ><a>{language?.systemprefrences}</a></li>
+             >
+              
+              <a>{language?.systemprefrences}</a></li>
 						
 						<li onClick={()=>args?.Sec("light")} 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 					   <a>{language?.lightmode}</a>

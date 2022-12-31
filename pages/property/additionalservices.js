@@ -43,6 +43,7 @@ function AdditionalServices() {
         const firstfun = () => {
             if (typeof window !== 'undefined') {
                 var locale = localStorage.getItem("Language");
+                 colorToggle = localStorage.getItem("colorToggle");
                 if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
                     window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
                  }
@@ -65,7 +66,7 @@ function AdditionalServices() {
             }
         }
         firstfun();
-        Router.push("./additionalservices")
+       
     }, [])
     
     const fetchAdditionalServices = async () => {

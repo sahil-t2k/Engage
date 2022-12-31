@@ -244,7 +244,7 @@ function UserProfileSettings() {
 
 
           {/* Change Password */}
-          <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
+          <div className={`${color?.whitebackground} shadow rounded-lg px-12 my-2 sm:p-6 xl:p-8  2xl:col-span-2`}>
 
             <h3 className={`${color?.text} text-base font-bold  mb-4`}>
               {language?.changepassword}
@@ -348,7 +348,7 @@ function UserProfileSettings() {
             </div>
           </div>
 
-          <div className={`${color?.greybackground}  grid  lg:grid-cols-2 md:grid-cols-1 py-2 sm:grid-cols-1 gap-3`}>
+          <div className={`${color?.greybackground}  grid  lg:grid-cols-2 md:grid-cols-1 my-2 sm:grid-cols-1 gap-3`}>
 
           <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
           <h3 className={`${color?.text} text-xl font-bold  mb-1`}>

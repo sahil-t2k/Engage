@@ -45,7 +45,6 @@ function Address() {
     const firstfun = () => {
       if (typeof window !== 'undefined') {
         var locale = localStorage.getItem("Language");
-        var locale = localStorage.getItem("Language");
         const colorToggle = localStorage.getItem("colorToggle");
         if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
           window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)

@@ -50,7 +50,7 @@ const Landing = () => {
     if (typeof window !== 'undefined') {
       locale = localStorage.getItem("Language");
        colorToggle =localStorage.getItem("colorToggle");
-      if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+      if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
         window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
       }
       else if(colorToggle === "true" || colorToggle === "false") {
@@ -118,7 +118,6 @@ const Landing = () => {
     }
   };
   const colorToggler = (newColor) =>{
-    alert("new color is"+newColor)
     if (newColor === 'system'){
       window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light)
       localStorage.setItem("colorToggle",newColor)
@@ -131,6 +130,7 @@ const Landing = () => {
       setColor(colorFile?.dark)
       localStorage.setItem("colorToggle",true)
     }
+    
   }
 
   /**Function to save Current property to be viewed to Local Storage**/
@@ -143,7 +143,7 @@ const Landing = () => {
     <>
       <Title name={`Engage |  ${language?.landing}`} />
       <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} />
-      <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} />
+      <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} colorToggle={colorToggle}/>
 
       <div
         id="main-content"
