@@ -148,7 +148,17 @@ function ReadMessage() {
                         
                  </div>
                  {reply === true ?
+
                  <div id="replymessage">
+                        <button className="float-right my-10 sm:inline-flex  text-gray-800  
+                            font-semibold border  focus:ring-4 focus:ring-cyan-200 font-semibold bg-gray-200
+                            rounded-lg text-sm px-1 py-1 text-center 
+                            items-center mb-1  mx-8  ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => setReply(false)}>
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
+                            </path></svg>
+                        </button>
                  <div className='px-6 my-5'>
                 <input type="text" className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                  defaultValue="neilthomas@gmail.com" />
