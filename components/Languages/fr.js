@@ -11,7 +11,7 @@ export default {
   previouspassword:"Mot de Passe Précédent",
   alertsandnotifications:"Alertes et Notifications",
   emailnotifications:"Notifications par Email",
-  userprofilesettings:"Paramètres du Profil Utilisateur",
+  userprofile:"Profil de L'utilisateur",
   darkmode:"Mode Sombre",
   lightmode:"Mode Lumière",
   inbox:"Boîte de Réception",

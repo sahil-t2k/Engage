@@ -420,9 +420,7 @@ function Signin(args) {
           pauseOnHover
         />
         {/* <DarkModeToggle Primary={darkModeSwitcher} Sec={setDarkModeSwitcher} /> */}
-        <span data-testid="result" id="result" className={user === false ? "not logged" : "logged"}>
-          {user === true ? <h6>logged in</h6> : <>not</>}
-        </span>
+      
       </div>
     </>
 

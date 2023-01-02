@@ -19,6 +19,7 @@ import colorFile from '../../components/color';
 var language;
 var currentUser;
 var currentLogged;
+let colorToggle;
 
 function UserProfileSettings() {
   var locale;
@@ -38,6 +39,7 @@ function UserProfileSettings() {
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
   const [modeChanger, setModeChanger] = useState("")
+  const [mode, setMode] = useState()
 
   useEffect(() => {
 
@@ -54,24 +56,28 @@ function UserProfileSettings() {
   const firstfun = () => {
     if (typeof window !== 'undefined') {
       locale = localStorage.getItem("Language");
-      const colorToggle =localStorage.getItem("colorToggle");
-      if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
-        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+      colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light);
+        setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true
+          : false);
       }
-      else if(colorToggle === "true" || colorToggle === "false") {
-        setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+      else if (colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        setMode(colorToggle === "true" ? true : false)
       }
-      
-        {
-      if (locale === "ar") {
-        language = arabic;
+
+      {
+        if (locale === "ar") {
+          language = arabic;
+        }
+        if (locale === "en") {
+          language = english;
+        }
+        if (locale === "fr") {
+          language = french;
+        }
       }
-      if (locale === "en") {
-        language = english;
-      }
-      if (locale === "fr") {
-        language = french;
-      }}
 
       fetchUserDetails();
       currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
@@ -80,22 +86,24 @@ function UserProfileSettings() {
     }
   }
 
-  const colorToggler = (newColor) =>{
-    if (newColor === 'system'){
-      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light)
-      localStorage.setItem("colorToggle",newColor)
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
     }
-    else if(newColor === 'light'){
+    else if (newColor === 'light') {
       setColor(colorFile?.light)
-      localStorage.setItem("colorToggle",false)
+      localStorage.setItem("colorToggle", false)
     }
-    else if(newColor === 'dark'){
+    else if (newColor === 'dark') {
       setColor(colorFile?.dark)
-      localStorage.setItem("colorToggle",true)
+      localStorage.setItem("colorToggle", true)
     }
+    firstfun();
+    router.push('./userprofilesettings')
   }
 
- 
+
   const fetchUserDetails = async () => {
     var item = {
       user_email: JSON.parse(localStorage.getItem("Signin Details"))?.email
@@ -134,7 +142,7 @@ function UserProfileSettings() {
               progress: undefined,
             });
             localStorage.setItem("Signin Details", JSON.stringify(userDetails));
-            router.push("./changepassword");
+            router.push("./userprofilesettings");
             setFlag([]);
 
           })
@@ -192,14 +200,14 @@ function UserProfileSettings() {
     }
   }
 
- 
+
   return (
 
     <>
       <Title name={`Engage |  ${language?.propertysummary}`} />
       <div>
-        <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} />
-        <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} />
+        <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} mode={mode} setMode={setMode} />
+        <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} colorToggle={colorToggle} />
         {/* Body */}
         <div id="main-content"
           className={`${color?.greybackground} min-h-screen px-4 py-2 pt-24 relative overflow-y-auto lg:ml-64`}>
@@ -235,7 +243,7 @@ function UserProfileSettings() {
                     ></path>
                   </svg>
                   <span className={`${color?.textgray} text-sm   font-medium hover:text-gray-900 ml-1 md:ml-2`}>
-                    {language?.userprofilesettings}
+                    {language?.userprofile}
                   </span>
                 </div>
               </li>
@@ -350,201 +358,211 @@ function UserProfileSettings() {
 
           <div className={`${color?.greybackground}  grid  lg:grid-cols-2 md:grid-cols-1 my-2 sm:grid-cols-1 gap-3`}>
 
-          <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
-          <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
-             Alerts & Notifications
-            </h3>
-            <p className={`${color?.textgray} text-sm  font-medium mb-2`}>You can set up enGage to get notifications</p>
-           
-            <div className={`${color?.text} text-lg font-bold  my-4`}>
-            Company News
-            </div>
-            <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGage news, announcements, and product updates</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+            <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
+              <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
+                Alerts & Notifications
+              </h3>
+              <p className={`${color?.textgray} text-sm  font-medium mb-2`}>You can set up enGage to get notifications</p>
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+              <div className={`${color?.text} text-lg font-bold  my-4`}>
+                Company News
+              </div>
+              <div className='flex'>
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGage news, announcements, and product updates</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t border-gray-200 my-2'></div>
 
 
               <div className={`${color?.text} text-lg font-bold  my-4`}>
-              Account Activity
-            </div>
+                Account Activity
+              </div>
               <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get important notifications about you or activity you`ve missed</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get important notifications about you or activity you`ve missed</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
 
               <div className={`${color?.text} text-lg font-bold  my-4`}>
-              Meetups Near You
-            </div>
+                Meetups Near You
+              </div>
               <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get an email when a Dribbble Meetup is posted close to my location</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get an email when a Dribbble Meetup is posted close to my location</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2  border-gray-200'></div>
 
-               
-              <div className={`${color?.text} text-lg font-bold  my-4`}>
-              New Messages
-            </div>
-              <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGagage news, announcements, and product updates</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+              <div className={`${color?.text} text-lg font-bold  my-4`}>
+                New Messages
+              </div>
+              <div className='flex'>
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGagage news, announcements, and product updates</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t border-gray-200'></div>
               <div id="btn" className="flex mt-2 items-center justify-end ml-auto mr-0 ">
-              <div className={flag !== 1 && spinner === 0 ? 'block' : 'hidden'}>
-                <Button Primary={language?.UpdateDisabled} /></div>
-              <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
-                <Button Primary={language?.Update}  />
-              </div>
-              <div className={spinner === 1 && flag === 1 ? 'block' : 'hidden'}>
-                <Button Primary={language?.SpinnerUpdate} />
+                <div className={flag !== 1 && spinner === 0 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.UpdateDisabled} /></div>
+                <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.Update} />
+                </div>
+                <div className={spinner === 1 && flag === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.SpinnerUpdate} />
+                </div>
               </div>
             </div>
-            </div>
-            
+
             <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
-            <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
-            Email Notifications
-            </h3>
-            <p className={`${color?.textgray} text-sm font-medium mb-2`}>You can set up enGage to get email notifications </p>
-          
-            <div className={`${color?.text} text-lg font-bold  my-4`}>
-            Rating reminders
-            </div>
-            <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send an email reminding me to rate an item a week after purchase</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+              <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
+                Email Notifications
+              </h3>
+              <p className={`${color?.textgray} text-sm font-medium mb-2`}>You can set up enGage to get email notifications </p>
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+              <div className={`${color?.text} text-lg font-bold  my-4`}>
+                Rating reminders
+              </div>
+              <div className='flex'>
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send an email reminding me to rate an item a week after purchase</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
 
               <div className={`${color?.text} text-lg font-bold  my-4`}>
-              Item update notifications
-            </div>
+                Item update notifications
+              </div>
               <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send user and product notifications for you</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send user and product notifications for you</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
 
               <div className={`${color?.text} text-lg font-bold  my-4`}>
-              Item comment notifications
-            </div>
+                Item comment notifications
+              </div>
               <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone comments on one of my items</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone comments on one of my items</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
-               
-              <div className={`${color?.text} text-lg font-bold  my-4`}>
-              Buyer review notifications
-            </div>
-              <div className='flex'>
-            <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone leaves a review with their rating</span>
-            <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
 
-                <input type="checkbox" className="sr-only peer" />
-                <div
-                  className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
+              <div className={`${color?.text} text-lg font-bold  my-4`}>
+                Buyer review notifications
+              </div>
+              <div className='flex'>
+                <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone leaves a review with their rating</span>
+                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+
+                  <input type="checkbox" className="sr-only peer" />
+                  <div
+                    className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 
                  dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 
                     peer-checked:after:translate-x-full 
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-              </label>
+                </label>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap my-2 border-t border-gray-200'></div>
               <div id="btn" className="flex mt-2 items-center justify-end ml-auto mr-0 ">
-              <div className={flag !== 1 && spinner === 0 ? 'block' : 'hidden'}>
-                <Button Primary={language?.UpdateDisabled} /></div>
-              <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
-                <Button Primary={language?.Update}  />
+                <div className={flag !== 1 && spinner === 0 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.UpdateDisabled} /></div>
+                <div className={spinner === 0 && flag === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.Update} />
+                </div>
+                <div className={spinner === 1 && flag === 1 ? 'block' : 'hidden'}>
+                  <Button Primary={language?.SpinnerUpdate} />
+                </div>
               </div>
-              <div className={spinner === 1 && flag === 1 ? 'block' : 'hidden'}>
-                <Button Primary={language?.SpinnerUpdate} />
-              </div>
+
             </div>
-              
           </div>
         </div>
-        </div>
+        <ToastContainer position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover />
       </div>
+     
     </>
 
 

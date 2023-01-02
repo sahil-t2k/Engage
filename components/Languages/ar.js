@@ -11,7 +11,7 @@ export default {
   previouspassword:"كلمة المرور السابقة",
   alertsandnotifications:"التنبيهات والإخطارات",
   emailnotifications:"اشعارات البريد الالكتروني",
-  userprofilesettings:"إعدادات ملف تعريف المستخدم",
+  userprofile:"ملف تعريفي للمستخدم",
   darkmode:"الوضع المظلم",
   lightmode:"وضع الضوء",
   inbox:"صندوق الوارد",

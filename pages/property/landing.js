@@ -29,11 +29,13 @@ const Landing = () => {
 
   /** State Intialisation for storing all Properties of Current User **/
   const [ownerdata, setOwnerdata] = useState([]);
-  const [gen, setGen] = useState([]) 
+  const [gen, setGen] = useState([])
   const [visible, setVisible] = useState(0);
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
   const [modeChanger, setModeChanger] = useState("")
+  const[mode,setMode] = useState()
+  
 
   useEffect(() => {
     firstfun();
@@ -43,36 +45,41 @@ const Landing = () => {
     else {
       fetchProperty();
     }
-
   }, [])
 
-  const firstfun = () => {
+  
+
+  const firstfun = async () => {
     if (typeof window !== 'undefined') {
-      locale = localStorage.getItem("Language");
-       colorToggle =localStorage.getItem("colorToggle");
-      if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
-        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+       locale = localStorage.getItem("Language");
+       colorToggle = localStorage.getItem("colorToggle");
+
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+        setColor(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? colorFile?.dark
+         : colorFile?.light);
+         setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true
+         : false);
+
       }
-      else if(colorToggle === "true" || colorToggle === "false") {
-        setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+      else if (colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light)
+        setMode(colorToggle === "true" ? true : false)
       }
-      
-        {
+
+      {
         if (locale === "ar") {
           language = arabic;
-        }
-        if (locale === "en") {
+        } else if (locale === "en") {
           language = english;
-        }
-        if (locale === "fr") {
+        } else if (locale === "fr") {
           language = french;
         }
-        
       }
       currentUser = JSON.parse(localStorage.getItem("Signin Details"));
       currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
     }
   }
+  
 
   /** Use Effect to fetch all the properties of Current user **/
   const fetchProperty = async () => {
@@ -80,7 +87,8 @@ const Landing = () => {
       var genData = [];
       const l = localStorage.getItem("Language");
       console.log("language " + l)
-      const url = `/api/${l}/properties/${currentUser.id}`;
+      const url = `/api/${l}/properties/${currentUser?.id}`;
+
       logger.info("url" + url)
       const response = await axios.get(url, {
         headers: { accept: "application/json" },
@@ -94,21 +102,21 @@ const Landing = () => {
             type: item.property_category,
             status: item.status,
             id: item.property_id,
-            property_id:item.property_id,
-            user_id:item.user_id,
-            property_name:item.property_name,
-            address_province:item.address_province,
-            address_city:item.address_city,
-            property_category:item.property_category,
-            language:item.language
+            property_id: item.property_id,
+            user_id: item.user_id,
+            property_name: item.property_name,
+            address_province: item.address_province,
+            address_city: item.address_city,
+            property_category: item.property_category,
+            language: item.language
           }
           genData.push(temp)
         })
         setGen(genData);
       }
-     
 
-     
+
+
     } catch (error) {
       if (error.response) {
         logger.error("Current User Properties Error");
@@ -117,24 +125,29 @@ const Landing = () => {
       }
     }
   };
-  const colorToggler = (newColor) =>{
-    if (newColor === 'system'){
-      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light)
-      localStorage.setItem("colorToggle",newColor)
+  
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
     }
-    else if(newColor === 'light'){
+    else if (newColor === 'light') {
       setColor(colorFile?.light)
-      localStorage.setItem("colorToggle",false)
+      localStorage.setItem("colorToggle", false)
     }
-    else if(newColor === 'dark'){
+    else if (newColor === 'dark') {
       setColor(colorFile?.dark)
-      localStorage.setItem("colorToggle",true)
+      localStorage.setItem("colorToggle", true)
     }
-    
+   firstfun();
+   router.push('./landing')
   }
 
+
+
   /**Function to save Current property to be viewed to Local Storage**/
-  const LocalProperty = ( props ) => {
+  const LocalProperty = (props) => {
     localStorage.setItem("property", JSON.stringify(props));
     router.push('./propertysummary');
   };
@@ -142,49 +155,49 @@ const Landing = () => {
   return (
     <>
       <Title name={`Engage |  ${language?.landing}`} />
-      <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} />
-      <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} colorToggle={colorToggle}/>
+      <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} mode={mode} setMode={setMode}/>
+      <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} colorToggle={colorToggle} />
 
       <div
         id="main-content"
         className={`${color?.whitebackground} min-h-screen pt-24 relative overflow-y-auto lg:ml-64`}>
         {/* Navbar */}
         <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-2">
-              <li className="inline-flex items-center">
+          <ol className="inline-flex items-center space-x-1 md:space-x-2">
+            <li className="inline-flex items-center">
               <div className={`${color?.text} text-base font-medium  inline-flex items-center`}>
                 <svg className="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                <Link href={currentLogged?.id.match(/admin.[0-9]*/) ? "../admin/AdminLanding" : "./landing"} 
-                className={`${color?.text} text-base font-medium  inline-flex items-center`}><a>{language?.home}</a>
+                <Link href={currentLogged?.id.match(/admin.[0-9]*/) ? "../admin/AdminLanding" : "./landing"}
+                  className={`${color?.text} text-base font-medium  inline-flex items-center`}><a>{language?.home}</a>
                 </Link></div>
-              </li>
-             
-              <li>
-                <div className="flex items-center">
+            </li>
+
+            <li>
+              <div className="flex items-center">
                 <div className={`${color?.textgray} text-base font-medium  inline-flex items-center`}>
-       
+
                   <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
                   <span className="text-gray-400 ml-1 md:ml-2 font-medium text-sm  " aria-current="page">{language?.LandingCols?.name}</span>
                 </div>
-                </div>
-              </li>
-            </ol>
-          </nav>
-      
+              </div>
+            </li>
+          </ol>
+        </nav>
 
-          <div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
+
+        <div className={(visible === 0 && colorToggle == false ? 'block' : 'hidden')}><LoaderTable /></div>
         <div className={(visible === 0 && colorToggle == true ? 'block' : 'hidden')}><LoaderDarkTable /></div>
-         <div className={visible === 1 ? 'block' : 'hidden'}>
-        <Table  gen={gen} setGen={setGen}  esp="landing"
-         color={color}
-       view={language?.view} edit={LocalProperty}
-        common={language?.common} cols={language?.LandingCols}
-        name="Inventory"/> 
+        <div className={visible === 1 ? 'block' : 'hidden'}>
+          <Table gen={gen} setGen={setGen} esp="landing"
+            color={color}
+            view={language?.view} edit={LocalProperty}
+            common={language?.common} cols={language?.LandingCols}
+            name="Inventory" />
         </div>
 
 
 
-          {/* <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
+        {/* <div className={`${color?.whitebackground} shadow rounded-lg md:mt-0 w-full sm:max-w-screen-sm xl:p-0`} >
             <div className="p-4 sm:py-8 sm:px-2 lg:p-space-y-2">
               <div className="text-center mt-16">
                 <div className={visible === 0 ? ' block w-32 h-8 my-2 flex justify-center' : 'hidden'}><></></div>
@@ -271,7 +284,7 @@ const Landing = () => {
           </div>
         */}
       </div>
-      
+
       <ToastContainer
         position="top-center"
         autoClose={10000}
