@@ -18,11 +18,9 @@ module.exports = {
     
     return config;
   },
+   // Will be available on both server and client
+  publicRuntimeConfig:'12.1.4',
   
-  publicRuntimeConfig: {
-    // Will be available on both server and client
-    version: '12.1.4',
-  },
   async rewrites() {
     return [
       {
