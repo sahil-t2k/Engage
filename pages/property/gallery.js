@@ -368,7 +368,7 @@ function Gallery() {
                 </nav>
 
                 {/* Gallery */}
-                <div className={`${color?.whitebackground} shadow rounded-lg  px-12 p-6  -mb-4 sm:p-6 xl:p-8  2xl:col-span-2`} >
+                <div className={`${color?.whitebackground} shadow rounded-lg  px-10 p-6  -mb-4 sm:p-6 xl:p-8  2xl:col-span-2`} >
                     {/* Header */}
                     <h6 className={`text-xl mb-2 flex leading-none pl-4 pt-2 font-bold ${color?.text}`}>
                         {language?.gallery}
@@ -410,14 +410,25 @@ function Gallery() {
                         <div >  <Loader /></div>
                     </div>
                     <div className={visible === 1 ? 'block' : 'hidden'}>
-                        <div className="flex-wrap container grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="flex-wrap container grid sm:grid-cols-2 py-4 lg:grid-cols-3 gap-4">
                             {gallery?.images?.map((item, idx) => {
                                 return (
-                                    <div className="block text-blueGray-600 text-xs  mt-6 font-bold " key={idx} >
-                                        <button onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
-                                            <img src={item.image_link} alt='Room Image' style={{ height: "200px", width: "450px" }} />
-                                        </button>
-                                        <table>
+                                    <div className="block text-blueGray-600 text-xs font-bold " key={idx} >
+                                        <div className='relative cursor-pointer' tooltip title="Click here to view, edit or delete." onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
+                                        
+                                      <a className={`absolute text-lg  font-semibold inset-0 z-10 bg-white text-gray-900 text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
+                                          <h1  className="tracking-wider" >{item?.image_title}</h1>
+                                    
+                                     </a>
+                                     <a href="#" className="relative">
+                                       
+                                            <img className='rounded-lg' src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }} />
+                                          
+                                      </a>
+                                        </div>
+
+                                     
+                                        {/* <table>
                                             <tr className="pt-1">
                                                 <td >
                                                     <span className={`pl-1 ${color?.text} text-sm`}>{item?.image_title}</span>
@@ -438,7 +449,7 @@ function Gallery() {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        </table>
+                                        </table> */}
                                     </div>
                                 )
                             }
@@ -446,6 +457,50 @@ function Gallery() {
                             }
 
                         </div>
+
+                        {/* <section className="overflow-hidden text-gray-700 ">
+                            <div className="container  mx-auto lg:pt-8">
+                                <div className="flex flex-wrap -m-1 ">
+                                    {gallery?.images?.map((item, idx) => {
+                                        return (
+                                            <div className="flex flex-wrap sm:1/6 md:2/3 lg:w-2/6" key={idx}>
+                                                <div className={`h-44 p-1 md:p-2  cursor-pointer relative`} style={{width:"280px"}} onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
+                                                    <div className='absolute  inset-0 py-2 md:px-2 z-0'>
+                                                    <img alt="gallery"  className={`  cursor-pointer  block object-cover object-center w-full h-full rounded `} 
+                                                        src={item.image_link} /> </div>
+                                                        <div className=" opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex
+                                                         justify-center items-center 
+                                                        text-sm text-white font-semibold">{item?.image_title}
+                                                        </div>
+                                                   <table>
+                                                        <tr className="py-2">
+                                                            <td >
+                                                                <span className={`pl-1 ${color?.text} text-sm`}>{item?.image_title}</span>
+
+                                                            </td>
+                                                            <td className="flex justify-end">
+                                                                <button
+                                                                    onClick={() => { setEditImage(1); setActionImage(item); setUpdateImage(item) }}
+                                                                    className={`text-gray-500   hover:${color?.text}
+                                                         cursor-pointer ${color?.hover} rounded`}>
+                                                                    <svg className=" h-5  w-5 font-semibold "
+                                                                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => { setdeleteImage(1); setActionImage(item) }} className={`text-gray-500   hover:${color?.text}
+                                                              cursor-pointer ${color?.hover} rounded`}>
+                                                                    <svg className="  w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                         )
+                                    })}
+                                </div>
+                            </div>
+                        </section>  */}
                     </div>
                 </div>
 
@@ -456,10 +511,10 @@ function Gallery() {
                             <div className={` ${color.tableheader} rounded-lg shadow relative`}>
                                 <div className="flex justify-between p-5 border-b rounded-t">
                                     <h3 className={`text-xl ${color?.text} font-semibold`}>
-                                        {actionEnlargeImage.image_title} {JSON.stringify(enlargeImage)}
+                                        {actionEnlargeImage.image_title}
                                     </h3>
                                     <button onClick={() => { setEditImage(1); setActionImage(actionEnlargeImage); setUpdateImage(actionEnlargeImage) }}
-                                        className={`text-gray-500   hover:${color?.text}
+                                        className={` px-1 mr-1  hover:${color?.sidebar} ${color?.text}
                                          cursor-pointer ${color?.hover} rounded`}>
                                         <svg className=" h-5  w-5 font-semibold "
                                             fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
