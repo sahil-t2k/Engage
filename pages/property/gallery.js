@@ -416,7 +416,7 @@ function Gallery() {
                                     <div className="block text-blueGray-600 text-xs font-bold " key={idx} >
                                         <div className='relative cursor-pointer' tooltip title="Click here to view, edit or delete." onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
                                         
-                                      <a className={`absolute text-lg  font-semibold inset-0 z-10 bg-white text-gray-900 text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
+                                      <a className={`absolute text-lg rounded-lg font-semibold inset-0 z-10 bg-white text-gray-900 text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
                                           <h1  className="tracking-wider" >{item?.image_title}</h1>
                                     
                                      </a>
