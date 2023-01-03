@@ -32,6 +32,7 @@ function Gallery() {
     const [allHotelDetails, setAllHotelDetails] = useState([])
     const [spinner, setSpinner] = useState(0)
     const [spin, setSpin] = useState(0)
+    const [selectedImage, setSelectedImage] = useState(false)
     const [gallery, setGallery] = useState([])
     const [image, setImage] = useState({})
     const [editImage, setEditImage] = useState(0)
@@ -414,16 +415,18 @@ function Gallery() {
                             {gallery?.images?.map((item, idx) => {
                                 return (
                                     <div className="block text-blueGray-600 text-xs font-bold " key={idx} >
-                                        <div className='relative cursor-pointer' tooltip title="Click here to view, edit or delete." onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
-                                        
-                                      <a className={`absolute text-lg rounded-lg font-semibold inset-0 z-10 bg-white text-gray-900 text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
-                                          <h1  className="tracking-wider" >{item?.image_title}</h1>
+                                        <div className='relative cursor-pointer' 
+                                        tooltip title="Click here to view or edit." >
+                                      {/* <a className={`absolute text-lg rounded-lg font-semibold inset-0 z-10 bg-white text-gray-900 flex flex-col
+                                       items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
+                                      
+                                          <h1  className="text-center" >{item?.image_title}</h1>
+                                     </a> */}
                                     
-                                     </a>
-                                     <a href="#" className="relative">
-                                       
-                                            <img className='rounded-lg' src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }} />
-                                          
+                                     <a href="#" className="relative flex" >
+                                     <input type="checkbox"  tooltip title="Click here to delete image." className="absolute bg-gray-50 border-gray-300 text-cyan-600  focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded" 
+                                      onClick={() => { setSelectedImage(!selectedImage) }}/>
+                                      <img className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }} onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}  />   
                                       </a>
                                         </div>
 
@@ -506,17 +509,15 @@ function Gallery() {
 
                 {/* Modal Image Enlarge */}
                 <div className={enlargeImage === 1 ? 'block' : 'hidden'}>
-                    <div className="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 backdrop-blur-xl sm:inset-0 bg-black/30 md:inset-0 z-50 flex justify-center items-center h-modal sm:h-full">
+                    <div className="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 backdrop-blur-xl   sm:inset-0 bg-black/30 md:inset-0 z-50 flex justify-center items-center h-modal sm:h-full">
                         <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
                             <div className={` ${color.tableheader} rounded-lg shadow relative`}>
                                 <div className="flex justify-between p-5 border-b rounded-t">
                                     <h3 className={`text-xl ${color?.text} font-semibold`}>
-                                        {actionEnlargeImage.image_title} {JSON.stringify(enlargeImage)}
+                                        {actionEnlargeImage.image_title}
                                     </h3>
                                     <button onClick={() => { setEditImage(1); setActionImage(actionEnlargeImage); setUpdateImage(actionEnlargeImage) }}
-
-                                        className={`text-gray-500   hover:${color?.text}
-
+                                        className={` px-1 mr-1  hover:${color?.sidebar} ${color?.text}
                                          cursor-pointer ${color?.hover} rounded`}>
                                         <svg className=" h-5  w-5 font-semibold "
                                             fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>

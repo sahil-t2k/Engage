@@ -179,8 +179,7 @@ const Table = (args) => {
                                                     <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
                                                         name="allSelect" checked={args?.gen?.filter(item => item?.isChecked !== true).length < 1}
                                                         onChange={(e) => { handlecheckbox(e); setViewDel(1); }}
-                                                        className="w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                                                        dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                                        className="bg-gray-50 border-gray-300 text-cyan-600  focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                 </div>
                                             </th> : <></>}
@@ -211,8 +210,8 @@ const Table = (args) => {
                                                         {args?.name != "Services" ?
                                                             <td className="p-4 w-4">
                                                                 <span className="flex items-center">
-                                                                    <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox" className="w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                                                        dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                                                    <input id="checkbox-1" aria-describedby="checkbox-1" type="checkbox"
+                                                                     className="bg-gray-50 border-gray-300 text-cyan-600  focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded" />
                                                                     <label htmlFor="checkbox-1" className="sr-only">checkbox</label>
                                                                 </span>
                                                             </td> : <></>}
@@ -379,8 +378,7 @@ const Table = (args) => {
                                                                     <input id="checkbox-1" name={item?.id} checked={item.isChecked || false}
                                                                         onChange={(e) => { handlecheckbox(e); setViewDel(1); }}
                                                                         aria-describedby="checkbox-1" type="checkbox"
-                                                                        className={`${args?.color?.greybackground} border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4
-                                                                     w-4 rounded`} />
+                                                                        className="bg-gray-50 border-gray-300 text-cyan-600  focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded" />
                                                                     <label htmlFor="checkbox-1" className="sr-only">checkbox</label>
                                                                 </span>
                                                             </td> : <></>}
