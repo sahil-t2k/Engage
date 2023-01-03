@@ -5,6 +5,23 @@ import '@testing-library/jest-dom'
 // Checking Basic Details page loading
 describe('Check if basicdetails page loads correctly', () => {
     beforeEach(() => {
+        // jest.mock('next/config',  () => ({
+        //     publicRuntimeConfig:'12.1.4'
+        //   }))
+
+        Object.defineProperty(window, "matchMedia", {
+            writable: true,
+            value: jest.fn().mockImplementation(query => ({
+              matches: false,
+              media: query,
+              onchange: null,
+              addListener: jest.fn(), // Deprecated
+              removeListener: jest.fn(), // Deprecated
+              addEventListener: jest.fn(),
+              removeEventListener: jest.fn(),
+              dispatchEvent: jest.fn(),
+            }))
+          });
         render(<BasicDetails />);
     });
 
