@@ -358,7 +358,7 @@ function Classic(args) {
                               {args?.allHotelDetails?.images?.map((resource, index) => {
                                  return (
                                     <Carousel.Item key={index} >
-                                       <img width="100%" style={{ height: "270px" }} src={resource?.image_link} /></Carousel.Item>
+                                       <img width="100%" style={{ height: "270px" }} className="rounded-lg" src={resource?.image_link} /></Carousel.Item>
                                  )
                               })}</Carousel></div>
                      </div>

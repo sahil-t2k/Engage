@@ -355,7 +355,7 @@ function ClassicDark(args) {
                               {args?.allHotelDetails?.images?.map((resource, index) => {
                                  return (
                                     <Carousel.Item key={index} >
-                                       <img width="100%" style={{ height: "270px" }} src={resource?.image_link} /></Carousel.Item>
+                                       <img width="100%" style={{ height: "270px" }} className="rounded-lg" src={resource?.image_link} /></Carousel.Item>
                                  )
                               })}</Carousel></div>
                      </div>
@@ -447,7 +447,7 @@ function ClassicDark(args) {
                                                       {resource?.room_images?.map((resource, index) => {
                                                          return (
                                                             <Carousel.Item key={index} >
-                                                               <img width="100%" style={{ height: "160px", marginBottom: "10px" }} src={resource?.image_link} />
+                                                               <img width="100%" className="rounded" style={{ height: "160px", marginBottom: "10px" }} src={resource?.image_link} />
                                                                <span className='text-gray-400' >{resource?.image_title}</span>
                                                             </Carousel.Item>
                                                          )
