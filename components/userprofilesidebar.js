@@ -109,15 +109,15 @@ const UserProfileSidebar = (args) => {
                 <div className={colorMode === true ? 'block' : 'hidden'}>
                   <ul className="py-2 space-y-2">
 
-                    <li onClick={() => args?.Sec("system")} className={`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}
-                    >
+                    <li onClick={() => args?.Sec("system")} className={`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
                       <input id="default-radio-1" type="radio" name="default-radio1"
                         checked={args?.colorToggle == "" || args?.colorToggle === undefined || args?.colorToggle === null || args?.colorToggle === "system"}
                         className="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
 
                       <a>{language?.systemprefrences}</a></li>
 
-                    <li onClick={() => args?.Sec("light")} className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
+                    <li onClick={() => args?.Sec("light")} className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal
+                     rounded-lg flex items-center p-2 pl-11`}>
                       <input id="default-radio-2" type="radio" name="default-radio2"
                         checked={args?.colorToggle == "false"} className="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
 

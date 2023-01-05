@@ -36,6 +36,7 @@ function Contact() {
   const [visible,setVisible]=useState(0) 
   const [deleteContact, setDeleteContact] = useState(0);
   const [contacts, setContacts] = useState([]);
+  const[mode,setMode] = useState()
   const [countryCode, setCountryCode] = useState({});
   const [view, setView] = useState(0);
   const [flag, setFlag] = useState([]);
@@ -43,32 +44,35 @@ function Contact() {
   const [deleteMultiple, setDeleteMultiple] = useState(0);
  
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        var locale = localStorage.getItem("Language");
-         colorToggle = localStorage.getItem("colorToggle");
-        if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
-          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
-       }
-       else if(colorToggle === "true" || colorToggle === "false") {
-         setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
-       } 
-        if (locale === "ar") {
-          language = arabic;
-        }
-        if (locale === "en") {
-          language = english;
-        }
-        if (locale === "fr") {
-          language = french;
-        }
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-      }
-    }
     firstfun();
   }, [])
+
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      var locale = localStorage.getItem("Language");
+       colorToggle = localStorage.getItem("colorToggle");
+      if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light);
+        setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+     }
+     else if(colorToggle === "true" || colorToggle === "false") {
+       setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+       setMode(colorToggle === "true" ? true : false)
+     } 
+      if (locale === "ar") {
+        language = arabic;
+      }
+      if (locale === "en") {
+        language = english;
+      }
+      if (locale === "fr") {
+        language = french;
+      }
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+    }
+  }
 
 
    useEffect(() => {
@@ -80,6 +84,23 @@ function Contact() {
     }
    }, []);
    
+   const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
+    }
+    else if (newColor === 'light') {
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", false)
+    }
+    else if (newColor === 'dark') {
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle", true)
+    }
+   firstfun();
+   Router.push('./contact')
+  }
 // Fetch Hotel Details
   const fetchHotelDetails = async () => {
     var genData = [];
@@ -331,7 +352,8 @@ function Contact() {
   return (
     <>
      <Title name={`Engage |  ${language?.contact}`}/>
-     <Header  color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
+     <Header  color={color} Primary={english?.Side} Type={currentLogged?.user_type} 
+     Sec={colorToggler} mode={mode} setMode={setMode}/>
      <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
      
       <div

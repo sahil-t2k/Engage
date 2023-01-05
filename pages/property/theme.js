@@ -18,11 +18,12 @@ var language;
 var currentUser;
 var currentProperty;
 var currentLogged;
+let colorToggle;
 
 function Theme() {
   /** State to store Current Property Details **/
   const [allHotelDetails, setAllHotelDetails] = useState([]);
-  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
+  const[mode,setMode] = useState()
   const [color, setColor] = useState({})
   const [allRooms, setAllRooms] = useState({});
   const [allPackages, setAllPackages] = useState({});
@@ -40,42 +41,44 @@ function Theme() {
   /** Router for Redirection **/
   const router = useRouter();
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        locale = localStorage.getItem("Language");
-        const colorToggle = localStorage.getItem("colorToggle");
-        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-        }
-        else if (colorToggle === "true" || colorToggle === "false") {
-          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-        }
-
-        {
-          if (locale === "ar") {
-            language = arabic;
-          }
-          if (locale === "en") {
-            language = english;
-          }
-          if (locale === "fr") {
-            language = french;
-          }
-
-        }
-        currentUser = JSON.parse(localStorage.getItem("Signin Details"));
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-        setLoc(window.location.origin)
-        setLang(locale)
-
-      }
-    }
     firstfun();
     router.push("./theme");
   }, [])
+
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      locale = localStorage.getItem("Language");
+      colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+      }
+      else if (colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        setMode(colorToggle === "true" ? true : false)
+      }
+
+      {
+        if (locale === "ar") {
+          language = arabic;
+        }
+        if (locale === "en") {
+          language = english;
+        }
+        if (locale === "fr") {
+          language = french;
+        }
+
+      }
+      currentUser = JSON.parse(localStorage.getItem("Signin Details"));
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+      setLoc(window.location.origin)
+      setLang(locale)
+
+    }
+  }
 
 
 
@@ -205,14 +208,30 @@ function Theme() {
     localStorage.setItem("ThemeName", item);
   }
 
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
+    }
+    else if (newColor === 'light') {
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", false)
+    }
+    else if (newColor === 'dark') {
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle", true)
+    }
+   firstfun();
+   Router.push('./theme')
+  }
   return (
     <>
 
-      <Header color={color} Primary={english?.Side} />
+      <Header color={color} Primary={english?.Side} Sec={colorToggler} mode={mode} setMode={setMode} />
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
       {/* Body */}
-      <div id="main-content" className={`${color?.greybackground}  pt-24 relative overflow-y-auto lg:ml-64`}
-      >
+      <div id="main-content" className={`${color?.greybackground}  pt-24 relative overflow-y-auto lg:ml-64`}>
         {/* Navbar */}
         <nav className="flex mb-5 px-4 ml-4" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-2">
@@ -352,6 +371,7 @@ function Theme() {
 
 
       </div>
+      
       {/* Toast Container */}
       <ToastContainer position="top-center"
         autoClose={5000}

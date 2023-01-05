@@ -29,6 +29,7 @@ function Services() {
     const [edit, setEdit] = useState(0)
     const [color, setColor] = useState({})
     const [view, setView] = useState(0);
+    const[mode,setMode] = useState()
     const [modified, setModified] = useState([])
     const [addEdit, setAddEdit] = useState(0)
     const [addDel, setAddDel] = useState(0)
@@ -37,32 +38,35 @@ function Services() {
     const [gene, setGene] = useState([])
 
     useEffect(() => {
-        const firstfun = () => {
-            if (typeof window !== 'undefined') {
-                var locale = localStorage.getItem("Language");
-                colorToggle = localStorage.getItem("colorToggle");
-                if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
-                  window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
-               }
-               else if(colorToggle === "true" || colorToggle === "false") {
-                 setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
-               } 
-               { if (locale === "ar") {
-                    language = arabic;
-                }
-                if (locale === "en") {
-                    language = english;
-                }
-                if (locale === "fr") {
-                    language = french;
-                }}
-                /** Current Property Details fetched from the local storage **/
-                currentProperty = JSON.parse(localStorage.getItem("property"));
-                currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-            }
-        }
         firstfun();
     }, [])
+
+    const firstfun = () => {
+        if (typeof window !== 'undefined') {
+            var locale = localStorage.getItem("Language");
+            colorToggle = localStorage.getItem("colorToggle");
+            if(colorToggle === "" || colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
+              window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+              setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+            }
+           else if(colorToggle === "true" || colorToggle === "false") {
+             setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+             setMode(colorToggle === "true" ? true : false)
+           } 
+           { if (locale === "ar") {
+                language = arabic;
+            }
+            if (locale === "en") {
+                language = english;
+            }
+            if (locale === "fr") {
+                language = french;
+            }}
+            /** Current Property Details fetched from the local storage **/
+            currentProperty = JSON.parse(localStorage.getItem("property"));
+            currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+        }
+    }
 
     /* Function call to fetch Current Property Details when page loads */
     const fetchHotelDetails = async () => {
@@ -108,6 +112,23 @@ function Services() {
           }
     }, [])
 
+    const colorToggler = (newColor) => {
+        if (newColor === 'system') {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+          : setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", newColor)
+        }
+        else if (newColor === 'light') {
+          setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", false)
+        }
+        else if (newColor === 'dark') {
+          setColor(colorFile?.dark)
+          localStorage.setItem("colorToggle", true)
+        }
+       firstfun();
+       Router.push('./services')
+      }
 
        
     /* Function to edit services*/
@@ -163,7 +184,7 @@ function Services() {
 
     return (
         <>
-            <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
+            <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
             <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
             <div id="main-content"
                 className={`${color?.whitebackground} min-h-screen pt-24 relative overflow-y-auto lg:ml-64`}>

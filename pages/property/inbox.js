@@ -10,9 +10,11 @@ import arabic from "../../components/Languages/ar";
 import Title from '../../components/title';
 var language;
 var currentLogged;
+let colorToggle;
 
 function Inbox() {
     const [color, setColor] = useState({})
+    const[mode,setMode] = useState()
 
     useEffect(() => {
         firstfun();
@@ -21,14 +23,16 @@ function Inbox() {
     const firstfun = () => {
         if (typeof window !== 'undefined') {
             var locale = localStorage.getItem("Language");
-            const colorToggle = localStorage.getItem("colorToggle");
+            colorToggle = localStorage.getItem("colorToggle");
            
             if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
                 window.matchMedia("(prefers-color-scheme:dark)").matches === true ?
-                 setColor(colorFile?.dark) : setColor(colorFile?.light)
+                 setColor(colorFile?.dark) : setColor(colorFile?.light);
+                 setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
             }
             else if (colorToggle === "true" || colorToggle === "false") {
                 setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+                setMode(colorToggle === "true" ? true : false)
                 
             }
             {
@@ -46,7 +50,23 @@ function Inbox() {
         }
     }
 
-
+    const colorToggler = (newColor) => {
+        if (newColor === 'system') {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+          : setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", newColor)
+        }
+        else if (newColor === 'light') {
+          setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", false)
+        }
+        else if (newColor === 'dark') {
+          setColor(colorFile?.dark)
+          localStorage.setItem("colorToggle", true)
+        }
+       firstfun();
+       Router.push('./inbox')
+      }
     const readMessage = () => {
         Router.push("./inbox/readmessage")
     }
@@ -54,7 +74,7 @@ function Inbox() {
         <>
             <Title name={`Engage |  ${language?.inbox}`} />
 
-            <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
+            <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
             <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
 
             <div id="main-content" className={`${color?.whitebackground} min-h-screen pt-20  relative overflow-y-auto lg:ml-64`}>
@@ -62,7 +82,7 @@ function Inbox() {
 
                     <div className="flex space-x-1 pl-0 sm:pl-4  sm:mt-0">
                         <div className="border-r   border-gray-200">
-                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" mr-4 -ml-1 w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                            <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" mr-4 -ml-1 w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                           dark:ring-offset-gray-800 focus:ring-2 mt-2  dark:bg-gray-700 dark:border-gray-600"/>
                             <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                         </div>
@@ -109,7 +129,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
@@ -118,7 +138,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
@@ -134,7 +154,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
@@ -143,7 +163,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
@@ -159,7 +179,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
@@ -168,7 +188,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
@@ -184,7 +204,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
@@ -193,7 +213,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
@@ -210,7 +230,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
@@ -219,7 +239,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div className={`${color?.tabletext} text-md pr-6 whitespace-nowrap`}>
@@ -236,7 +256,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
@@ -245,7 +265,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
@@ -262,7 +282,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
@@ -271,7 +291,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
@@ -288,7 +308,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
@@ -297,7 +317,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
@@ -314,7 +334,7 @@ function Inbox() {
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded-full text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
+                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
                  dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
@@ -323,7 +343,7 @@ function Inbox() {
                                             </td>
                                             <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
                                                 <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded-full" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
+                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
                                                 </div>
 
                                                 <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>

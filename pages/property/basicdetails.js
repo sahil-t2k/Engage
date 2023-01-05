@@ -22,7 +22,7 @@ var currentLogged;
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const logger = require("../../services/logger");
-
+let colorToggle;
 
 export default function BasicDetails() {
   const router = useRouter();
@@ -32,40 +32,45 @@ export default function BasicDetails() {
   const [flag, setFlag] = useState([]);
   const [color, setColor] = useState({})
   const [error, setError] = useState({})
+  const[mode,setMode] = useState()
+  const [modeChanger, setModeChanger] = useState("")
 
 
   /** Fetching language from the local storage **/
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        var locale = localStorage.getItem("Language");
-        const colorToggle = localStorage.getItem("colorToggle");
-        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-        }
-        else if (colorToggle === "true" || colorToggle === "false") {
-          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-        }
-        {
-          if (locale === "ar") {
-            language = arabic;
-          }
-          if (locale === "en") {
-            language = english;
-          }
-          if (locale === "fr") {
-            language = french;
-
-          }
-        }
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-
-      }
-    }
     firstfun();
   }, [])
+  
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      var locale = localStorage.getItem("Language");
+      colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+      }
+      else if (colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        setMode(colorToggle === "true" ? true : false)
+      }
+      {
+        if (locale === "ar") {
+          language = arabic;
+        }
+        if (locale === "en") {
+          language = english;
+        }
+        if (locale === "fr") {
+          language = french;
+
+        }
+      }
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+
+    }
+  }
 
   const fetchBasicDetails = async () => {
     const url = `/api/${currentProperty.address_province.replace(
@@ -94,7 +99,23 @@ export default function BasicDetails() {
 
   }, []);
 
-
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
+    }
+    else if (newColor === 'light') {
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", false)
+    }
+    else if (newColor === 'dark') {
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle", true)
+    }
+   firstfun();
+   router.push('./basicdetails')
+  }
 
   const current = new Date();
   let month = current.getMonth() + 1;
@@ -197,7 +218,7 @@ export default function BasicDetails() {
       <Title name={`Engage |  ${language?.basicdetails}`} />
       <div>
 
-        <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} />
+        <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
         <Sidebar color={color} Primary={english.Side} Type={currentLogged?.user_type} />
 
         <div id="main-content"

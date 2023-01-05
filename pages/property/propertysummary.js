@@ -14,6 +14,7 @@ import arabic from "../../components/Languages/ar";
 import colorFile from "../../components/color";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import Carousel from 'better-react-carousel';
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -30,12 +31,14 @@ var country;
 var currentProperty;
 var currentLogged;
 var i = 0;
+let colorToggle;
 
 function PropertySummary() {
   /** State to store Current Property Details **/
   const [allHotelDetails, setAllHotelDetails] = useState([]);
-  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
+  const[mode,setMode] = useState()
+  const [modeChanger, setModeChanger] = useState("")
    
  /** Router for Redirection **/
   const router = useRouter();
@@ -57,10 +60,13 @@ function PropertySummary() {
     var locale = localStorage.getItem("Language");
     const colorToggle =localStorage.getItem("colorToggle");
     if(colorToggle === "" ||colorToggle === undefined ||  colorToggle ===null ||colorToggle === "system"){
-       window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) 
+       window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) :setColor(colorFile?.light) ;
+       setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true
+       : false);
     }
     else if(colorToggle === "true" || colorToggle === "false") {
       setColor(colorToggle=== "true" ? colorFile?.dark: colorFile?.light);
+      setMode(colorToggle === "true" ? true : false)
     }
     {
       if (locale === "ar") {
@@ -104,11 +110,29 @@ function PropertySummary() {
         });
       }
 
+      const colorToggler = (newColor) => {
+        if (newColor === 'system') {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+          : setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", newColor)
+        }
+        else if (newColor === 'light') {
+          setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", false)
+        }
+        else if (newColor === 'dark') {
+          setColor(colorFile?.dark)
+          localStorage.setItem("colorToggle", true)
+        }
+       firstfun();
+       router.push('./propertysummary')
+      }
+
   return (
     <>
      <Title name={`Engage |  ${language?.propertysummary}`}/>
      <div>
-      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
+      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type}  Sec={colorToggler} mode={mode} setMode={setMode}/>
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
       {/* Body */}
       <div id="main-content"
@@ -371,32 +395,41 @@ function PropertySummary() {
                 </span>
               </div>
             </div>
-            <div className="flex-wrap container ">
-              <Swiper
-                centeredSlides={true}
-                          autoplay={{
-                           delay: 1000,
-                           disableOnInteraction: false,
-                              }}
-                              pagination={{
-                                 clickable: true,
-                              }}
-                              modules={[Autoplay, Pagination, Navigation]}
-                              className="mySwiper">
-                           {allHotelDetails?.images?.map((resource, index) => {
-                              return (<SwiperSlide key={index}>
-                                 <img
-                                    className="object-fill w-full h-96"
-                                    src={resource?.image_link}
-                                    alt="image slide 1" 
-                                 />
-
-                              </SwiperSlide>
-                              )
-
-                           })}
-                        </Swiper>
-            </div>
+                        <Carousel cols={1} rows={1} gap={10} autoPlay={1000} loop={true} 
+                             responsiveLayout={ [
+                              {
+                                breakpoint: 480,
+                                cols: 1,
+                                rows: 1,
+                                gap: 10,
+                                loop: true,
+                                autoplay: 1000
+                              },
+                              {
+                                 breakpoint: 810,
+                                 cols: 2,
+                                 rows: 1,
+                                 gap: 10,
+                                 loop: true,
+                                 autoplay: 1000
+                               },
+                               {
+                                 breakpoint: 1020,
+                                 cols: 2,
+                                 rows: 1,
+                                 gap: 10,
+                                 loop: true,
+                                 autoplay: 1000
+                               },
+                            ]}
+                            >
+                              {allHotelDetails?.images?.map((resource, index) => {
+                                 return (
+                                    <Carousel.Item key={index} >
+                                       <img width="100%" style={{ height: "350px" }} className="rounded-lg" src={resource?.image_link} /></Carousel.Item>
+                                 )
+                              })}</Carousel>
+            
           </div>
         </div>
 

@@ -205,9 +205,10 @@ function UserProfileSettings() {
 
     <>
       <Title name={`Engage |  ${language?.propertysummary}`} />
-      <div>
+      
         <UserProfileHeader color={color} Primary={color?.name} Sec={colorToggler} mode={mode} setMode={setMode} />
         <UserProfileSidebar color={color} Primary={color?.name} Sec={colorToggler} colorToggle={colorToggle} />
+       
         {/* Body */}
         <div id="main-content"
           className={`${color?.greybackground} min-h-screen px-4 py-2 pt-24 relative overflow-y-auto lg:ml-64`}>
@@ -254,7 +255,7 @@ function UserProfileSettings() {
           {/* Change Password */}
           <div className={`${color?.whitebackground} shadow rounded-lg px-12 my-2 sm:p-6 xl:p-8  2xl:col-span-2`}>
 
-            <h3 className={`${color?.text} text-base font-bold  mb-4`}>
+            <h3 className={`${color?.text} text-base font-bold pt-4 mb-4`}>
               {language?.changepassword}
             </h3>
 
@@ -359,7 +360,7 @@ function UserProfileSettings() {
           <div className={`${color?.greybackground}  grid  lg:grid-cols-2 md:grid-cols-1 my-2 sm:grid-cols-1 gap-3`}>
 
             <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
-              <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
+              <h3 className={`${color?.text} text-xl pt-4 font-bold  mb-1`}>
                 Alerts & Notifications
               </h3>
               <p className={`${color?.textgray} text-sm  font-medium mb-2`}>You can set up enGage to get notifications</p>
@@ -369,7 +370,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGage news, announcements, and product updates</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -380,6 +382,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t border-gray-200 my-2'></div>
 
@@ -389,7 +392,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get important notifications about you or activity you`ve missed</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -400,6 +404,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
@@ -409,7 +414,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get an email when a Dribbble Meetup is posted close to my location</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -420,6 +426,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2  border-gray-200'></div>
 
@@ -429,7 +436,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Get enGagage news, announcements, and product updates</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -440,6 +448,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t border-gray-200'></div>
               <div id="btn" className="flex mt-2 items-center justify-end ml-auto mr-0 ">
@@ -455,7 +464,7 @@ function UserProfileSettings() {
             </div>
 
             <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
-              <h3 className={`${color?.text} text-xl font-bold  mb-1`}>
+              <h3 className={`${color?.text} text-xl font-bold pt-4  mb-1`}>
                 Email Notifications
               </h3>
               <p className={`${color?.textgray} text-sm font-medium mb-2`}>You can set up enGage to get email notifications </p>
@@ -465,7 +474,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send an email reminding me to rate an item a week after purchase</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -476,6 +486,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
@@ -485,7 +496,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send user and product notifications for you</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex  relative  cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -495,7 +507,7 @@ function UserProfileSettings() {
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-                </label>
+                </label></div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
@@ -505,7 +517,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone comments on one of my items</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+               <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex pb-6 relative  cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -515,7 +528,7 @@ function UserProfileSettings() {
                 peer-checked:after:border-white a fter:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
-                </label>
+                </label></div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap border-t my-2 border-gray-200'></div>
 
@@ -525,7 +538,8 @@ function UserProfileSettings() {
               </div>
               <div className='flex'>
                 <span className={`${color?.textgray} text-base ml-2  font-medium`}>Send me an email when someone leaves a review with their rating</span>
-                <label className="inline-flex pb-6 relative items-center justify-end ml-auto cursor-pointer">
+                <div className='items-center justify-end ml-auto'>
+                <label className="inline-flex relative cursor-pointer">
 
                   <input type="checkbox" className="sr-only peer" />
                   <div
@@ -536,6 +550,7 @@ function UserProfileSettings() {
                   after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5
                    after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
                 </label>
+                </div>
               </div>
               <div className='hover:bg-gray-100 divide-y mt-2 whitespace-nowrap my-2 border-t border-gray-200'></div>
               <div id="btn" className="flex mt-2 items-center justify-end ml-auto mr-0 ">
@@ -552,6 +567,7 @@ function UserProfileSettings() {
             </div>
           </div>
         </div>
+
         <ToastContainer position="top-center"
             autoClose={5000}
             hideProgressBar={false}
@@ -561,8 +577,7 @@ function UserProfileSettings() {
             pauseOnFocusLoss
             draggable
             pauseOnHover />
-      </div>
-     
+      
     </>
 
 

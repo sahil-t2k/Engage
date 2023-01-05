@@ -9,9 +9,10 @@ import arabic from "../../../components/Languages/ar";
 import Title from '../../../components/title';
 var language;
 var currentLogged;
+let colorToggle;
 
 function ReadMessage() {
-    const [darkModeSwitcher, setDarkModeSwitcher] = useState()
+    const[mode,setMode] = useState()
     const [color, setColor] = useState({})
     const[reply,setReply] = useState(false)
 
@@ -22,14 +23,16 @@ function ReadMessage() {
     const firstfun = () => {
         if (typeof window !== 'undefined') {
             var locale = localStorage.getItem("Language");
-            const colorToggle = localStorage.getItem("colorToggle");
+             colorToggle = localStorage.getItem("colorToggle");
            
             if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
                 window.matchMedia("(prefers-color-scheme:dark)").matches === true ?
-                 setColor(colorFile?.dark) : setColor(colorFile?.light)
+                 setColor(colorFile?.dark) : setColor(colorFile?.light);
+                 setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
             }
             else if (colorToggle === "true" || colorToggle === "false") {
                 setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+                setMode(colorToggle === "true" ? true : false)
                 
             }
             {
@@ -51,14 +54,29 @@ function ReadMessage() {
     const inbox = () => {
         Router.push("../inbox")
     }
-    const replyMessage = () => {
-        Router.push("./replymessage")
-    }
+    
+    const colorToggler = (newColor) => {
+        if (newColor === 'system') {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+          : setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", newColor)
+        }
+        else if (newColor === 'light') {
+          setColor(colorFile?.light)
+          localStorage.setItem("colorToggle", false)
+        }
+        else if (newColor === 'dark') {
+          setColor(colorFile?.dark)
+          localStorage.setItem("colorToggle", true)
+        }
+       firstfun();
+       Router.push('./readmessage')
+      }
     return (
         <>
             <Title name={`Engage |  ${language?.inbox}`} />
 
-            <Header color={color} Primary={english?.Side1} Type={currentLogged?.user_type} />
+            <Header color={color} Primary={english?.Side1} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
             <Sidebar color={color} Primary={english?.Side1} Type={currentLogged?.user_type} />
 
             <div id="main-content" className={`${color?.whitebackground} min-h-screen pt-24  relative overflow-y-auto lg:ml-64`}>

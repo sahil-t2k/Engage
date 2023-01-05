@@ -295,9 +295,7 @@ function Classic(args) {
                            delay: 1000,
                            disableOnInteraction: false,
                               }}
-                              pagination={{
-                                 clickable: true,
-                              }}
+                             
                               modules={[Autoplay, Pagination, Navigation]}
                               className="mySwiper">
                            {args?.allHotelDetails?.images?.map((resource, index) => {

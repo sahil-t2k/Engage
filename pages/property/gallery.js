@@ -22,12 +22,13 @@ const logger = require("../../services/logger");
 var language;
 var currentProperty;
 var currentLogged;
+let checked;
+let colorToggle;
 import Router from 'next/router';
 
 
 function Gallery() {
     const [visible, setVisible] = useState(0)
-    const [darkModeSwitcher, setDarkModeSwitcher] = useState()
     const [color, setColor] = useState({})
     const [allHotelDetails, setAllHotelDetails] = useState([])
     const [spinner, setSpinner] = useState(0)
@@ -35,6 +36,7 @@ function Gallery() {
     const [selectedImage, setSelectedImage] = useState(false)
     const [gallery, setGallery] = useState([])
     const [image, setImage] = useState({})
+    const [images, setImages] = useState([])
     const [editImage, setEditImage] = useState(0)
     const [deleteImage, setdeleteImage] = useState(0)
     const [actionImage, setActionImage] = useState({})
@@ -43,40 +45,46 @@ function Gallery() {
     const [addImage, setAddImage] = useState(0)
     const [addURLImage, setAddURLImage] = useState(0)
     const [enlargeImage, setEnlargeImage] = useState(0)
+    const [enlargedImage, setEnlargedImage] = useState()
     const [error, setError] = useState({})
+    const [mode, setMode] = useState()
+    const [indexImage, setIndexImage] = useState()
     const [actionEnlargeImage, setActionEnlargeImage] = useState({})
 
     useEffect(() => {
-        const firstfun = () => {
-            if (typeof window !== 'undefined') {
-                var locale = localStorage.getItem("Language");
-                const colorToggle = localStorage.getItem("colorToggle");
-                if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-                    window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-                }
-                else if (colorToggle === "true" || colorToggle === "false") {
-                    setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-                }
-
-                {
-                    if (locale === "ar") {
-                        language = arabic;
-                    }
-                    if (locale === "en") {
-                        language = english;
-                    }
-                    if (locale === "fr") {
-                        language = french;
-                    }
-                }
-                /** Current Property Details fetched from the local storage **/
-                currentProperty = JSON.parse(localStorage.getItem("property"));
-                currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-
-            }
-        }
         firstfun();
     }, [])
+
+    const firstfun = () => {
+        if (typeof window !== 'undefined') {
+            var locale = localStorage.getItem("Language");
+            colorToggle = localStorage.getItem("colorToggle");
+            if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+                window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+                setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+            }
+            else if (colorToggle === "true" || colorToggle === "false") {
+                setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+                setMode(colorToggle === "true" ? true : false)
+            }
+
+            {
+                if (locale === "ar") {
+                    language = arabic;
+                }
+                if (locale === "en") {
+                    language = english;
+                }
+                if (locale === "fr") {
+                    language = french;
+                }
+            }
+            /** Current Property Details fetched from the local storage **/
+            currentProperty = JSON.parse(localStorage.getItem("property"));
+            currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+
+        }
+    }
 
 
     useEffect(() => {
@@ -88,6 +96,23 @@ function Gallery() {
         }
     }, []);
 
+    const colorToggler = (newColor) => {
+        if (newColor === 'system') {
+            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+                : setColor(colorFile?.light)
+            localStorage.setItem("colorToggle", newColor)
+        }
+        else if (newColor === 'light') {
+            setColor(colorFile?.light)
+            localStorage.setItem("colorToggle", false)
+        }
+        else if (newColor === 'dark') {
+            setColor(colorFile?.dark)
+            localStorage.setItem("colorToggle", true)
+        }
+        firstfun();
+        Router.push('./gallery')
+    }
 
     /* Function call to fetch Current Property Details when page loads */
     const fetchHotelDetails = async () => {
@@ -99,6 +124,13 @@ function Gallery() {
         axios.get(url)
             .then((response) => {
                 setGallery(response.data);
+                setImages(response.data?.images);
+                setEnlargedImage(response.data?.images?.map((item, idx) => {
+                    return ({
+                        image_id: item?.image_id,
+                        image_title: item?.image_title, image_link: item?.image_link, image_idx: idx, image_description: item?.image_description
+                    })
+                }))
                 logger.info("url  to fetch property details hitted successfully")
                 setVisible(1)
             })
@@ -240,7 +272,8 @@ function Gallery() {
                         });
                         document.getElementById('editImage').reset();
                         fetchHotelDetails();
-                        setAllHotelDetails([])
+                        setAllHotelDetails([]);
+                        setEnlargeImage(0)
                         setActionImage({});
                         setError({});
                         Router.push("./gallery");
@@ -324,11 +357,73 @@ function Gallery() {
             setError(result)
         }
     }
+
+
+    const handlecheckbox = (e) => {
+        console.log(images.length)
+        const { name, checked } = e.target;
+
+        let tempCon = images.map((item) =>
+            item.image_id === name ? { ...item, isChecked: checked } : item
+        );
+        setImages(tempCon)
+        console.log(images)
+
+    }
+
+    // Select multiple delete images
+    const allDelete = async () => {
+        checked = images.filter(i => i.isChecked === true).map(j => { return (j.image_id) })
+        setdeleteImage(1)
+    }
+
+    /* Function Multiple Delete*/
+    function deleteMultiple() {
+        const data = checked?.map((item) => { return ({ image_id: item, property_id: currentProperty?.property_id }) })
+        setSpinner(1);
+        const imagedata = data;
+        const finalImages = { images: imagedata };
+        axios
+            .post(`/api/deleteall/images`, finalImages, {
+                headers: { "content-type": "application/json" },
+            })
+            .then((response) => {
+                setSpinner(0)
+                toast.success("API: Images delete success.", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                fetchHotelDetails();
+                Router.push("./gallery");
+                setdeleteImage(0);
+            })
+            .catch((error) => {
+                setSpinner(0)
+                toast.error("API:Images add error.", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+            });
+
+
+    }
+
     return (
         <>
             <Title name={`Engage |  ${language?.gallery}`} />
             {/* Header   */}
-            <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} />
+            <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode} />
             {/* Sidebar */}
             <Sidebar color={color} Primary={english.Side} Type={currentLogged?.user_type} />
 
@@ -387,7 +482,7 @@ function Gallery() {
                                 <a href="#" className={`${color?.textgray} hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"></path></svg>
                                 </a>
-                                <a href="#" className={`${color?.textgray} hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
+                                <a onClick={allDelete} className={`${color?.textgray} hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
                                 </a>
                                 <a href="#" className={`${color?.textgray} hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
@@ -412,48 +507,26 @@ function Gallery() {
                     </div>
                     <div className={visible === 1 ? 'block' : 'hidden'}>
                         <div className="flex-wrap container grid sm:grid-cols-2 py-4 lg:grid-cols-3 gap-4">
-                            {gallery?.images?.map((item, idx) => {
+                            {images?.map((item, idx) => {
+
                                 return (
-                                    <div className="block text-blueGray-600 text-xs font-bold " key={idx} >
-                                        <div className='relative cursor-pointer' 
-                                        tooltip title="Click here to view or edit." >
-                                      {/* <a className={`absolute text-lg rounded-lg font-semibold inset-0 z-10 bg-white text-gray-900 flex flex-col
-                                       items-center justify-center opacity-0 hover:opacity-100 bg-opacity-40 duration-300`}>
-                                      
-                                          <h1  className="text-center" >{item?.image_title}</h1>
-                                     </a> */}
-                                    
-                                     <a href="#" className="relative flex" >
-                                     <input type="checkbox"  tooltip title="Click here to delete image." className="absolute bg-gray-50 border-gray-300 text-cyan-600  focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded" 
-                                      onClick={() => { setSelectedImage(!selectedImage) }}/>
-                                      <img className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }} onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}  />   
-                                      </a>
-                                        </div>
+                                    <>
+                                        <div className="block text-blueGray-600 text-xs font-bold " key={idx}  >
+                                            <div className='relative cursor-pointer'
+                                                tooltip title="Click here to view or edit." >
+                                                <a href="#" className="relative flex" >
+                                                    <input type="checkbox" id={item?.image_id}  tooltip title="Click here to delete image."
+                                                        name={item?.image_id} checked={item.isChecked || false}
+                                                        onChange={(e) => { handlecheckbox(e) }} className="bottom-0 right-0 cursor-pointer absolute bg-gray-30 opacity-30 m-1 border-gray-300 text-cyan-600  checked:opacity-100 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded-full"
+                                                        onClick={() => { setSelectedImage(!selectedImage) }} />
+                                                    <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }}
+                                                        onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item); 
+                                                         setIndexImage(idx); }} />
+                                                </a>
+                                            </div>
 
-                                     
-                                        {/* <table>
-                                            <tr className="pt-1">
-                                                <td >
-                                                    <span className={`pl-1 ${color?.text} text-sm`}>{item?.image_title}</span>
 
-                                                </td>
-                                                <td className="flex justify-end">
-                                                    <button
-                                                        onClick={() => { setEditImage(1); setActionImage(item); setUpdateImage(item) }}
-                                                        className={`text-gray-500   hover:${color?.text}
-                                                         cursor-pointer ${color?.hover} rounded`}>
-                                                        <svg className=" h-5  w-5 font-semibold "
-                                                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
-                                                    </button>
-                                                    <button
-                                                        onClick={() => { setdeleteImage(1); setActionImage(item) }} className={`text-gray-500   hover:${color?.text}
-                                                              cursor-pointer ${color?.hover} rounded`}>
-                                                        <svg className="  w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table> */}
-                                    </div>
+                                        </div></>
                                 )
                             }
                             )
@@ -461,60 +534,32 @@ function Gallery() {
 
                         </div>
 
-                        {/* <section className="overflow-hidden text-gray-700 ">
-                            <div className="container  mx-auto lg:pt-8">
-                                <div className="flex flex-wrap -m-1 ">
-                                    {gallery?.images?.map((item, idx) => {
-                                        return (
-                                            <div className="flex flex-wrap sm:1/6 md:2/3 lg:w-2/6" key={idx}>
-                                                <div className={`h-44 p-1 md:p-2  cursor-pointer relative`} style={{width:"280px"}} onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item) }}>
-                                                    <div className='absolute  inset-0 py-2 md:px-2 z-0'>
-                                                    <img alt="gallery"  className={`  cursor-pointer  block object-cover object-center w-full h-full rounded `} 
-                                                        src={item.image_link} /> </div>
-                                                        <div className=" opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex
-                                                         justify-center items-center 
-                                                        text-sm text-white font-semibold">{item?.image_title}
-                                                        </div>
-                                                   <table>
-                                                        <tr className="py-2">
-                                                            <td >
-                                                                <span className={`pl-1 ${color?.text} text-sm`}>{item?.image_title}</span>
 
-                                                            </td>
-                                                            <td className="flex justify-end">
-                                                                <button
-                                                                    onClick={() => { setEditImage(1); setActionImage(item); setUpdateImage(item) }}
-                                                                    className={`text-gray-500   hover:${color?.text}
-                                                         cursor-pointer ${color?.hover} rounded`}>
-                                                                    <svg className=" h-5  w-5 font-semibold "
-                                                                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd"></path></svg>
-                                                                </button>
-                                                                <button
-                                                                    onClick={() => { setdeleteImage(1); setActionImage(item) }} className={`text-gray-500   hover:${color?.text}
-                                                              cursor-pointer ${color?.hover} rounded`}>
-                                                                    <svg className="  w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                         )
-                                    })}
-                                </div>
-                            </div>
-                        </section>  */}
                     </div>
                 </div>
 
                 {/* Modal Image Enlarge */}
                 <div className={enlargeImage === 1 ? 'block' : 'hidden'}>
+
                     <div className="overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 backdrop-blur-xl   sm:inset-0 bg-black/30 md:inset-0 z-50 flex justify-center items-center h-modal sm:h-full">
+                        <div className='flex justify-start ml-2 mr-auto'>
+                            <svg className={indexImage <= 0  ? 'hidden' : 'block cursor-pointer' } xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 0 24 24" width="28px"
+                                onClick={() => {
+                                    setActionEnlargeImage((enlargedImage.filter(i => i.image_idx === indexImage - 1).map(j => {
+                                        return ({
+                                            image_id: j?.image_id, image_title: j?.image_title, image_idx: j?.image_idx, image_description: j?.image_description,
+                                            image_link: j?.image_link
+                                        })
+                                    }))?.[0]); setIndexImage(indexImage - 1);
+                                }}
+                                fill="#ffffff"><path d="M0 0h24v24H0V0z" fill="none" opacity=".87" /><path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z" /></svg>
+                        </div>
+
                         <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
                             <div className={` ${color.tableheader} rounded-lg shadow relative`}>
                                 <div className="flex justify-between p-5 border-b rounded-t">
                                     <h3 className={`text-xl ${color?.text} font-semibold`}>
-                                        {actionEnlargeImage.image_title}
+                                        {actionEnlargeImage?.image_title}
                                     </h3>
                                     <button onClick={() => { setEditImage(1); setActionImage(actionEnlargeImage); setUpdateImage(actionEnlargeImage) }}
                                         className={` px-1 mr-1  hover:${color?.sidebar} ${color?.text}
@@ -528,9 +573,24 @@ function Gallery() {
                                      p-1.5 ml-auto inline-flex items-center`} data-modal-toggle="user-modal">
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                     </button> </div>
-                                <div> <img src={actionEnlargeImage.image_link} alt='pic_room' style={{ height: "350px", width: "650px" }} />
+                                <div>
+
+                                    <img src={actionEnlargeImage?.image_link} alt='pic_room' style={{ height: "350px", width: "650px" }} />
                                 </div>
                             </div>
+                        </div>
+                        <div className='flex justify-end mr-2 ml-auto'>
+                            <svg xmlns="http://www.w3.org/2000/svg" className={indexImage >=  images?.length-1  ? 'hidden' : 'block cursor-pointer' } 
+                            onClick={() => {
+                                setActionEnlargeImage((enlargedImage.filter(i => i.image_idx === indexImage + 1).map(j => {
+                                    return ({
+                                        image_id: j?.image_id, image_title: j?.image_title, image_idx: j?.image_idx, image_description: j?.image_description,
+                                        image_link: j?.image_link
+                                    })
+                                }))?.[0]); setIndexImage(indexImage + 1);
+                            }}
+                                enableBackground="new 0 0 24 24" height="32px" viewBox="0 0 24 24" width="28px" fill="#ffffff"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><polygon points="6.23,20.23 8,22 18,12 8,2 6.23,3.77 14.46,12" /></g></svg>
+
                         </div>
                     </div>
                 </div>
@@ -560,6 +620,7 @@ function Gallery() {
                                     <form id='editImage'>
                                         <div className="grid grid-cols-6 gap-6">
                                             <div className="col-span-6 sm:col-span-3">
+
                                                 <img src={actionImage?.image_link} alt='Property Image' height={"200"} width={"400"} />
                                             </div>
                                             <div className="col-span-6 sm:col-span-3">
@@ -648,10 +709,7 @@ function Gallery() {
                                             setError({});
 
                                         }}
-                                        className="text-gray-400 bg-transparent
-                                 hover:bg-gray-200 
-                                 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                    >
+                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" >
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                     </button>
@@ -869,7 +927,7 @@ function Gallery() {
 
                                     {spinner === 0 ?
                                         <>
-                                            <Button Primary={language?.Delete} onClick={() => submitDelete()} />
+                                            <Button Primary={language?.Delete} onClick={() => deleteMultiple()} />
                                             <Button Primary={language?.Cancel} onClick={() => setdeleteImage(0)} />
                                         </>
                                         :

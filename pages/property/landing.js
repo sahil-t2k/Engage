@@ -31,7 +31,6 @@ const Landing = () => {
   const [ownerdata, setOwnerdata] = useState([]);
   const [gen, setGen] = useState([])
   const [visible, setVisible] = useState(0);
-  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
   const [modeChanger, setModeChanger] = useState("")
   const[mode,setMode] = useState()

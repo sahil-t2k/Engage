@@ -47,36 +47,39 @@ function Addroom() {
   const [error, setError] = useState({})
   const [flag, setFlag] = useState(0)
   const [allRoomRates, setAllRoomRates] = useState([])
+  const[mode,setMode] = useState()
 
   /** Use Effect to fetch details from the Local Storage **/
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        var locale = localStorage.getItem("Language");
-        const colorToggle = localStorage.getItem("colorToggle");
-        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-        }
-        else if (colorToggle === "true" || colorToggle === "false") {
-            setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-        }
-       { if (locale === "ar") {
-          language = arabic;
-        }
-        if (locale === "en") {
-          language = english;
-        }
-        if (locale === "fr") {
-          language = french;
-        }}
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-      }
-    }
     firstfun();
-    Router.push("./addroom")
   }, [])
+
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      var locale = localStorage.getItem("Language");
+      colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+          setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+        }
+      else if (colorToggle === "true" || colorToggle === "false") {
+          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+          setMode(colorToggle === "true" ? true : false)
+      }
+     { if (locale === "ar") {
+        language = arabic;
+      }
+      if (locale === "en") {
+        language = english;
+      }
+      if (locale === "fr") {
+        language = french;
+      }}
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+    }
+  }
 
 
   // Room Types
@@ -563,10 +566,27 @@ function Addroom() {
     }
   }
 
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
+    }
+    else if (newColor === 'light') {
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", false)
+    }
+    else if (newColor === 'dark') {
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle", true)
+    }
+   firstfun();
+   Router.push('./addroom')
+  }
   return (
     <>
 
-      <Header Primary={english?.Side1} color={color} />
+      <Header Primary={english?.Side1} color={color} Sec={colorToggler} mode={mode} setMode={setMode} />
       <Sidebar Primary={english?.Side1} color={color} Type={currentLogged?.user_type} />
 
       <div id="main-content"

@@ -20,12 +20,15 @@ var language;
 var currentProperty;
 import Router from 'next/router'
 const logger = require("../../services/logger");
-import Image from 'next/image'
+import Image from 'next/image';
+let colorToggle;
 
 function Reviews() {
   const [reviews, setReviews] = useState([]);
   const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [color, setColor] = useState({})
+  const[mode,setMode] = useState()
+  const [modeChanger, setModeChanger] = useState("")
   const [visible, setVisible] = useState(0);
   const [view, setView] = useState(0);
   const [del, setDel] = useState('');
@@ -34,6 +37,7 @@ function Reviews() {
   const [edit, setEdit] = useState(0)
   const [active, setActive] = useState({})
   const [org, setOrg] = useState({})
+  
   var date = new Date();
 
   var currentDate = {
@@ -72,35 +76,38 @@ function Reviews() {
   }
 
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        var locale = localStorage.getItem("Language");
-        const colorToggle = localStorage.getItem("colorToggle");
-        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-            window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-        }
-        else if (colorToggle === "true" || colorToggle === "false") {
-            setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-        }
-
-        {
-        if (locale === "ar") {
-          language = arabic;
-        }
-        if (locale === "en") {
-          language = english;
-        }
-        if (locale === "fr") {
-          language = french;
-        }
-      }
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-      }
-    }
+   
     firstfun();
   }, [])
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      var locale = localStorage.getItem("Language");
+      const colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+          setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+          }
+      else if (colorToggle === "true" || colorToggle === "false") {
+          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+          setMode(colorToggle === "true" ? true : false)
+      }
+
+      {
+      if (locale === "ar") {
+        language = arabic;
+      }
+      if (locale === "en") {
+        language = english;
+      }
+      if (locale === "fr") {
+        language = french;
+      }
+    }
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+    }
+  }
 
   useEffect(() => {
     if(JSON.stringify(currentLogged)==='null'){
@@ -111,6 +118,24 @@ function Reviews() {
     }
  }, []);
 
+
+ const colorToggler = (newColor) => {
+  if (newColor === 'system') {
+    window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+    : setColor(colorFile?.light)
+    localStorage.setItem("colorToggle", newColor)
+  }
+  else if (newColor === 'light') {
+    setColor(colorFile?.light)
+    localStorage.setItem("colorToggle", false)
+  }
+  else if (newColor === 'dark') {
+    setColor(colorFile?.dark)
+    localStorage.setItem("colorToggle", true)
+  }
+ firstfun();
+ Router.push('./reviews')
+}
 
   const fetchReviews = async () => {
     const url = `/api/${currentProperty.address_province.replace(
@@ -283,7 +308,7 @@ function Reviews() {
 
   return (
     <>
-      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type}/>
+      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
       <Sidebar Primary={english?.Side} color={color} Type={currentLogged?.user_type} />
       <div id="main-content"
       className={`${color?.greybackground} px-4 pt-24 py-2 relative overflow-y-auto lg:ml-64`}>

@@ -19,16 +19,17 @@ var currentProperty;
 const logger = require("../../services/logger");
 import Link from "next/link";
 import Footer from '../../components/Footer';
-import Loader from "../../components/loaders/loader";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar"
 var i = 0;
 var country;
 var currentLogged;
+let colorToggle;
 
 function Address() {
   const [visible, setVisible] = useState(0)
+  const[mode,setMode] = useState()
   const [countryInitial, setCountryInitial] = useState([])
   const [provinceInitial, setProvinceInitial] = useState([])
   const [cityInitial, setCityInitial] = useState([])
@@ -42,36 +43,37 @@ function Address() {
   const [address, setAddress] = useState([]);
 
   useEffect(() => {
-    const firstfun = () => {
-      if (typeof window !== 'undefined') {
-        var locale = localStorage.getItem("Language");
-        const colorToggle = localStorage.getItem("colorToggle");
-        if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
-          window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
-        }
-        else if (colorToggle === "true" || colorToggle === "false") {
-          setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
-        }
-        {
-          if (locale === "ar") {
-            language = arabic;
-          }
-          if (locale === "en") {
-            language = english;
-          }
-          if (locale === "fr") {
-            language = french;
-          }
-        }
-        /** Current Property Details fetched from the local storage **/
-        currentProperty = JSON.parse(localStorage.getItem("property"));
-        currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
-      }
-    }
     firstfun();
   }, [])
 
-
+  const firstfun = () => {
+    if (typeof window !== 'undefined') {
+      var locale = localStorage.getItem("Language");
+       colorToggle = localStorage.getItem("colorToggle");
+      if (colorToggle === "" || colorToggle === undefined || colorToggle === null || colorToggle === "system") {
+        window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark) : setColor(colorFile?.light)
+        setMode(window.matchMedia("(prefers-color-scheme:dark)").matches === true ? true : false);
+      }
+      else if (colorToggle === "true" || colorToggle === "false") {
+        setColor(colorToggle === "true" ? colorFile?.dark : colorFile?.light);
+        setMode(colorToggle === "true" ? true : false)
+      }
+      {
+        if (locale === "ar") {
+          language = arabic;
+        }
+        if (locale === "en") {
+          language = english;
+        }
+        if (locale === "fr") {
+          language = french;
+        }
+      }
+      /** Current Property Details fetched from the local storage **/
+      currentProperty = JSON.parse(localStorage.getItem("property"));
+      currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+    }
+  }
 
   useEffect(() => {
     if (JSON.stringify(currentLogged) === 'null') {
@@ -81,6 +83,24 @@ function Address() {
       fetchHotelDetails();
     }
   }, []);
+
+  const colorToggler = (newColor) => {
+    if (newColor === 'system') {
+      window.matchMedia("(prefers-color-scheme:dark)").matches === true ? setColor(colorFile?.dark)
+      : setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", newColor)
+    }
+    else if (newColor === 'light') {
+      setColor(colorFile?.light)
+      localStorage.setItem("colorToggle", false)
+    }
+    else if (newColor === 'dark') {
+      setColor(colorFile?.dark)
+      localStorage.setItem("colorToggle", true)
+    }
+   firstfun();
+   Router.push('./address')
+  }
 
   /* Function call to fetch Current Property Details when page loads */
   const fetchHotelDetails = async () => {
@@ -214,7 +234,7 @@ function Address() {
   return (
     <>
       <Title name={`Engage |  ${language?.address}`} />
-      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
+      <Header color={color} Primary={english?.Side} Type={currentLogged?.user_type}  Sec={colorToggler} mode={mode} setMode={setMode}/>
       <Sidebar color={color} Primary={english?.Side} Type={currentLogged?.user_type} />
 
       <div id="main-content"
