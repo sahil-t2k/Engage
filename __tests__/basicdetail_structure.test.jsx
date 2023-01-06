@@ -5,10 +5,6 @@ import '@testing-library/jest-dom'
 // Checking Basic Details page loading
 describe('Check if basicdetails page loads correctly', () => {
     beforeEach(() => {
-        // jest.mock('next/config',  () => ({
-        //     publicRuntimeConfig:'12.1.4'
-        //   }))
-
         Object.defineProperty(window, "matchMedia", {
             writable: true,
             value: jest.fn().mockImplementation(query => ({

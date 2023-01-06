@@ -586,7 +586,7 @@ function Addroom() {
   return (
     <>
 
-      <Header Primary={english?.Side1} color={color} Sec={colorToggler} mode={mode} setMode={setMode} />
+      <Header Primary={english?.Side1} color={color} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode} />
       <Sidebar Primary={english?.Side1} color={color} Type={currentLogged?.user_type} />
 
       <div id="main-content"

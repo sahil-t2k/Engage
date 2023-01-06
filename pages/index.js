@@ -11,7 +11,6 @@ import Button from "../components/Button";
 import english from "../components/Languages/en"
 import french from "../components/Languages/fr"
 import arabic from "../components/Languages/ar";
-import DarkModeLogic from "../components/darkmodelogic";
 //import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
@@ -21,7 +20,6 @@ let user = false;
 
 function Signin(args) {
   const [lang, setLang] = useState("");
-  const [darkModeSwitcher, setDarkModeSwitcher] = useState()
   const [spinner, setSpinner] = useState(0)
   /** Router for Redirection **/
   const router = useRouter();

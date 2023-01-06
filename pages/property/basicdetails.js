@@ -33,7 +33,6 @@ export default function BasicDetails() {
   const [color, setColor] = useState({})
   const [error, setError] = useState({})
   const[mode,setMode] = useState()
-  const [modeChanger, setModeChanger] = useState("")
 
 
   /** Fetching language from the local storage **/
@@ -83,7 +82,6 @@ export default function BasicDetails() {
         setBasicDetails(response?.data);
         setAllHotelDetails(response?.data);
         logger.info("url  to fetch property details hitted successfully")
-        console.log(response.data)
         setVisible(1)
       })
       .catch((error) => { logger.error("url to fetch property details, failed") });
@@ -152,7 +150,7 @@ export default function BasicDetails() {
           "description_body": allHotelDetails.description_body,
           "description_date": allHotelDetails.description_date
         }
-        const url = '/api/basic'
+       const url = '/api/basic'
         axios.put(url, final_data, { header: { "content-type": "application/json" } }).then
           ((response) => {
             setSpinner(0);
@@ -202,7 +200,6 @@ export default function BasicDetails() {
   const validationBasicDetails = () => {
     setError({})
     var result = validatebasicDetails(allHotelDetails)
-    console.log("Result" + JSON.stringify(result))
     if (result === true) {
 
       submitBasicEdit();
@@ -216,7 +213,7 @@ export default function BasicDetails() {
   return (
     <>
       <Title name={`Engage |  ${language?.basicdetails}`} />
-      <div>
+    
 
         <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode}/>
         <Sidebar color={color} Primary={english.Side} Type={currentLogged?.user_type} />
@@ -304,7 +301,7 @@ export default function BasicDetails() {
                             )
                           } required
                         >
-                          <option selected disabled>{basicDetails?.property_category}</option>
+                          <option defaultValue={basicDetails?.property_category} disabled>{basicDetails?.property_category}</option>
                           <option value="hotel" >Hotel</option>
                           <option value="resort">Resort</option>
                           <option value="motel">Motel</option>
@@ -386,7 +383,7 @@ export default function BasicDetails() {
                             )
                           }
                         >
-                          <option selected disabled >{basicDetails?.star_rating}</option>
+                          <option defaultValue={basicDetails?.star_rating} disabled >{basicDetails?.star_rating}</option>
                           <option value="1" >1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -500,7 +497,7 @@ export default function BasicDetails() {
 
         </div>
         <Footer color={color} Primary={english.Foot} />
-      </div>
+     
 
     </>
   )

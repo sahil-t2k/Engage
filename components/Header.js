@@ -174,10 +174,10 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
 
       {/** Sidebar for small screens **/}
       <div className={smSidebar === true ? "block" : "hidden"}>
-        <aside id="sidebar" className="fixed lg:hidden z-20 h-full top-0 left-0 pt-16 flex sm:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
+        <aside className="fixed lg:hidden z-20 h-full top-0 left-0 pt-16 flex sm:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
         <div className={`${args?.color?.whitebackground} relative flex-1 flex flex-col min-h-0 border-r border-gray-200  pt-0`}>
           <div className="flex-1 flex flex-col  pb-4 overflow-y-auto">
-            <div className={`${args?.color?.greybackground} flex-1 py-4 px-3 divide-y space-y-1`}>
+            <div className={`${args?.color?.whitebackground} flex-1 py-4 px-3 divide-y space-y-1`}>
               <ul className="space-y-2 pb-2">
                 <li>
                   <form action="#" method="GET" className="lg:hidden">
@@ -203,11 +203,10 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg>
                   <span className="ml-3">
-                  <Link href={{pathname:args?.Primary?.dashboard, query: { id: 1 }}}><a>{language?.dashboard} </a></Link>
-                   </span>
+                  <Link href={{pathname:args?.Primary?.dashboard, query: { id: 1 }}}><a>{language?.dashboard} </a></Link> </span>
                 </li>
                 <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2`}>
-                <svg className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0 ${args?.color?.iconhover} transition duration-75  `} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
+                <svg className={`w-6 h-6  ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
                 
                   <span className="ml-3"><Link href={{pathname:args?.Primary?.inbox, query: { id: 1 }}}><a>{language?.inbox} </a></Link> </span>
                 </li>
@@ -230,13 +229,16 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                   </span>
                 </li>
                 <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 `}>
-                  <svg className={`w-7 h-7  ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
+                  <svg
+                    className={`w-7 h-7  ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
                     fill="currentColor"
                     viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg" >
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M16,3C10.5,3,6,7.5,6,13c0,8.4,9,15.5,9.4,15.8c0.2,0.1,0.4,0.2,0.6,0.2s0.4-0.1,0.6-0.2C17,28.5,26,21.4,26,13
-	                    C26,7.5,21.5,3,16,3z M16,17c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,17,16,17z"></path>
+	C26,7.5,21.5,3,16,3z M16,17c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,17,16,17z"
+                    ></path>
                   </svg>
                   <span className="ml-3 flex-1 whitespace-nowrap">
                   <Link href={{pathname:args?.Primary?.address, query: { id: 1 }}}><a>{language?.address}</a></Link></span>
@@ -346,7 +348,7 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     {language?.rooms}</a>
                     </Link></span>
                 </li>
-                
+
                 {JSON.stringify(args?.Type) === "2"?<></>:
                 <>
                 <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2  group`}>
@@ -389,35 +391,44 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     <a>{language?.pointofsale}</a></Link>
                       </span>
                 </li>
-               {/* ARI */}
-               <li>
+                
+                {/* ARI */}
+                <li>
 					<button type="button" onClick={()=>{setAri(!ari)} }
           className= {`${args?.color?.text} ${args?.color?.sidebar} group  rounded-lg flex items-center p-2 
             w-full p-2 text-base font-normal  transition duration-75`} >
                    <svg
+
                     className={`w-6 h-6 ${args?.color?.textgray} flex-shrink-0  ${args?.color?.iconhover} transition duration-75`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
                   </svg>
-                <span className="flex-1 ml-3 text-left whitespace-nowrap" >ARI</span>
+
+                  <span className="flex-1 ml-3 text-left whitespace-nowrap" >ARI</span>
                   <svg sidebar-toggle-item className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" 
                   xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
             </button>
            <div className={ari === true ? 'block' : 'hidden'}>
 					<ul  className="py-2 space-y-2">
-						<li className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
+						<li className= {`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}
+     >
 							<Link  href={{pathname:args?.Primary?.availability, query: { id: 1 }}}>
             	<a>{language?.availability}</a></Link>
 						</li>
 						<li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.inventory, query: { id: 1 }}}>
-              <a>{language?.inventory}</a>
+              <a 
+							>
+                  {language?.inventory}</a>
 						</Link></li>
             <li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.promotion, query: { id: 1 }}}>
-              <a>{language?.promotions}</a>
+              <a 
+							>
+                  {language?.promotions}</a>
 						</Link></li>
             <li 	className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
 						<Link  href={{pathname:args?.Primary?.modification, query: { id: 1 }}}>
@@ -436,6 +447,7 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
 				        </li>
                 </>}
               </ul>
+            
               <div className="space-y-2 pt-2">
                 <ul>
                   <li className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2  group`}>
@@ -511,7 +523,8 @@ dark:bg-gray-700 dark:divide-gray-6001`:'hidden'}>
                     <Link href={{pathname:args?.Primary?.roomsxml, query: { id: 1 }}}>
                     <a>{language?.roomxml}</a></Link>
                     </span>
-                  </li></>}
+                  </li>
+                  </>}
                 </ul>
               </div>
             </div>

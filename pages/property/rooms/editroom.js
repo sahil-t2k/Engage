@@ -954,7 +954,7 @@ function Room() {
 
   return (
     <>
-      <Header Primary={english?.Side1} color={color}Sec={colorToggler} mode={mode} setMode={setMode}/>
+      <Header Primary={english?.Side1} color={color}Sec={colorToggler} mode={mode} setMode={setMode} Type={currentLogged?.user_type} />
       <Sidebar Primary={english?.Side1} Type={currentLogged?.user_type} color={color}  />
 
       <div id="main-content"
