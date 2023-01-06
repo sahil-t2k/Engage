@@ -33,7 +33,8 @@ export default function BasicDetails() {
   const [color, setColor] = useState({})
   const [error, setError] = useState({})
   const[mode,setMode] = useState()
-  const [image, setImage] = useState()
+  const [imageLogo, setImageLogo] = useState()
+  const [uploadImageSpin, setUploadImageSpin] = useState(false)
 
 
   /** Fetching language from the local storage **/
@@ -210,20 +211,21 @@ export default function BasicDetails() {
     }
   }
 
-   /* Function to upload image*/
+   /* Function to upload logo to cloud*/
    const uploadImage = (image) => {
-   
-    const imageDetails = image
+    setUploadImageSpin(true)
+   const imageDetails = image
     const formData = new FormData();
     formData.append("file", imageDetails);
     formData.append("upload_preset", "Travel2Kashmir")
     formData.append("enctype", "multipart/form-data")
     axios.post("https://api.cloudinary.com/v1_1/dvczoayyw/image/upload", formData)
         .then(response => {
-            setImage(response?.data?.secure_url)
+            setImageLogo(response?.data?.secure_url)
+            submitPhotoEdit(response?.data?.secure_url)
         })
         .catch(error => {
-          toast.error("Image upload error! ", {
+          toast.error("Image upload error. ", {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -232,11 +234,49 @@ export default function BasicDetails() {
                 draggable: true,
                 progress: undefined,
             });
-            console.error('Image upload error!', error);
+            console.error('Image upload error.', error);
 
         });
 
 }
+// Logo Upload
+const submitPhotoEdit = (logo) => {
+      const final_data = {
+        "property_id": currentProperty?.property_id,
+        "logo_link": logo
+       
+      }
+     const url = '/api/basic'
+      axios.put(url, final_data, { header: { "content-type": "application/json" } }).then
+        ((response) => {
+          
+          toast.success("API: logo Updated Successfully!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          fetchBasicDetails();
+          router.push("./basicdetails");
+          setUploadImageSpin(false);
+          
+        })
+        .catch((error) => {
+          
+          toast.error("API:logo Update Error!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        })
+    }
 
   return (
     <>
@@ -284,7 +324,7 @@ export default function BasicDetails() {
           {/* Basic Details Form */}
           <div className={`${color?.whitebackground} shadow rounded-lg px-12  sm:p-6 xl:p-8  2xl:col-span-2`}>
             <h6 className={`${color?.text} text-xl flex leading-none pl-6 lg:pt-2 pt-6  font-bold`}>
-              {language?.basicdetails}
+              {language?.basicdetails} 
             </h6>
             <div className="pt-6">
               <div className=" md:px-4 mx-auto w-full">
@@ -294,6 +334,7 @@ export default function BasicDetails() {
                       <div className= "relative"
                         htmlFor="grid-password">
                         <img className="rounded-full w-24 h-24 block"src={allHotelDetails?.logo} alt="propertylogo"/>
+                     
                         <input type="file" id="actual-btn"
                          onChange={e => {
                           uploadImage(e.target.files[0]);
@@ -301,18 +342,19 @@ export default function BasicDetails() {
                         className='hidden' name="myImage" accept="image/png, image/gif, image/jpeg, image/jpg"/>
                        <label htmlFor="actual-btn" className="absolute bottom-0.5 left-16 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-full text-sm inline-flex items-center px-2 py-2 text-center">
                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
-                       </label></div>
+                       </label>
+    {uploadImageSpin === true ?
+     <svg className="absolute w-8 h-8 bottom-6 left-6 right-6  text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+    </svg>:<></>}
+                       </div>
                     </div>
                   </div>
-                  {/* <div className="w-full lg:w-6/12 px-4">
-                    <div className="relative w-full mb-3">
-                   
-                    </div>
-                  </div> */}
-                  <div className="w-full lg:w-6/12 px-4">
+                  <div className="w-full lg:w-6/12  px-4">
                     <div className="relative w-full mb-3">
                       <label
-                        className={`text-sm font-medium ${color?.text} block mb-2`}
+                        className={`text-sm font-medium mt-4 ${color?.text} block mb-2`}
                         htmlFor="grid-password">
                         {language?.propertyname}
                         <span style={{ color: "#ff0000" }}>*</span>
