@@ -33,6 +33,7 @@ export default function BasicDetails() {
   const [color, setColor] = useState({})
   const [error, setError] = useState({})
   const[mode,setMode] = useState()
+  const [image, setImage] = useState()
 
 
   /** Fetching language from the local storage **/
@@ -209,6 +210,33 @@ export default function BasicDetails() {
     }
   }
 
+   /* Function to upload image*/
+   const uploadImage = (image) => {
+   
+    const imageDetails = image
+    const formData = new FormData();
+    formData.append("file", imageDetails);
+    formData.append("upload_preset", "Travel2Kashmir")
+    formData.append("enctype", "multipart/form-data")
+    axios.post("https://api.cloudinary.com/v1_1/dvczoayyw/image/upload", formData)
+        .then(response => {
+            setImage(response?.data?.secure_url)
+        })
+        .catch(error => {
+          toast.error("Image upload error! ", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            console.error('Image upload error!', error);
+
+        });
+
+}
 
   return (
     <>
@@ -261,6 +289,26 @@ export default function BasicDetails() {
             <div className="pt-6">
               <div className=" md:px-4 mx-auto w-full">
                 <div className="flex flex-wrap">
+                <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                      <div className= "relative"
+                        htmlFor="grid-password">
+                        <img className="rounded-full w-24 h-24 block"src={allHotelDetails?.logo} alt="propertylogo"/>
+                        <input type="file" id="actual-btn"
+                         onChange={e => {
+                          uploadImage(e.target.files[0]);
+                      }}
+                        className='hidden' name="myImage" accept="image/png, image/gif, image/jpeg, image/jpg"/>
+                       <label htmlFor="actual-btn" className="absolute bottom-0.5 left-16 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-full text-sm inline-flex items-center px-2 py-2 text-center">
+                       <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                       </label></div>
+                    </div>
+                  </div>
+                  {/* <div className="w-full lg:w-6/12 px-4">
+                    <div className="relative w-full mb-3">
+                   
+                    </div>
+                  </div> */}
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
                       <label
