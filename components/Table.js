@@ -232,7 +232,8 @@ const Table = (args) => {
                                                             <td className="data text-left text-sm font-semibold  ">
 
                                                                 <input type="text"
-                                                                    onChange={(e) => setEditContact({ ...editContact, type: e.target.value }, setFlag(1))} className={`shadow-sm  ${args?.color?.whitebackground} border border-gray-300 ${args?.color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-64 p-2.5`}
+                                                                    onChange={(e) => setEditContact({ ...editContact, type: e.target.value }, setFlag(1))} 
+                                                                    className={`shadow-sm  ${args?.color?.whitebackground} border border-gray-300 ${args?.color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-64 p-2.5`}
                                                                     defaultValue={item?.type}></input> 
                                                                      
                                                                     </td>

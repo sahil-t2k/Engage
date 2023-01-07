@@ -150,8 +150,8 @@ function UserProfileHeader(args) {
 
             </button>
           </div>
-
-          <div className="ml-auto mr-0 flex justify-end">
+        
+          <div onClick={() => { setFlag(!flag) }}  className="ml-auto mr-0 flex justify-end">
             <div id="dropdownInformation" className={flag === true ? `${args?.color?.whitebackground} absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow 
            dark:bg-gray-700 dark:divide-gray-6001`: 'hidden'}>
               <div className={`${args?.color?.text} py-3 px-4 text-sm `}>
@@ -176,6 +176,7 @@ function UserProfileHeader(args) {
 
             </div>
              </div>
+             
         </div>
       </nav>
 

@@ -1,4 +1,5 @@
 export default {
+  logo:"شعار",
   systemprefrences:"تفضيلات النظام",
   colorscheme:"نظام الألوان",
   basicservices:"الخدمات الأساسية",

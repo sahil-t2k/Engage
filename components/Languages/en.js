@@ -1,4 +1,5 @@
 export default {
+  logo:"Logo",
   systemprefrences:"System Prefrences",
   colorscheme:"Color Scheme",
   listofproperties:"List of Properties",

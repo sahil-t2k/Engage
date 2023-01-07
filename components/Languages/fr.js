@@ -1,4 +1,5 @@
 export default {
+  logo:"Logo",
   systemprefrence:"Préférences de Système",
   colorscheme:"Schéma de Couleur",
   basicservices:"Services de base",

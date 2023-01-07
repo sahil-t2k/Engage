@@ -2,7 +2,7 @@ const validatebasicDetails = (data) => {
     var error = {};
     var flag = []
     var final_flag = true;
-
+    console.log('validation called')
     if (data.property_name === "") {
         flag.push(false)
         error.property_name = "APP: The property name is required"
