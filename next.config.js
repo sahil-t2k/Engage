@@ -1,7 +1,8 @@
 
 /** @type {import('next').NextConfig} */
+import { withAxiom } from 'next-axiom';
 
-module.exports = {
+export default withAxiom({
   // jest.config.js
 
   setupFilesAfterEnv: ['./jest.setup.js'],
@@ -44,3 +45,5 @@ module.exports = {
     return config;
   }
 }
+)
+
