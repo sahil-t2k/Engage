@@ -2,16 +2,17 @@
 /** @type {import('next').NextConfig} */
 const { withAxiom } = require('next-axiom');
 
-export default withAxiom({
+module.exports = withAxiom(
+ 
   // jest.config.js
 
-  setupFilesAfterEnv: ['./jest.setup.js'],
+ { setupFilesAfterEnv: ['./jest.setup.js'],
 
  env:{
       serverURL:"http://103:136:36:27",
       port:"7860"
     }
-  ,
+  , 
 
   webpack: (config) => {
     config.resolve.fallback = { crypto: 
