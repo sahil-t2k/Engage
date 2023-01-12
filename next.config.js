@@ -1,6 +1,6 @@
 
 /** @type {import('next').NextConfig} */
-import { withAxiom } from 'next-axiom';
+const { withAxiom } = require('next-axiom');
 
 export default withAxiom({
   // jest.config.js
