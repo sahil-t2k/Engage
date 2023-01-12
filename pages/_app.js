@@ -17,5 +17,5 @@ function MyApp({ Component, pageProps }) {
    </>
   )
 }
-
+export { reportWebVitals } from 'next-axiom';
 export default MyApp
