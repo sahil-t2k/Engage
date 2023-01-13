@@ -156,27 +156,27 @@ function ReadMessage() {
                 </div>
                 <div className='hover:bg-gray-100 divide-y  border-t border-gray-200'></div>
                 <div className='flex space-x-3 items-center px-4 my-3'>
-                       <a href="#replymessage"> <button  onClick={()=>{setReply(true)}} className="sm:inline-flex  text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-semibold rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                       <a href="#replymessage">
+                         <button  onClick={()=>{setReply(true)}} className="sm:inline-flex  text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-semibold rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                           <span className='mr-3'>
                          Reply</span>
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white flex-shrink-0 transition duration-75" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M0 0h24v24H0V0z" fill="none"/>
                             <path d="M4.01 6.03l7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3L2 10l15 2-15 2 .01 7L23 12 2.01 3z"/></svg>
                           </button></a>
+                          {reply === true ?
+                          <button   onClick={() => setReply(false)} className="sm:inline-flex  text-gray-900 bg-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 
+                          font-semibold rounded-lg text-sm px-5 py-2.5 text-center items-center ml-3">
+                          <svg className="w-5 h-5  mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
+                            </path></svg>
+                          <span className='mr-3'>
+                        Cancel</span>
+                          </button>:<></>}
                         
                  </div>
                  {reply === true ?
 
                  <div id="replymessage">
-                        <button className="float-right my-10 sm:inline-flex  text-gray-800  
-                            font-semibold border  focus:ring-4 focus:ring-cyan-200 font-semibold bg-gray-200
-                            rounded-lg text-sm px-1 py-1 text-center 
-                            items-center mb-1  mx-8  ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => setReply(false)}>
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd">
-                            </path></svg>
-                        </button>
                  <div className='px-6 my-5'>
                 <input type="text" className={`shadow-sm ${color?.greybackground}  border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
                  defaultValue="neilthomas@gmail.com" />

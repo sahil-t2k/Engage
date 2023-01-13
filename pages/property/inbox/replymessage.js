@@ -64,9 +64,7 @@ function ReplyMessage() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mt-2 hover:bg-gray-100 mr-2 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" enableBackground="new 0 0 24 24" viewBox="0 0 24 24" fill="currentColor">
                                     <rect fill="none" height="24" width="24" />
                                     <path d="M9,19l1.41-1.41L5.83,13H22V11H5.83l4.59-4.59L9,5l-7,7L9,19z" />
-
                                 </svg> </button>
-
                         </div>
                         <span className={`${color?.textgray} hover:${color?.text} cursor-pointer mr-1 p-1 ${color?.hover} rounded inline-flex justify-center`}>
                             <svg xmlns="http://www.w3.org/2000/svg"  height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" x="0" /></g><g><g><path d="M12,2C6.5,2,2,6.5,2,12s4.5,10,10,10s10-4.5,10-10S17.5,2,12,2z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8 S16.41,20,12,20z M12.5,7H11v6l5.2,3.2l0.8-1.3l-4.5-2.7V7z" /></g></g></svg>

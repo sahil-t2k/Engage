@@ -464,13 +464,13 @@ function Gallery() {
                 </nav>
 
                 {/* Gallery */}
-                <div className={`${color?.whitebackground} shadow rounded-lg  px-10 p-6  -mb-4 sm:p-6 xl:p-8  2xl:col-span-2`} >
+                <div className={`${color?.whitebackground} shadow rounded-lg  px-10 p-6  -mb-4 sm:p-8 xl:p-8  2xl:col-span-2`} >
                     {/* Header */}
-                    <h6 className={`text-xl mb-2 flex leading-none pl-4 pt-2 font-bold ${color?.text}`}>
+                    <h6 className={`text-xl mb-2 flex leading-none  pt-2 font-bold ${color?.text}`}>
                         {language?.gallery}
                     </h6>
-                    <div className="sm:flex">
-                        <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 ml-5 sm:mb-0">
+                    <div className="sm:flex my-2">
+                        <div className=" sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3  sm:mb-0">
                             <form className="lg:pr-3" action="#" method="GET">
                                 <label htmlFor="users-search" className="sr-only">{language?.search}</label>
                                 <div className="mt-1 relative lg:w-64 xl:w-96">
@@ -493,8 +493,8 @@ function Gallery() {
                                 </a>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
-                            <Button Primary={language?.Add} onClick={() => setAddImage(1)} />
+                        <div className="flex items-center space-x-2 sm:space-x-3 lg:ml-auto">
+                           <Button Primary={language?.Add} onClick={() => setAddImage(1)} /> 
                             <Button Primary={language?.AddfromURL} onClick={() => setAddURLImage(1)} />
                         </div>
                     </div>

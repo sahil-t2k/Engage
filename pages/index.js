@@ -11,7 +11,6 @@ import Button from "../components/Button";
 import english from "../components/Languages/en"
 import french from "../components/Languages/fr"
 import arabic from "../components/Languages/ar";
-//import { Router } from "react-router";
 const logger = require("../services/logger");
 var language;
 var currentUser;
@@ -28,15 +27,14 @@ function Signin(args) {
   const [error, setError] = useState({})
   const [color, setColor] = useState({})
   const [modeChanger, setModeChanger] = useState("")
+
   /** State for internationalization **/
   useEffect(() => {
     firstfun()
     getCookieData();
   }, [locale])
 
-  
-
-  // first fun
+  // First Function
  const firstfun = () => {
   if (typeof window !== 'undefined') {
     locale = localStorage.getItem("Language");
@@ -84,7 +82,7 @@ function Signin(args) {
     }     
 }
 }
-  //write into cookies
+  //Write into Cookies
   function setCookieData(checked) {
     if (checked) {
       Cookies.set("email", signinDetails.email, { expires: 30 })
@@ -147,7 +145,7 @@ function Signin(args) {
           if (EncryptedPass === response.data.password) {
 
             /** Toast emitter Sign in Successfull **/
-            logger.info("Login Successful!");
+            logger.info("Login Successful.");
             const whoIsLogged = {
               id: response.data.id,
               name: response.data.name,
@@ -219,7 +217,6 @@ function Signin(args) {
     }
   };
 
-
   // Validation Function
   const validation = (signinDetails) => {
     var Result = checkFormData(signinDetails);
@@ -233,6 +230,7 @@ function Signin(args) {
     }
 
   }
+
   //Checking Form Data for Validations
   const checkFormData = (signinDetails) => {
     var error = {};
@@ -249,6 +247,8 @@ function Signin(args) {
     return Object.keys(error).length === 0 ? true : error;
 
   }
+
+  
   return (
     <>
       <Title id="title" name="Engage | Sign in" />

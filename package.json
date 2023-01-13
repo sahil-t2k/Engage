@@ -64,6 +64,8 @@
     "react-toastify": "^8.2.0",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.2",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1",
     "xml-formatter": "^2.6.1",
     "xmldom": "^0.6.0",
     "yarn": "^1.22.18"
