@@ -23,7 +23,7 @@ var language;
 var currentProperty;
 var currentLogged;
 let checked;
-let check;
+let check = [];
 let colorToggle;
 import Router from 'next/router';
 
@@ -467,9 +467,7 @@ function Gallery() {
                 {/* Gallery */}
                 <div className={`${color?.whitebackground} shadow rounded-lg  px-10 p-6  -mb-4 sm:p-8 xl:p-8  2xl:col-span-2`} >
                     {/* Header */}
-                    <h6 className={`text-xl mb-2 flex leading-none  pt-2 font-bold ${color?.text}`}>
-                        {language?.gallery}
-                    </h6>
+                    <h6 className={`text-xl mb-2 flex leading-none  pt-2 font-bold ${color?.text}`}>{language?.gallery} </h6>
                     <div className="sm:flex my-2">
                         <div className=" sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3  sm:mb-0">
                             <form className="lg:pr-3" action="#" method="GET">
@@ -520,7 +518,7 @@ function Gallery() {
                                                         name={item?.image_id} checked={item.isChecked || false}
                                                         onChange={(e) => { handlecheckbox(e) }} className="bottom-0 right-0 cursor-pointer absolute bg-gray-30 opacity-30 m-1 border-gray-300 text-cyan-600  checked:opacity-100 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded-full"
                                                         onClick={() => { setSelectedImage(!selectedImage) }} />
-                                                       { check?.length === 0 ?
+                                                       { check?.length === 0 || undefined ?
                                                     <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }}
                                                         onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item); 
                                                          setIndexImage(idx); }} />
