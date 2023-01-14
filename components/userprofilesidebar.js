@@ -109,24 +109,48 @@ const UserProfileSidebar = (args) => {
                 <div className={colorMode === true ? 'block' : 'hidden'}>
                   <ul className="py-2 space-y-2">
 
-                    <li onClick={() => args?.Sec("system")} className={`${args?.color?.text}  text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
-                      <input id="default-radio-1" type="radio" name="default-radio1"
-                        checked={args?.colorToggle == "" || args?.colorToggle === undefined || args?.colorToggle === null || args?.colorToggle === "system"}
-                        className="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
+                    <li onClick={() => args?.Sec("system")} className={
+                      args?.colorToggle == "" || args?.colorToggle === undefined || args?.colorToggle === null || args?.colorToggle === "system" ?
+                      `${args?.color?.text}  text-base cursor-pointer font-bold rounded-lg flex items-center p-2 pl-11`:
+                      `${args?.color?.text}  text-base font-normal cursor-pointer rounded-lg flex items-center p-2 pl-11`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="mr-1" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
                       <a>{language?.systemprefrences}</a></li>
 
-                    <li onClick={() => args?.Sec("light")} className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal
+                    <li onClick={() => args?.Sec("light")} className={
+                    args?.colorToggle == "false" ?
+                    `${args?.color?.text} ${args?.color?.sidebar} group text-base font-bold cursor-pointer  rounded-lg flex items-center p-2 pl-11`:
+                    `${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal cursor-pointer
                      rounded-lg flex items-center p-2 pl-11`}>
-                      <input id="default-radio-2" type="radio" name="default-radio2"
-                        checked={args?.colorToggle == "false"} className="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
+                    <svg
+                    id="theme-toggle-light-icon"
+                    className=" w-5 h-5 mr-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg> 
                       <a>{language?.lightmode}</a>
                     </li>
-                    <li onClick={() => args?.Sec("dark")} className={`${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal rounded-lg flex items-center p-2 pl-11`}>
-                      <input id="default-radio-3" type="radio"
-                        checked={args?.colorToggle == "true"} name="default-radio3" className="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
+                    <li onClick={() => args?.Sec("dark")} className={args?.colorToggle == "true" ?
+                    `${args?.color?.text} ${args?.color?.sidebar} group text-base font-bold cursor-pointer rounded-lg flex items-center p-2 pl-11`:
+                    `${args?.color?.text} ${args?.color?.sidebar} group text-base font-normal cursor-pointer
+                     rounded-lg flex items-center p-2 pl-11`}>
+                     
+                  <svg 
+                    id="theme-toggle-dark-icon "
+                    className="w-5 h-5 mr-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                    ></path> </svg>
                       <a>{language?.darkmode}</a>
                     </li>
 

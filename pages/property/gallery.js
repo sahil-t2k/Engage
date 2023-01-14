@@ -23,6 +23,7 @@ var language;
 var currentProperty;
 var currentLogged;
 let checked;
+let check;
 let colorToggle;
 import Router from 'next/router';
 
@@ -367,19 +368,19 @@ function Gallery() {
             item.image_id === name ? { ...item, isChecked: checked } : item
         );
         setImages(tempCon)
-        console.log(images)
-
+        check = tempCon.filter(i => i.isChecked === true).map(j => { return (j.image_id) })
     }
 
     // Select multiple delete images
     const allDelete = async () => {
-        checked = images.filter(i => i.isChecked === true).map(j => { return (j.image_id) })
+        // checked = images.filter(i => i.isChecked === true).map(j => { return (j.image_id) })
+        // alert(checked?.length)
         setdeleteImage(1)
     }
 
     /* Function Multiple Delete*/
     function deleteMultiple() {
-        const data = checked?.map((item) => { return ({ image_id: item, property_id: currentProperty?.property_id }) })
+        const data = check?.map((item) => { return ({ image_id: item, property_id: currentProperty?.property_id }) })
         setSpinner(1);
         const imagedata = data;
         const finalImages = { images: imagedata };
@@ -519,9 +520,13 @@ function Gallery() {
                                                         name={item?.image_id} checked={item.isChecked || false}
                                                         onChange={(e) => { handlecheckbox(e) }} className="bottom-0 right-0 cursor-pointer absolute bg-gray-30 opacity-30 m-1 border-gray-300 text-cyan-600  checked:opacity-100 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded-full"
                                                         onClick={() => { setSelectedImage(!selectedImage) }} />
+                                                       { check?.length === 0 ?
                                                     <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }}
                                                         onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item); 
                                                          setIndexImage(idx); }} />
+                                                           :
+                                                         <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "410px" }}
+                                                       />}
                                                 </a>
                                             </div>
 
