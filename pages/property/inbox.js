@@ -19,7 +19,7 @@ function Inbox() {
     useEffect(() => {
         firstfun();
     }, [])
-
+  
     const firstfun = () => {
         if (typeof window !== 'undefined') {
             var locale = localStorage.getItem("Language");

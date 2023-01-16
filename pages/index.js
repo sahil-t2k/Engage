@@ -82,6 +82,7 @@ function Signin(args) {
     }     
 }
 }
+
   //Write into Cookies
   function setCookieData(checked) {
     if (checked) {
@@ -93,6 +94,7 @@ function Signin(args) {
       Cookies.remove("password")
     }
   }
+
   //read from cookies
   function getCookieData() {
     var mail = Cookies.get("email");
@@ -103,6 +105,7 @@ function Signin(args) {
       document.getElementById('password').value = pass;
     }
   }
+
   /** Function for Internationalisation **/
   const changelanguage = (item) => {
     if (item != localStorage.getItem("Language")) {
