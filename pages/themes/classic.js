@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
+import { createLogger, stdSerializers } from 'bunyan';
 import StarRatings from 'react-star-ratings';
 import icon from '../../components/GlobalData'
 import english from '../../components/Languages/en'
@@ -18,7 +19,7 @@ import "swiper/css/navigation";
 // import required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
 import axios from 'axios';
-const logger = require("../../services/logger");
+// const logger = require("../../services/logger");
 import Router, { useRouter } from "next/router";
 import LineLoader from '../../components/loaders/lineloader';
 var currentUser;
@@ -34,9 +35,34 @@ var defaultRate = {
    base_rate_currency: 'USD'
 }
 
+const logger = createLogger({
+   name: 'myapp',
+   stream: process.stdout,
+   // log INFO and above to stdout    
+   serializers: {
+     req: reqSerializer,
+     res: stdSerializers.res,
+     err: stdSerializers.err
+   },
+ 
+ });
+ 
+ function reqSerializer(req) {
+   console.log(req)
+   return {
+     method: req.method,
+     url: req.url,
+     headers: req.headers,
+     remoteAddress: req.remoteAddress,
+     remotePort:req.remotePort,
+     port:req.port
+   };
+ }
+
 function Classic(args) {
    SwiperCore.use([Navigation, Pagination, Autoplay]);
    const [language, setLanguage] = useState(english);
+   const [ip, setIP] = useState({});
    const [calendarIn, setCalendarIn] = useState(false);
    const[checkinDate,setCheckinDate] = useState();
    const[checkoutDate,setCheckoutDate] = useState();
@@ -60,6 +86,26 @@ function Classic(args) {
    const [smSidebar, setSmSidebar] = useState(false)
    const [allHotelDetails, setAllHotelDetails] = useState([]);
 
+   useEffect(() => {
+      getData();
+    }, [])
+  
+    const getData = async () => {
+      const res = await axios.get('https://geolocation-db.com/json/');
+      setIP(res.data.IPv4)
+    }
+  
+    //read from cookies
+    function getIPData() {
+      logger.info({
+        req: {
+          method: 'GET', url: location.hostname, headers: { "content-type": "application/json" }, "remoteAddress": ip,
+          "remotePort":  location.pathname, "port":location.port
+        }, msg: 'cliced on home navbar'
+      });
+     
+    }
+
   const changeCheckIn =  (d1) => {
    setCheckinDate(d1);
     setD1(new Date(d1).toString().slice(4,10));
@@ -72,7 +118,7 @@ function Classic(args) {
    setD2(new Date(d2).toString().slice(4,10));
    setCalendarOut(!calendarOut);
  }
-   /** Router for Redirection **/
+ 
   /** Router for Redirection **/
   const router = useRouter();
   useEffect(() => {
@@ -99,6 +145,7 @@ function Classic(args) {
    useEffect(() => {
       fetchHotelDetails();
    }, []);
+   
    
 
    const fetchHotelDetails = async () => {
@@ -146,7 +193,7 @@ function Classic(args) {
                   </select>
                   
                   <a
-                     href="#home"
+                     href="#home" onClick={() => { getIPData("From button log") }}
                      className="header-menu-item"
                   >{language?.home} 
                   </a

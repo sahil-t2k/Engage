@@ -2,6 +2,11 @@
 /** @type {import('next').NextConfig} */
 const { withAxiom } = require('next-axiom');
 
+const nextConfig = {
+  reactStrictMode: true,
+}
+
+
 module.exports = withAxiom(
  
   // jest.config.js
@@ -14,11 +19,25 @@ module.exports = withAxiom(
     }
   , 
 
+ 
   webpack: (config) => {
     config.resolve.fallback = { crypto: 
     require.resolve("crypto-browserify")};
     
     return config;
+  },
+
+  resolve: {
+    
+    fallback: {
+      // 👇️👇️👇️ add this 👇️👇️👇️
+      "os": require.resolve("os-browserify/browser"),
+      "assert": require.resolve("assert"),
+      "stream": require.resolve("stream"),
+    }
+  },
+  "browser": {
+    "assert": false,
   },
    // Will be available on both server and client
   publicRuntimeConfig:'12.1.4',
