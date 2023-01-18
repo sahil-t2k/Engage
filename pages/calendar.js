@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
-import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
-import { scheduleData } from '../data/dummy';
-import { Header } from '../components';
+// import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
+// import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
+// import { scheduleData } from '../data/dummy';
+// import { Header } from '../components';
 
 function Calendar() {
     const [scheduleObj, setScheduleObj] = useState();
@@ -18,7 +18,7 @@ function Calendar() {
   
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-    <Header category="App" title="Calendar" />
+    {/* <Header category="App" title="Calendar" />
     <ScheduleComponent
       height="650px"
       ref={(schedule) => setScheduleObj(schedule)}
@@ -49,7 +49,7 @@ function Calendar() {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
    
   </div>
   )
