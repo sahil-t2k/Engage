@@ -22,23 +22,28 @@ module.exports = withAxiom(
  
   webpack: (config) => {
     config.resolve.fallback = { crypto: 
-    require.resolve("crypto-browserify")};
-    
+    require.resolve("crypto-browserify")}; 
     return config;
   },
 
+ 
+  
+   
+  
+
   resolve: {
-    
     fallback: {
-      // 👇️👇️👇️ add this 👇️👇️👇️
-      "os": require.resolve("os-browserify/browser"),
+     "os": require.resolve("os-browserify/browser"),
       "assert": require.resolve("assert"),
       "stream": require.resolve("stream"),
+      "zlib": require.resolve("browserify-zlib")
     }
   },
   "browser": {
+    // "zlib":false,
     "assert": false,
   },
+ 
    // Will be available on both server and client
   publicRuntimeConfig:'12.1.4',
   
@@ -56,7 +61,7 @@ module.exports = withAxiom(
    
   },
 
-
+ 
   future: {
     webpack5: true,
   },

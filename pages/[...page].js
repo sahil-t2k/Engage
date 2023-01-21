@@ -77,7 +77,7 @@ function Page() {
       var language= router.locale || 'en';
       console.log("language is "+language)
       fetchLanguage(language)
-     url=`/api/${router?.query?.page[0]}/${router?.query?.page[1]}/${router?.query?.page[2]}/${router?.query?.page[3]}`
+     url=`/api/${router?.query?.page[0]}/${router?.query?.page[1]}/${router?.query?.page[2]}/${router?.query?.page[3].toLowerCase()}`
       fetchProperty(url);
     }
     else{

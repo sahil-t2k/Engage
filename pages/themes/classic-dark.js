@@ -103,8 +103,7 @@ function ClassicDark(args) {
 
  //read from cookies
  function getIPData(msg,url) {
-   console.log(typeof msg);
-    const info = {req: {method: 'GET', url: url, headers: { "content-type": "application/json" }, "remoteAddress": ip,
+    const info = {req: {method: 'GET', url:`${location.pathname.toLowerCase()}${url.toLowerCase()}`, headers: { "content-type": "application/json" }, "remoteAddress": ip,
     "pathName": location.pathname, "port": location.port}}
    logger.info(info,msg);  
  }
@@ -114,10 +113,11 @@ function ClassicDark(args) {
    if(state=== false){getIPData(`${section} section expanded`,`/${section}`)}
    if(state=== true){getIPData(`${section}  section contract`,`/${section}`)}
  }
+ 
 //   For Single Room Logger
 function  getSingleSection(state,name,section){
- if(state=== false){getIPData(`${name} ${section} expanded`,`/${section}/${name}`)}
- if(state=== true){getIPData(`${name} ${section} contract`,`/${section}/${name}`)}
+ if(state=== false){getIPData(`${name} ${section} expanded`,`/${section}/${name.trim().replace(" ","-")}`)}
+ if(state=== true){getIPData(`${name} ${section} contract`,`/${section}/${name.trim().replace(" ","-")}`)}
 }
 
   const fetchHotelDetails = async () => {
@@ -175,12 +175,12 @@ function  getSingleSection(state,name,section){
                      className="header-menu-item"
                   ><span className='text-white hover:text-gray-400'>{language?.home} </span>
                   </a>
-                  <a  onClick={() => { getIPData("Anchor tag About from header"),"/about" }}
+                  <a  onClick={() => { getIPData("Anchor tag About from header","/about" )}}
                      href="#about"
                      className="header-menu-item"
                   >
                      <span className='text-white hover:text-gray-400'>{language?.about}</span></a>
-                  <a onClick={() => { getIPData("Anchor tag Gallery from header"),"/gallery" }}
+                  <a onClick={() => { getIPData("Anchor tag Gallery from header","/gallery" )}}
                      href="#gallery"
                      className="header-menu-item"
                   ><span className='text-white hover:text-gray-400'>{language?.gallery}</span></a>

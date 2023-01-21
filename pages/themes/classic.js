@@ -73,8 +73,7 @@ function Classic(args) {
   
     //read from cookies
     function getIPData(msg,url) {
-      console.log(typeof msg);
-       const info = {req: {method: 'GET', url: url, headers: { "content-type": "application/json" }, "remoteAddress": ip,
+     const info = {req: {method: 'GET', url:`${location.pathname.toLowerCase()}${url.toLowerCase()}`, headers: { "content-type": "application/json" }, "remoteAddress": ip,
              "pathName": location.pathname, "port": location.port}}
       logger.info(info,msg);  
     }
@@ -86,8 +85,8 @@ function Classic(args) {
     }
 //   For Single Room Logger
   function  getSingleSection(state,name,section){
-    if(state=== false){getIPData(`${name} ${section} expanded`,`/${section}/${name}`)}
-    if(state=== true){getIPData(`${name} ${section} contract`,`/${section}/${name}`)}
+    if(state=== false){getIPData(`${name} ${section} expanded`,`/${section}/${name.trim().replace(" ","-")}`)}
+    if(state=== true){getIPData(`${name} ${section} contract`,`/${section}/${name.trim().replace(" ","-")}`)}
   }
   const changeCheckIn = (d1) => {
    setCheckinDate(d1);
@@ -174,12 +173,11 @@ function Classic(args) {
                      className="header-menu-item"
                   >{language?.home} 
                   </a>
-                  <a   onClick={() => { getIPData("Anchor tag About from header"),"/about" }}
+                  <a  onClick={() => { getIPData("Anchor tag About from header","/about") }}
                      href="#about"
                      className="header-menu-item"
-                  >{language?.about}</a
-                  >
-                  <a onClick={() => { getIPData("Anchor tag Gallery from header"),"/gallery" }}
+                  >{language?.about}</a>
+                  <a onClick={() => { getIPData("Anchor tag Gallery from header","/gallery") }}
                      href="#gallery"
                      className="header-menu-item"
                   >{language?.gallery}</a
@@ -393,7 +391,7 @@ function Classic(args) {
 
                       {/* Rooms */}
                        <div id="rooms" className={singleRoom === false ? 'accordion-start accordion-panel' : 'accordion-start accordion-panel active'}>
-                              <div onClick={() => {setSingleRoom(!singleRoom);getMsgSection(singleRoom,"Rooms")}}className='accordion-trigger'>
+                              <div onClick={() => {setSingleRoom(!singleRoom);getMsgSection(singleRoom,"rooms")}}className='accordion-trigger'>
                                  <button className='mb-6' >
                                     <div className='accordion-trigger'>
                                        <div className={visible === 0 ? 'block  w-32 mb-6' : 'hidden'}><SubHeading /></div>
@@ -406,7 +404,7 @@ function Classic(args) {
                                     return (
                                        <div  className='group'   key={idx}>
                                           <div  onClick={() => {
-                                          setOpen({ ...open, view: !open.view, id: idx }); getSingleSection(open?.view,resource?.room_name,"Rooms")
+                                          setOpen({ ...open, view: !open.view, id: idx }); getSingleSection(open?.view,resource?.room_name,"rooms")
                                          }}>
                                           <p className='flex capitalize mt-4 py-1'>
                                              <div className="my-1.5 mr-1.5 -ml-2 border-gray-200 border-0 rounded-full  font-bold text-gray-600  bg-gray-200 flex items-center justify-center" style={{ height: "22px", width: "22px", fontSize: "14px" }}>{idx + 1}</div>
@@ -671,7 +669,7 @@ function Classic(args) {
                            {/* Packages */}
                            {args?.allPackages?.packages  !== undefined?
                            <div id="packages" className={packages === false ? 'accordion-start accordion-panel' : 'accordion-start accordion-panel active'}>
-                              <div className='accordion-trigger' onClick={() => { setPackages(!packages);getMsgSection(packages,"Packages") }}>
+                              <div className='accordion-trigger' onClick={() => { setPackages(!packages);getMsgSection(packages,"packages") }}>
                                  <button className="mb-6" >
                                     <div className='accordion-trigger' >
                                        <div className={visible === 0 ? 'block  mb-6 w-32' : 'hidden'}><SubHeading /></div>
@@ -685,7 +683,7 @@ function Classic(args) {
                                     return (
                                        <div className='group'  key={idx}>
                                           <div onClick={() => {
-                                          setOpen({ ...open, view: !open.view, id: idx });getSingleSection(open?.view,resource?.package_name,"Packages")
+                                          setOpen({ ...open, view: !open.view, id: idx });getSingleSection(open?.view,resource?.package_name,"packages")
                                          }}>
                                           <p className='flex capitalize mt-4 py-1'>
                                              <div className="my-1.5 mr-1.5 -ml-2 border-gray-200 border-0 rounded-full  font-bold text-gray-600  bg-gray-200 flex items-center justify-center" style={{ height: "22px", width: "22px", fontSize: "14px" }}>{idx + 1}</div>

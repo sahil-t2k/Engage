@@ -50,7 +50,6 @@ function ReadMessage() {
         }
     }
 
-
     const inbox = () => {
         Router.push("../inbox")
     }

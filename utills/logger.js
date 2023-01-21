@@ -1,10 +1,22 @@
-import { createLogger, stdSerializers } from 'bunyan';
-
+import { createLogger, stdSerializers} from 'bunyan';
+// import { createStream, createLogger, stdSerializers} from 'bunyan-kafka';
 
     
 export const logger = createLogger({
-    name: 'myapp',
+    name: 'engage-theme-logs',
     stream: process.stdout,
+    // stream: {
+    //   level: 'info',
+    //   type: 'raw',
+    //   stream: createStream({
+    //     kafka: {
+    //       topic: 'themelogs',
+    //       client: {
+    //         kafkaHost: '103.136.36.27:9092'
+    //       }
+    //     }
+    //   })
+    // },
     // log INFO and above to stdout    
     serializers: {
       req: reqSerializer,
@@ -12,6 +24,19 @@ export const logger = createLogger({
       err: stdSerializers.err
     },
   });
+  
+  // logger.addStream({
+  //   level: 'info',
+  //   type: 'raw',
+  //   stream: bunyanKafka.createStream({
+  //     kafka: {
+  //       topic: 'themelogs',
+  //       client: {
+  //         kafkaHost: '103.136.36.27:9092'
+  //       }
+  //     }
+  //   })
+  // });
 
  export function reqSerializer(req) {
     return {
