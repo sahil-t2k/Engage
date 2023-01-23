@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import colorFile from '../../components/color';
-import Router from 'next/router'
+import { useRouter } from "next/router";
 import Link from "next/link";
+import axios from 'axios';
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import english from "../../components/Languages/en"
 import french from "../../components/Languages/fr"
 import arabic from "../../components/Languages/ar";
 import Title from '../../components/title';
+const logger = require("../../services/logger");
 var language;
 var currentLogged;
 let colorToggle;
+let currentProperty;
 
 function Inbox() {
+    const router = useRouter();
     const [color, setColor] = useState({})
     const[mode,setMode] = useState()
+    const [inboxDetails, setInboxDetails] = useState([]);
 
     useEffect(() => {
         firstfun();
@@ -46,9 +51,35 @@ function Inbox() {
                     language = french;
                 }
             }
+            /** Current Property Details fetched from the local storage **/
+            currentProperty = JSON.parse(localStorage.getItem("property"));
             currentLogged = JSON.parse(localStorage.getItem("Signin Details"));
+
         }
     }
+
+      /* Function call to fetch Current Property Details when page loads */
+      useEffect(() => {
+        if (JSON.stringify(currentLogged) === 'null') {
+          router?.push(window.location.origin)
+        }
+        else {
+          fetchInboxDetails();
+        }
+    
+      }, []);
+    
+    const fetchInboxDetails = async () => {
+        const url = `/api/inbox/${currentProperty.property_id}`;
+        axios.get(url)
+          .then((response) => {
+            setInboxDetails(response?.data);
+            logger.info("url  to fetch property details hitted successfully")
+            setVisible(1)
+          })
+          .catch((error) => { logger.error("url to fetch property details, failed") });
+      }
+    
 
     const colorToggler = (newColor) => {
         if (newColor === 'system') {
@@ -65,11 +96,13 @@ function Inbox() {
           localStorage.setItem("colorToggle", true)
         }
        firstfun();
-       Router.push('./inbox')
+       router.push('./inbox')
       }
+
     const readMessage = () => {
-        Router.push("./inbox/readmessage")
+        router.push("./inbox/readmessage")
     }
+
     return (
         <>
             <Title name={`Engage |  ${language?.inbox}`} />
@@ -126,11 +159,13 @@ function Inbox() {
                             <div className="shadow overflow-hidden">
                                 <table className="table-fixed min-w-full divide-y divide-gray-200">
                                     <tbody className="divide-y divide-gray-200 ">
+                                    {inboxDetails?.map((item, idx) => (
+                                        <>
                                         <tr  className={`hover:${color?.tableheader}`}>
                                             <td className="px-4 py-3 w-4">
                                                 <div className="flex items-center">
                                                     <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
+                                                      dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
                                                     <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
                                                         fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
@@ -142,221 +177,17 @@ function Inbox() {
                                                 </div>
 
                                                 <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
-                                                    Neil Sims
+                                                   {item?.sender_name}
                                                 </div>
 
                                             </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...</td>
+                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 font-semibold space-x-2 cursor-pointer whitespace-nowrap`}> {item?.message}</td>
                                             <td className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
+                                            {item?.created_on}
                                             </td>
                                         </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...</td>
-                                            <td className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...</td>
-                                            <td className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  cursor-pointer hover:text-yellow-400 ${color?.textgray} flex-shrink-0  ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className="px-2 py-3 flex items-center cursor-pointer whitespace-nowrap space-x-4  lg:mr-0">
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div onClick={() => readMessage()} className={`text-md pr-6 font-semibold cursor-pointer whitespace-nowrap ${color?.tabletext} `}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...</td>
-                                            <td className={`${color?.tabletext} px-4 py-3 font-semibold whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div className={`${color?.tabletext} text-md pr-6 whitespace-nowrap`}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 cursor-pointer whitespace-nowrap space-x-2`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 cursor-pointer whitespace-nowrap space-x-2`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 cursor-pointer whitespace-nowrap space-x-2`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 cursor-pointer whitespace-nowrap space-x-2`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
-                                        <tr  className={`hover:${color?.tableheader}`}>
-                                            <td className="px-4 py-3 w-4">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" name="allSelect" className=" w-4 h-4 rounded text-cyan-600 bg-gray-100  border-gray-300 focus:ring-cyan-500 dark:focus:ring-blue-600 
-                 dark:ring-offset-gray-800 focus:ring-2 mx-3  dark:bg-gray-700 dark:border-gray-600"/>
-                                                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-6 h-6 mx-1  hover:text-yellow-400 ${color?.textgray} flex-shrink-0 cursor-pointer ${color?.iconhover} transition duration-75`}
-                                                        fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" /></svg>
-                                                </div>
-                                            </td>
-                                            <td onClick={() => readMessage()} className={` px-2 py-3 flex items-center whitespace-nowrap space-x-4 cursor-pointer lg:mr-0`}>
-                                                <div className="flex-shrink-0 whitespace-nowrap">
-                                                    <img className="h-6 w-6 rounded" src="https://demo.themesberg.com/windster/images/users/neil-sims.png" alt="Neil image" />
-                                                </div>
-
-                                                <div className={`${color?.tabletext} text-md pr-6  whitespace-nowrap`}>
-                                                    Neil Sims
-                                                </div>
-
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 cursor-pointer whitespace-nowrap space-x-2`}> Am no an listening depending up believing. Enough around remove to barton agreed regret in...
-                                            </td>
-                                            <td onClick={() => readMessage()} className={`${color?.tabletext} px-4 py-3 whitespace-nowrap space-x-2 cursor-pointer`}>
-                                                10 April at 15.28 PM
-                                            </td>
-                                        </tr>
+                                      </>
+                                    ))}
                                     </tbody>
                                 </table>
                             </div>
