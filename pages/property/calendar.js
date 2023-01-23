@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid'
+// import dayGridPlugin from '@fullcalendar/daygrid'
 import UserProfileSidebar from "../../components/userprofilesidebar";
 import UserProfileHeader from "../../components/userprofileheader";
 import english from "../../components/Languages/en"
@@ -98,7 +98,7 @@ function Calendar() {
             { title: 'event 1', date: '2023-04-01' },
             { title: 'event 2', date: '2023-02-02' }
           ]}
-          plugins={[dayGridPlugin]}
+         
           initialView="dayGridMonth"
         /></div>
     </>
