@@ -342,7 +342,7 @@ function Theme() {
                     /\s+/g,
                     "-"
                   )}/${currentProperty?.address_city}/${currentProperty?.property_category
-                  }s/${allHotelDetails?.property_name?.replaceAll(' ', '-')}`
+                  }s/${allHotelDetails?.property_name?.replaceAll(' ', '-')?.toLowerCase()}`
                 }>
                   <a target="_blank">Preview </a>
                 </Link>

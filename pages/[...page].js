@@ -78,7 +78,6 @@ function Page({ data, room_data, package_data }) {
       setAllPackages(package_data);
       }
 
-  
   /* Function call to fetch Current Property Details when page loads */
   useEffect(() => {
     if(data==='404')

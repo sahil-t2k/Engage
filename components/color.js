@@ -7,7 +7,9 @@ export default {
         "crossbg":"text-gray-200",
         "tabletext":"text-gray-100",
         "cross":"bg-gray-700",
-        "deltext":"text-gray-200","greybackground":"bg-gray-900","whitebackground":"bg-gray-800","hover":"hover:bg-gray-900","error":"text-red-500","textgray":"text-gray-400","sidebar":"hover:bg-gray-700","iconhover":"group-hover:text-white","footerhover":"hover:text-white","widget":"text-slate-400"
+        "deltext":"text-gray-200",
+        "greybackground":"bg-gray-900",
+        "whitebackground":"bg-gray-800","hover":"hover:bg-gray-900","error":"text-red-500","textgray":"text-gray-400","sidebar":"hover:bg-gray-700","iconhover":"group-hover:text-white","footerhover":"hover:text-white","widget":"text-slate-400"
     },
     "light":
     {"name":"light",
