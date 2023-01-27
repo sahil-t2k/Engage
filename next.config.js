@@ -14,7 +14,7 @@ module.exports = withAxiom(
  { setupFilesAfterEnv: ['./jest.setup.js'],
 
  env:{
-      serverURL:"http://103:136:36:27",
+      serverURL:"http://103.136.36.27",
       port:"7860"
     }
   , 

@@ -123,14 +123,14 @@ export async function getServerSideProps(context) {
   //to check if url is valid string
   if (items.split('/').length === 5) {
     //fetch hotel data
-    const data = await fetch(`http://103.136.36.27:7860/api${items}`)
+  const data = await fetch(`${process.env.serverURL}:${process.env.port}/api${items}`)
       .then((response) => response.json());
     let property_id= data.property_id;
     //fetch room data
-    const room_data=await fetch(`http://103.136.36.27:7860/api/all_rooms_details/${property_id}`)
+    const room_data=await fetch(`${process.env.serverURL}:${process.env.port}/api/all_rooms_details/${property_id}`)
     .then((response) => response.json());
 //fetch package data
-    const package_data=await fetch(`http://103.136.36.27:7860/api/all_packages_details/${property_id}`)
+    const package_data=await fetch(`${process.env.serverURL}:${process.env.port}/api/all_packages_details/${property_id}`)
     .then((response) => response.json()) 
     //return data fetched to function generation html  
     return { props: { data,room_data,package_data } }

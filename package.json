@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "dev": "npm-run-all --serial git-info start-server",
-    "test": "jest --watch --detectOpenHandles"
+    "test": "jest --watchAll --detectOpenHandles --coverage"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.0.3",
