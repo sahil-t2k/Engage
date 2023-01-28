@@ -68,6 +68,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon002"
                             }
                         ],
                         "capacity": [
@@ -155,10 +158,98 @@ function itenary() {
                                 "provider_id": "provider004"
                             }
                         ]
+                    },
+                    {
+                        "activity_name": "Night Stay In Gulmarg",
+                        "time_of_ride": "",
+                        "distance": "",
+                        "place": "Gulmarg",
+                        "milestones": [
+
+                        ],
+                        "boarding_point": "Gulmarg",
+                        "Guided_tour": false,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 2
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
                     }
                 ],
-                "addons": [],
-                "providers": []
+                "addons": [
+                    {
+                        "addon_id": "addon001",
+                        "addon_name": "First Aid kit",
+                        "provider": "Service provider",
+                        "serves": "4",
+                        "quantity": "1"
+                    },
+                    {
+                        "addon_id": "addon002",
+                        "addon_name": "Refreshment",
+                        "provider": "NH-1 Restaurant Shalteng",
+                        "serves": "1",
+                        "quantity": "7"
+                    }
+
+                ],
+                "providers": [
+                    {
+                        "provider_id": "provider001",
+                        "provider_category": "Food",
+                        "Name": "M/s NH 1 Restautant",
+                        "Company": "NH 1 Restautant pvt ltd",
+                        "languageOptions": [
+                            "English",
+                            "Hindi",
+                            "kannad"
+                        ],
+                        "guideExperience": {
+                            "years": 10,
+                            "certifications": [
+                                "Certified Asian Chef",
+                                "Certified Muglai Chef"
+                            ],
+                            "specializations": [
+                                "Muglai food",
+                                "South Indian Food"
+                            ]
+                        },
+                        "groupSize": {
+                            "min": 2,
+                            "max": 20
+                        },
+                        "servicesOffered": {
+                            "Veg Food": true,
+                            "Non-Veg Food": true,
+                        },
+                        "contactInformation": {
+                            "email": "NH1@t2k.com",
+                            "phone": "101102911",
+                            "website": "www.NH1.t2k.com"
+                        },
+                        "reviews": [
+                            {
+                                "name": "Raman Iyer",
+                                "rating": 5,
+                                "review": "They serve authentic South indian food."
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "day": 2,
@@ -266,14 +357,232 @@ function itenary() {
                                 "provider_id": "provider004"
                             }
                         ]
+                    },
+                    {
+                        "activity_name": "Stay in Pehalgam",
+                        "time_of_ride": "",
+                        "distance": "",
+                        "place": "pehalgam",
+                        "milestones": [
+
+                        ],
+                        "boarding_point": "Pehalgam",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 2
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
                     }
                 ],
                 "addons": [],
                 "providers": []
-            }
+            },
+            {
+                "day": 3,
+                "activities": [
+                    {
+                        "activity_name": "Transfer From pehalgam to srinagar",
+                        "time_of_ride": "2 Hrs",
+                        "distance": "110km",
+                        "place": "srinagar",
+                        "milestones": [
+                            {
+                                "Pampore Saffron fields": true,
+                                "description": "Witness the freshness of worlds best saffron fields"
+                            }
+                        ],
+                        "boarding_point": "Pehalgam",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 3
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
+                    },
+                    {
+                        "activity_name": "Shikara Ride",
+                        "time_of_ride": "30 min",
+                        "distance": "7 km",
+                        "place": "Srinagar",
+                        "milestones": [
+                            {
+                                "Nehru Park": true,
+                                "description": "Nehru Park, Dal Lake, Srinagar, Kashmir, a small island park with swimming pool, boating facilities and small park for picnic. Can be reached by shikaras, popular destination in evenings."
+                            },
+                            {
+                                "Char Chinar": true,
+                                "description": "Char Chinar, also sometimes called Char Chinari, Ropa Lank, or Rupa Lank, is an island in Dal Lake, Srinagar, Jammu and Kashmir. Dal Lake includes 3 islands, 2 of which are marked with beautiful Chinar trees. The island located on the Lakut Dal (small Dal) is known as Roph Lank (Silver Island), is marked with the presence of majestic Chinar trees at the four corners, thus known as Char-Chinari (Four Chinars). The second Chinar Island, known as Sone Lank (Gold Island), is located on the Bod Dal (Big Dal) and overlooks the holy shrine of Hazratbal ."
+                            }
+                        ],
+                        "boarding_point": "Ghat no 2",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 3
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
+                    },
+                    {
+                        "activity_name": "Visit to Mughal Gardens",
+                        "time_of_ride": "1 Hr",
+                        "distance": "16km",
+                        "place": "Srinagar",
+                        "milestones": [
+                            {
+                                "Nishat": true,
+                                "description": "Nishat is famous for the Nishat Gardens (Nishat Bagh). And is a very popular tourist destination. The Nishat Bagh is a 12 terraced garden located near Srinagar's famous Dal Lake. It is the second-largest Mughal garden in Kashmir after Shalimar Bagh. Nishat Bagh was designed and built in 1633 by Asif Khan, the elder brother of Nur Jehan."
+                            },
+                            {
+                                "Shalimar": true,
+                                "description": "Shalimar Bagh is a Mughal garden in Srinagar, Jammu and Kashmir, India, linked through a channel to the northeast of Dal Lake. It is also known as Shalimar Gardens, Farah Baksh, and Faiz Baksh. The other famous shoreline garden in the vicinity is Nishat Bagh, 'The Garden of Delight'. The Bagh was built by Mughal Emperor Jahangir, for his wife Nur Jahan, in 1619. ."
+                            },
+                            {
+                                "Chashma shahie": true,
+                                "description": "Chashme Shahi or Chashma i Shahi Or Cheshma Shahi (translation: the royal spring), also called Chashma Shahi or Cheshma Shahi, is one of the Mughal gardens built in 1632 AD around a spring by Ali Mardan Khan, a governor of Mughal emperor Shah Jahan as per the orders of the Emperor, as a gift for his eldest son Prince Dara Shikoh.[1][2] The garden is located in the Zabarwan Range, near Raj Bhawan (Governor's house) overlooking Dal Lake in Srinagar, Kashmir, India."
+                            },
+                            ,
+                            {
+                                "Pari mehal": true,
+                                "description": "Pari Mahal or Peer Mahal, also known as The Palace of Fairies, is a seven-terraced garden located at the top of Zabarwan mountain range, overlooking the city of Srinagar and the south-west of Dal Lake in the Indian union territory of Jammu and Kashmir. It is an example of Islamic architecture and patronage of art during the reign of the then Mughal Emperor Shah Jahan. ."
+                            }
+                        ],
+                        "boarding_point": "Pehalgam taxi stand",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 0
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
+                    },
+                    {
+                        "activity_name": "Stay in Srinagar",
+                        "time_of_ride": "",
+                        "distance": "",
+                        "place": "pehalgam",
+                        "milestones": [
+
+                        ],
+                        "boarding_point": "Pehalgam",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 2
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
+                    }
+                ],
+                "addons": [],
+                "providers": []
+            },
+            {
+                "day": 4,
+                "activities": [
+                    {
+                        "activity_name": "Transfer From Srinagar Airport",
+                        "time_of_ride": "1 Hrs",
+                        "distance": "16km",
+                        "place": "Srinagar",
+                        "milestones": [
+
+                        ],
+                        "boarding_point": "Srinagar hotel",
+                        "Guided_tour": true,
+                        "add_on": [
+                            {
+                                "addon_id": "addon001"
+                            }
+                        ],
+                        "capacity": [
+                            {
+                                "adult": 4
+                            },
+                            {
+                                "children": 3
+                            }
+                        ],
+                        "providers": [
+                            {
+                                "provider_id": "provider004"
+                            }
+                        ]
+                    }
+
+                ],
+                "addons": [],
+                "providers": []
+            },
         ]
 
     }
+    const addons = [{
+
+    }]
     return (
         <div>
             <>
@@ -320,7 +629,7 @@ function itenary() {
 
                     {/*content start*/}
                     <div className='mx-4'>
-                        {/* <h1>{JSON.stringify(itenary)}</h1> */}
+
                         <div className='flex'>
                             <span className='text-3xl'>{itenary.tour_name}</span>
                             <h2 className='indent-4 pt-3'>{itenary.duration_days} Days and {itenary.duration_nights} Nights - {itenary.tour_type} tour</h2>
@@ -329,49 +638,111 @@ function itenary() {
 
                         {/*Day wise activity */}
                         <div >
-                            <div className='mt-4 mx-4 p-2 border-rose-900 border border-4 '>
-                            <span className='text-3xl'>Itenary <br /></span>
-                            {itenary.plan.map((item,i) => (
-                                <div key={i} className='border border-2 border-black border-dotted p-4'>
-                                    {/* {JSON.stringify(item)} */}
-                                    <span>Day: {item.day}</span>
-                                    <div>
-                                        {item.activities.map(act => {
-                                            return (
-                                                <>
-                                                    {/* {JSON.stringify(act)} */}
-                                                <div>Activity name : {act?.activity_name}</div>
-                                                <div>Time of ride : {act?.time_of_ride}</div>
-                                                <div>Distance : {act?.distance}</div>
-                                                <div>Place: {act?.place}</div>
-                                                    <div>Mile stones : {act.milestones.map((ms,id) => {
-                                                        return (<div key={id}>
-                                                            Place: {Object.keys(ms)[0]} <br/>
-                                                            Description: {ms.description}
-                                                            </div>)
-                                                    })}</div>
-                                                    <div>Boarding point: {act?.boarding_point}</div>
-                                                    <div>Guided Tour: {act?.Guided_tour?'Yes':'No'}</div>
-                                                    <div>Capacity:
-                                                       Adult : {act?.capacity.[0].adult}<br/>
-                                                       Children : {act?.capacity.[1].children}
-                                                    </div>
-                                                    <div>Addons: {act?.add_on.map((Add,idx)=>{return(<div key={idx}>Addon_id: 
-                                                    {Add.addon_id}</div>)})}</div>
-                                                    <div>Provider:{act?.providers.map((pro,idx)=>{return(<div key={idx}>Provider_id: 
-                                                    {pro.provider_id}</div>)})}</div>
-                                                    *************************
-                                                </>
-                                            )
-                                        })}
+                            <div className='mt-4 mx-4 p-2 '>
+                                <span className='text-3xl'>Itenary <br /></span>
+                                {itenary.plan.map((item, i) => (
+                                    <div key={i} >
+                                        <table className='my-16 border-collapse border border-black bg-zinc-300 w-full'>
+                                            <tbody className=''>
 
+                                                <tr className='border border-black'>
+                                                    <th className='border border-black'>Day:</th>
+                                                    <td className='border border-black'>{item.day}</td>
+                                                </tr>
+                                                {item.activities.map((act, i) => {
+                                                    return (
+                                                        <>
+                                                            {/* {JSON.stringify(act)} */}
+                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Activity name :</th>
+                                                                <td className='border border-black'>{act?.activity_name}</td>
+                                                            </tr>
+                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Time of ride :</th>
+                                                                <td className='border border-black'>{act?.time_of_ride}</td>
+                                                            </tr>
+                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Distance :</th>
+                                                                <td className='border border-black'>{act?.distance}</td>
+                                                            </tr>
+                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Place:</th>
+                                                                <td className='border border-black'>{act?.place}</td>
+                                                            </tr>
+                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Mile stones :</th>
+                                                                <td className='border border-black'>
+                                                                    {act.milestones.map((ms, id) => {
+                                                                        return (<><tr className='border border-black' key={id}>
+                                                                            <th className='border border-black' width='auto'>Place:</th>
+                                                                            <td className='border border-black'> {Object.keys(ms)[0]}</td>
+                                                                        </tr>
+                                                                            <tr className='border border-black' key={id}>
+                                                                                <th className='border border-black' width='auto'>Description:</th>
+                                                                                <td className='border border-black'>{ms.description}</td>
+                                                                            </tr></>)
+                                                                    })}
+                                                                </td>
+                                                            </tr>
+                                                            <tr className='border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Boarding point:</th>
+                                                                <td className='border border-black'>{act?.boarding_point}</td>
+                                                            </tr>
+                                                            <tr className='border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Guided Tour:</th>
+                                                                <td className='border border-black'>{act?.Guided_tour ? 'Yes' : 'No'}</td>
+                                                            </tr>
+                                                            <tr className='border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Capacity:</th>
+                                                                <td className='border border-black'>
+                                                                    <tr className='border border-black' key={i}>
+                                                                        <th className='border border-black' width='auto'>Adult :</th>
+                                                                        <td className='border border-black'>{act?.capacity.[0].adult}</td>
+                                                                    </tr>
+                                                                    <tr className='border border-black' key={i}>
+                                                                        <th className='border border-black' width='auto'>Children :</th>
+                                                                        <td className='border border-black'>{act?.capacity.[1].children}</td>
+                                                                    </tr>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr className='border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Addons:</th>
+                                                                <td className='border border-black'>
+                                                                    {act?.add_on.map((Add, idx) => {
+                                                                        return (
+                                                                            <tr className='border border-black' key={idx}>
+                                                                                <th className='border border-black' width='auto'>Addon_id:</th>
+                                                                                <td className='border border-black'>{Add.addon_id}</td>
+                                                                            </tr>)
+                                                                    })}
+
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr className='border border-black' key={i}>
+                                                                <th className='border border-black' width='auto'>Provider:</th>
+                                                                <td className='border border-black'>
+                                                                    <tr className='border border-black' key={i}>
+                                                                        {act?.providers.map((pro, idx) => {
+                                                                            return (<tr className='border border-black' key={idx}><th className='border border-black' width='auto'>Provider_id:</th>
+                                                                                <td className='border border-black'>{pro.provider_id}</td>
+                                                                            </tr>)
+                                                                        })}
+                                                                    </tr>
+                                                                </td>
+                                                            </tr>
+                                                        </>
+                                                    )
+                                                })}
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
 
-                            ))
-                            }
+                                ))
+                                }
 
-                        </div>
+                            </div>
 
 
                             {/*Pricing box */}
