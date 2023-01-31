@@ -39,18 +39,19 @@ function Page({ data, room_data, package_data }) {
   }
   const fetchProperty = async () => {
     
-    if(data.http_code !='404'){
+    if(data?.http_code !='404'){
    var language= router.locale || 'en';
     console.log("language is "+language)
     fetchLanguage(language)
     setAllHotelDetails(data);
-    setTheme(data.theme != "" ? data.theme : 'Classic');
+    setTheme(data?.theme != "" ? data?.theme : 'Classic');
     fetchRoomDetails(room_data);
     fetchPackageDetails(package_data);
-    data.contacts.map(i => { if (i.contact_type === 'Phone') { setPhone(i) } });
-    data.contacts.map(i => { if (i.contact_type === 'Email') { setEmail(i) } });
+    
+    data?.contacts?.map(i => { if (i.contact_type === 'Phone') { setPhone(i) } });
+    data?.contacts?.map(i => { if (i.contact_type === 'Email') { setEmail(i) } });
     var ser = [];
-    data.services.map(i => {
+    data?.services?.map(i => {
       if (i.service_value !== "no")
         if (i.service_value !== "Not available") {
           {
@@ -125,7 +126,7 @@ export async function getServerSideProps(context) {
     //fetch hotel data
   const data = await fetch(`${process.env.serverURL}:${process.env.port}/api${items}`)
       .then((response) => response.json());
-    let property_id= data.property_id;
+    let property_id= data?.property_id;
     //fetch room data
     const room_data=await fetch(`${process.env.serverURL}:${process.env.port}/api/all_rooms_details/${property_id}`)
     .then((response) => response.json());

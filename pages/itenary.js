@@ -83,10 +83,14 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider001"
+                            },
+                            {
+                                "provider_id": "provider002"
                             }
                         ]
                     },
+                    
                     {
                         "activity_name": "Gondolla ride",
                         "time_of_ride": "30 min",
@@ -111,6 +115,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon003"
                             }
                         ],
                         "capacity": [
@@ -143,6 +150,13 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon004"
+                            }
+                            ,
+                            {
+                                "addon_id": "addon005"
                             }
                         ],
                         "capacity": [
@@ -172,6 +186,18 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id":"addon006"
+                            },
+                            {
+                                "addon_id":"addon007"
+                            },
+                            {
+                                "addon_id":"addon008"
+                            },
+                            {
+                                "addon_id":"addon009"
                             }
                         ],
                         "capacity": [
@@ -184,68 +210,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
-                            }
-                        ]
-                    }
-                ],
-                "addons": [
-                    {
-                        "addon_id": "addon001",
-                        "addon_name": "First Aid kit",
-                        "provider": "Service provider",
-                        "serves": "4",
-                        "quantity": "1"
-                    },
-                    {
-                        "addon_id": "addon002",
-                        "addon_name": "Refreshment",
-                        "provider": "NH-1 Restaurant Shalteng",
-                        "serves": "1",
-                        "quantity": "7"
-                    }
-
-                ],
-                "providers": [
-                    {
-                        "provider_id": "provider001",
-                        "provider_category": "Food",
-                        "Name": "M/s NH 1 Restautant",
-                        "Company": "NH 1 Restautant pvt ltd",
-                        "languageOptions": [
-                            "English",
-                            "Hindi",
-                            "kannad"
-                        ],
-                        "guideExperience": {
-                            "years": 10,
-                            "certifications": [
-                                "Certified Asian Chef",
-                                "Certified Muglai Chef"
-                            ],
-                            "specializations": [
-                                "Muglai food",
-                                "South Indian Food"
-                            ]
-                        },
-                        "groupSize": {
-                            "min": 2,
-                            "max": 20
-                        },
-                        "servicesOffered": {
-                            "Veg Food": true,
-                            "Non-Veg Food": true,
-                        },
-                        "contactInformation": {
-                            "email": "NH1@t2k.com",
-                            "phone": "101102911",
-                            "website": "www.NH1.t2k.com"
-                        },
-                        "reviews": [
-                            {
-                                "name": "Raman Iyer",
-                                "rating": 5,
-                                "review": "They serve authentic South indian food."
+                                "provider_id": "provider005"
                             }
                         ]
                     }
@@ -278,6 +243,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon002"
                             }
                         ],
                         "capacity": [
@@ -290,7 +258,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider001"
                             }
                         ]
                     },
@@ -310,6 +278,12 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon0011"
+                            },
+                            {
+                                "addon_id": "addon0010"
                             }
                         ],
                         "capacity": [
@@ -322,7 +296,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider006"
                             }
                         ]
                     },
@@ -342,6 +316,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon0012"
                             }
                         ],
                         "capacity": [
@@ -354,7 +331,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider007"
                             }
                         ]
                     },
@@ -371,6 +348,18 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id":"addon006"
+                            },
+                            {
+                                "addon_id":"addon007"
+                            },
+                            {
+                                "addon_id":"addon008"
+                            },
+                            {
+                                "addon_id":"addon009"
                             }
                         ],
                         "capacity": [
@@ -383,13 +372,11 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider007"
                             }
                         ]
                     }
-                ],
-                "addons": [],
-                "providers": []
+                ]
             },
             {
                 "day": 3,
@@ -410,6 +397,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id":"addon0013"
                             }
                         ],
                         "capacity": [
@@ -422,7 +412,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider008"
                             }
                         ]
                     },
@@ -446,6 +436,9 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id":"addon0014"
                             }
                         ],
                         "capacity": [
@@ -458,7 +451,7 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider009"
                             }
                         ]
                     },
@@ -491,6 +484,12 @@ function itenary() {
                         "add_on": [
                             {
                                 "addon_id": "addon001"
+                            },
+                            {
+                                "addon_id": "addon0017"
+                            },
+                            {
+                                "addon_id":"addon0018"
                             }
                         ],
                         "capacity": [
@@ -503,7 +502,10 @@ function itenary() {
                         ],
                         "providers": [
                             {
-                                "provider_id": "provider004"
+                                "provider_id": "provider002"
+                            },
+                            {
+                                "provider_id": "provider0010"
                             }
                         ]
                     },
@@ -536,9 +538,7 @@ function itenary() {
                             }
                         ]
                     }
-                ],
-                "addons": [],
-                "providers": []
+                ]
             },
             {
                 "day": 4,
@@ -580,20 +580,625 @@ function itenary() {
         ]
 
     }
-    const addons = [{
+    const addons = [
+        {
+            "addon_id": "addon001",
+            "name": "First aid kit",
+            "provider": "service provider",
+            "description": "The first kit will be available on board",
+            "price": "",
+            "serves": "5",
+            "quantity": "2"
+          },
+          {
+            "addon_id": "addon002",
+            "name": "Refreshment on the way to gulmarg",
+            "provider": "Restaurant NH-1, Shalteng",
+            "description": "The guest will be served with the refreshment i.e. chai pakauda and snacks",
+            "price": "150",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon003",
+            "name": "Gandola",
+            "provider": "gulmarg gondola corp",
+            "description": "The guest will get the gondola tickets once they reach at boarding point",
+            "price": "1500",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon004",
+            "name": "Skiing Gears",
+            "provider": "Gulmarg Slopes",
+            "description": "The guest will get the Skiing gears from the vendor",
+            "price": "1500",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon005",
+            "name": "Skiing Instructor",
+            "provider": "Gulmarg Slopes",
+            "description": "The guest will be able to learn from experienced instructor",
+            "price": "1500",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon006",
+            "name": "Dinner",
+            "provider": "Hotel",
+            "description": "The guest will be able to have veg as well as non veg food at hotel as per their choice",
+            "price": "1500",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon007",
+            "name": "welcome drink",
+            "provider": "Hotel",
+            "description": "The guest will be served with authentic kashmiri kehwa as soon as they check in",
+            "price": "150",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon008",
+            "name": "BreakFast",
+            "provider": "Hotel",
+            "description": "The guest will be able to have veg as well as non veg food at hotel as per their choice",
+            "price": "250",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0010",
+            "name": "Horse ride gear",
+            "provider": "Horse riding company",
+            "description": "The rider will get riding gears",
+            "price": "1250",
+            "serves": "6",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0010",
+            "name": "Horse ride",
+            "provider": "Horse riding company",
+            "description": "The rider will get ride with instructor",
+            "price": "1250",
+            "serves": "6",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0012",
+            "name": "Lunch at betab valley",
+            "provider": "valley view restaurants",
+            "description": "The Guest will get veg as well as non veg options",
+            "price": "650",
+            "serves": "2",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0013",
+            "name": "Kehwa at pampore",
+            "provider": "Saffron field",
+            "description": "The Guest authentic kehwa at saffron fields",
+            "price": "150",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0014",
+            "name": "Life saving equipments",
+            "provider": "Shikara walla",
+            "description": "the life saving equipments will be present onboard",
+            "price": "150",
+            "serves": "1",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0017",
+            "name": "Local taxi",
+            "provider": "Taxi stand no 4",
+            "description": "Sedan,Suv and hatchbacks available for guest",
+            "price": "1500",
+            "serves": "4",
+            "quantity": "20"
+          },
+          {
+            "addon_id": "addon0018",
+            "name": "Photographer",
+            "provider": "Photography club nishat",
+            "description": "A4 size photographs will be provided to guest apart from other softcopy of photos",
+            "price": "150",
+            "serves": "1",
+            "quantity": "20"
+          }
+        ]
 
-    }]
+    const provider = [
+        {
+            "provider_id": "provider001",
+            "provider_category": "Food",
+            "Name": "M/s NH 1 Restautant",
+            "Company": "NH 1 Restautant pvt ltd",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad"
+            ],
+            "guideExperience": {
+                "years": 10,
+                "certifications": [
+                    "Certified Asian Chef",
+                    "Certified Muglai Chef"
+                ],
+                "specializations": [
+                    "Muglai food",
+                    "South Indian Food"
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+                "Veg Food": true,
+                "Non-Veg Food": true,
+            },
+            "contactInformation": {
+                "email": "NH1@t2k.com",
+                "phone": "101102911",
+                "website": "www.NH1.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider002",
+            "provider_category": "Transport",
+            "Name": "Mr. Aziz mir",
+            "Company": "Airpot taxi drivers assosciation",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad"
+            ],
+            "guideExperience": {
+                "years": 10,
+                "certifications": [
+                    
+                ],
+                "specializations": [
+                    "SUV",
+                    "Sedan",
+                    "Hatchback"
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 7
+            },
+            "servicesOffered": {
+                "Veg Food": true,
+                "Non-Veg Food": true,
+            },
+            "contactInformation": {
+                "email": "taxi@t2k.com",
+                "phone": "101102911",
+                "website": "www.airport-taxi.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider004",
+            "provider_category": "Transport",
+            "Name": "M/s Cable car corporation",
+            "Company": "Cabe car corporation",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                    "Asia's highest gondolla ",
+                    "Chair carriages for skiers"
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+                "Chair carriage": true,
+                "Closed carriage": true,
+            },
+            "contactInformation": {
+                "email": "gulamrg gonadola@t2k.com",
+                "phone": "1011029111",
+                "website": "www.gg.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider003",
+            "provider_category": "Activity",
+            "Name": "M/s Gulmarg slopes",
+            "Company": "M/s Gulmarg slopes",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                   
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+                "Skiing gears": true,
+                "Skiing instructor": true,
+            },
+            "contactInformation": {
+                "email": "gulamrgSlopes@t2k.com",
+                "phone": "1011029111",
+                "website": "www.slopes.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider005",
+            "provider_category": "Hotel",
+            "Name": "Gulmarg peaks",
+            "Company": "M/s Raddison pvt ltd",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                   "3 star king size room",
+            
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+            "bon fire":"true",
+            "food":"true",
+            "room service":"true",
+            "vallet parking":"true"    
+            },
+            "contactInformation": {
+                "email": "Hotel@t2k.com",
+                "phone": "1011029111",
+                "website": "www.hotel.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider006",
+            "provider_category": "Horse ride",
+            "Name": "Pehalgam pony association",
+            "Company": "",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                   "3 star king size room",
+            
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+            "horse ride":"true",
+            "riding gears": "true",
+            "riding instuctor":"true"
+            },
+            "contactInformation": {
+                "email": "Horse@t2k.com",
+                "phone": "1011029111",
+                "website": "www.horse.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider007",
+            "provider_category": "Food",
+            "Name": "Valley view restautant",
+            "Company": "",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 3,
+                "certifications": [
+                    ],
+                "specializations": [
+                   "Asian food",
+                   "South indian food",
+                   "authentic kashmiri wazwaan"
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+            "veg food" : "true",
+            "non-veg food" : "true",
+            },
+            "contactInformation": {
+                "email": "Horse@t2k.com",
+                "phone": "1011029111",
+                "website": "www.horse.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider007",
+            "provider_category": "Hotel",
+            "Name": "Highland hotel",
+            "Company": "M/s Raddison pvt ltd",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                   "3 star king size room",
+            
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+            "bon fire":"true",
+            "food":"true",
+            "room service":"true",
+            "vallet parking":"true"    
+            },
+            "contactInformation": {
+                "email": "Hotel@t2k.com",
+                "phone": "1011029111",
+                "website": "www.hotel.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider008",
+            "provider_category": "Food",
+            "Name": "Pampore saffron field cafe",
+            "Company": "M/s JKTDC",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                   "Authentic kehwa",
+                   "noon chai and sot",
+                   "samavar chai"
+            
+                ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+            "food":"true",
+            "photography":"true",
+            "vallet parking":"true"    
+            },
+            "contactInformation": {
+                "email": "safronfield@t2k.com",
+                "phone": "1011029111",
+                "website": "www.safronfield.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider009",
+            "provider_category": "Travel",
+            "Name": "Dal Shikara",
+            "Company": "M/s JKTDC",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                    "shikara ride",
+                    "life saving equipment",
+                    "guiding services"
+                   ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+           "photography":"true"
+            },
+            "contactInformation": {
+                "email": "dalshikara@t2k.com",
+                "phone": "1011029111",
+                "website": "www.Dalshikara.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        },
+        {
+            "provider_id": "provider0010",
+            "provider_category": "Photography",
+            "Name": "Photography club",
+            "Company": "M/s Photography club association",
+            "languageOptions": [
+                "English",
+                "Hindi",
+                "kannad",
+                "French",
+                "Spanish"
+            ],
+            "Experience": {
+                "years": 30,
+                "certifications": [
+                    ],
+                "specializations": [
+                    "Kashur dress photo",
+                    "couple photoshoot",
+                    "adventure photoshoot"
+                   ]
+            },
+            "groupSize": {
+                "min": 2,
+                "max": 20
+            },
+            "servicesOffered": {
+           "photography":"true"
+            },
+            "contactInformation": {
+                "email": "photographyclub@t2k.com",
+                "phone": "1011029111",
+                "website": "www.Photography.t2k.com"
+            },
+            "reviews": [
+                {
+                    "name": "Raman Iyer",
+                    "rating": 5,
+                    "review": "They serve authentic South indian food."
+                }
+            ]
+        }
+    ]
     return (
         <div>
             <>
 
-                <Header />
-                <Sidebar />
-                <div id="main-content"
-                    className={` min-h-screen pt-24 relative overflow-y-auto lg:ml-64`}>
-
-                    {/* Navbar */}
-                    <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
+            <Header />
+            <Sidebar />
+            <div id="main-content" className={` min-h-screen pt-24 relative overflow-y-auto lg:ml-64`}>
+{/* Navbar */}
+             <nav className="flex mb-5 ml-4" aria-label="Breadcrumb">
                         <ol className="inline-flex items-center space-x-1 md:space-x-2">
                             <li className="inline-flex items-center">
                                 <div className={` text-base font-medium  inline-flex items-center`}>
@@ -624,115 +1229,109 @@ function itenary() {
                                 </div>
                             </li>
                         </ol>
-                    </nav>
-                    {/*nav end */}
+             </nav>
+ {/*nav end */}
+{/*content start*/}
+            <div className='mx-4'>
+                <div className='flex'>
+                    <span className='text-3xl'>{itenary.tour_name}</span>
+                    <h2 className='indent-4 pt-3'>{itenary.duration_days} Days and {itenary.duration_nights} Nights - {itenary.tour_type} tour</h2>
+                </div>
+            <p className='text-lg'>Tour Description: {itenary.tour_summary} </p>
+                {/*Day wise activity */}
+                <div >
+                 <div className='mt-4 mx-4 p-2 '>
+                 <span className='text-3xl'>Itenary <br /></span>
+                  {itenary.plan.map((item, i) => (
+                     <div key={i} >
+                     <table className='my-16 border-collapse border border-black bg-zinc-300 w-full'>
+                      <tbody className=''>
+                        <tr className='border border-black'>
+                            <th className='border border-black'>Day:</th>
+                               <td className='border border-black'>{item.day}</td>
+                                    </tr>
+                                    {item.activities.map((act, i) => {
+                                    return ( <>
+                                    <tr className='mt-8 pt-4 border border-black' key={i}>
+                                       <th className='border border-black' width='auto'>Activity name :</th>
+                                       <td className='border border-black'>{act?.activity_name}</td>
+                                    </tr>
+                                 <tr className='mt-8 pt-4 border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Time of ride :</th>
+                                      <td className='border border-black'>{act?.time_of_ride}</td>
+                                  </tr>
+                                  <tr className='mt-8 pt-4 border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Distance :</th>
+                                      <td className='border border-black'>{act?.distance}</td>
+                                  </tr>
+                                  <tr className='mt-8 pt-4 border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Place:</th>
+                                      <td className='border border-black'>{act?.place}</td>
+                                  </tr>
+                                  <tr className='mt-8 pt-4 border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Mile stones :</th>
+                                      <td className='border border-black'>
+                                          {act.milestones.map((ms, id) => {
+                                              return (<><tr className='border border-black' key={id}>
+                                                  <th className='border border-black' width='auto'>Place:</th>
+                                                  <td className='border border-black'> {Object.keys(ms)[0]}</td>
+                                              </tr>
+                                                  <tr className='border border-black' key={id}>
+                                                      <th className='border border-black' width='auto'>Description:</th>
+                                                      <td className='border border-black'>{ms.description}</td>
+                                                  </tr></>)
+                                          })}
+                                      </td>
+                                  </tr>
+                                  <tr className='border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Boarding point:</th>
+                                      <td className='border border-black'>{act?.boarding_point}</td>
+                                  </tr>
+                                  <tr className='border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Guided Tour:</th>
+                                      <td className='border border-black'>{act?.Guided_tour ? 'Yes' : 'No'}</td>
+                                  </tr>
+                                  <tr className='border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Capacity:</th>
+                                      <td className='border border-black'>
+                                          <tr className='border border-black' key={i}>
+                                              <th className='border border-black' width='auto'>Adult :</th>
+                                              <td className='border border-black'>{act?.capacity.[0].adult}</td>
+                                          </tr>
+                                          <tr className='border border-black' key={i}>
+                                              <th className='border border-black' width='auto'>Children :</th>
+                                              <td className='border border-black'>{act?.capacity.[1].children}</td>
+                                          </tr>
+                                      </td>
+                                  </tr>
 
-                    {/*content start*/}
-                    <div className='mx-4'>
+                                  <tr className='border border-black' key={i}>
+                                      <th className='border border-black' width='auto'>Addons:</th>
+                                      <td className='border border-black'>
+                                          {act?.add_on.map((Add, idx) => {
+                                              return (
+                                                  <tr className='border border-black' key={idx}>
+                                                      <th className='border border-black' width='auto'>Addon_id:</th>
+                                                      <td className='border border-black'>{Add.addon_id}</td>
+                                                  </tr>)
+                                        })}
 
-                        <div className='flex'>
-                            <span className='text-3xl'>{itenary.tour_name}</span>
-                            <h2 className='indent-4 pt-3'>{itenary.duration_days} Days and {itenary.duration_nights} Nights - {itenary.tour_type} tour</h2>
-                        </div>
-                        <p className='text-lg'>Tour Description: {itenary.tour_summary} </p>
+                                     </td>
+                               </tr>
 
-                        {/*Day wise activity */}
-                        <div >
-                            <div className='mt-4 mx-4 p-2 '>
-                                <span className='text-3xl'>Itenary <br /></span>
-                                {itenary.plan.map((item, i) => (
-                                    <div key={i} >
-                                        <table className='my-16 border-collapse border border-black bg-zinc-300 w-full'>
-                                            <tbody className=''>
-
-                                                <tr className='border border-black'>
-                                                    <th className='border border-black'>Day:</th>
-                                                    <td className='border border-black'>{item.day}</td>
-                                                </tr>
-                                                {item.activities.map((act, i) => {
-                                                    return (
-                                                        <>
-                                                            {/* {JSON.stringify(act)} */}
-                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Activity name :</th>
-                                                                <td className='border border-black'>{act?.activity_name}</td>
-                                                            </tr>
-                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Time of ride :</th>
-                                                                <td className='border border-black'>{act?.time_of_ride}</td>
-                                                            </tr>
-                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Distance :</th>
-                                                                <td className='border border-black'>{act?.distance}</td>
-                                                            </tr>
-                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Place:</th>
-                                                                <td className='border border-black'>{act?.place}</td>
-                                                            </tr>
-                                                            <tr className='mt-8 pt-4 border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Mile stones :</th>
-                                                                <td className='border border-black'>
-                                                                    {act.milestones.map((ms, id) => {
-                                                                        return (<><tr className='border border-black' key={id}>
-                                                                            <th className='border border-black' width='auto'>Place:</th>
-                                                                            <td className='border border-black'> {Object.keys(ms)[0]}</td>
-                                                                        </tr>
-                                                                            <tr className='border border-black' key={id}>
-                                                                                <th className='border border-black' width='auto'>Description:</th>
-                                                                                <td className='border border-black'>{ms.description}</td>
-                                                                            </tr></>)
-                                                                    })}
-                                                                </td>
-                                                            </tr>
-                                                            <tr className='border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Boarding point:</th>
-                                                                <td className='border border-black'>{act?.boarding_point}</td>
-                                                            </tr>
-                                                            <tr className='border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Guided Tour:</th>
-                                                                <td className='border border-black'>{act?.Guided_tour ? 'Yes' : 'No'}</td>
-                                                            </tr>
-                                                            <tr className='border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Capacity:</th>
-                                                                <td className='border border-black'>
-                                                                    <tr className='border border-black' key={i}>
-                                                                        <th className='border border-black' width='auto'>Adult :</th>
-                                                                        <td className='border border-black'>{act?.capacity.[0].adult}</td>
-                                                                    </tr>
-                                                                    <tr className='border border-black' key={i}>
-                                                                        <th className='border border-black' width='auto'>Children :</th>
-                                                                        <td className='border border-black'>{act?.capacity.[1].children}</td>
-                                                                    </tr>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr className='border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Addons:</th>
-                                                                <td className='border border-black'>
-                                                                    {act?.add_on.map((Add, idx) => {
-                                                                        return (
-                                                                            <tr className='border border-black' key={idx}>
-                                                                                <th className='border border-black' width='auto'>Addon_id:</th>
-                                                                                <td className='border border-black'>{Add.addon_id}</td>
-                                                                            </tr>)
-                                                                    })}
-
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr className='border border-black' key={i}>
-                                                                <th className='border border-black' width='auto'>Provider:</th>
-                                                                <td className='border border-black'>
-                                                                    <tr className='border border-black' key={i}>
-                                                                        {act?.providers.map((pro, idx) => {
-                                                                            return (<tr className='border border-black' key={idx}><th className='border border-black' width='auto'>Provider_id:</th>
-                                                                                <td className='border border-black'>{pro.provider_id}</td>
-                                                                            </tr>)
-                                                                        })}
-                                                                    </tr>
-                                                                </td>
-                                                            </tr>
-                                                        </>
+                                   <tr className='border border-black' key={i}>
+                                       <th className='border border-black' width='auto'>Provider:</th>
+                                       <td className='border border-black'>
+                                           <tr className='border border-black' key={i}>
+                                               {act?.providers.map((pro, idx) => {
+                                                   return (<tr className='border border-black' key={idx}><th className='border border-black' width='auto'>Provider_id:</th>
+                                                       <td className='border border-black'>{pro.provider_id}</td>
+                                                   </tr>)
+                                               })}
+                                           </tr>
+                                       </td>
+                                   </tr>
+                               </>
                                                     )
                                                 })}
                                             </tbody>
@@ -759,6 +1358,34 @@ function itenary() {
                                     <li>Tax Amount : {itenary.tax_amount}</li>
                                     <li>Other Charges : {itenary.other_charges}</li>
                                 </ul>
+                            </div>
+
+                            {/* addons */}
+                            <div className="mt-4 mx-4 border-2 border-black p-2">
+                            <table className='px-4 border border-black'>
+                                <tr className='px-4 border border-black'>
+                                <th className='px-4 border border-black'>addon_id</th>
+                                <th className='px-4 border border-black'>addon name</th>
+                                <th className='px-4 border border-black'>addon provider</th>
+                                <th className='px-4 border border-black'>addon description</th>
+                                <th className='px-4 border border-black'>addon price</th>
+                                <th className='px-4 border border-black'>addon serves</th>
+                                <th className='px-4 border border-black'>addon quantity</th>
+                                </tr>
+                                {addons.map((addon,i)=>{
+                                    return(
+                                        <tr key={i} className='px-4 border border-black'>
+                                                <td className='px-4 border border-black'>{addon?.addon_id}</td>
+                                                <td className='px-4 border border-black'>{addon?.name}</td>
+                                                <td className='px-4 border border-black'>{addon?.provider}</td>
+                                                <td className='px-4 border border-black'>{addon?.description}</td>
+                                                <td className='px-4 border border-black'>{addon?.price}</td>
+                                                <td className='px-4 border border-black'>{addon?.serves}</td>
+                                                <td className='px-4 border border-black'>{addon?.quantity}</td>
+                                            </tr>
+                                        )
+                                })}
+                            </table>
                             </div>
                         </div>
 
