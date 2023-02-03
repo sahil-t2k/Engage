@@ -241,14 +241,8 @@ export default {
     
   },
   "BedsCols":{
-  
-    col1 : "Bed Length",
-    col2 : "Bed Width", 
-   },
-   
-   "BedsCols":{
-    col1 :"Longueur du Lit",
-    col2 : "Largeur du Lit", 
+    col1 :"Longueur du Lit (en cm)",
+    col2 : "Largeur du Lit (en cm)", 
    },
 
   "UpdateDisabled" :{

@@ -28,6 +28,7 @@ let colorToggle;
 import Router from 'next/router';
 
 
+
 function Gallery() {
     const [visible, setVisible] = useState(0)
     const [color, setColor] = useState({})
@@ -420,8 +421,27 @@ function Gallery() {
 
     }
 
+    // function to search image
+    const [searchedImages,setSearchedImages] =useState([{}])
+    const [showSearchedImages,setShowSearchedImages] =useState(0)
+        const clearSearchField = () =>{
+            document.getElementById('imageSearchBox').reset();
+            
+        }
+
+    const searchImage = (data) => {
+        
+        let match =images.filter((i)=>(i.image_title.match(data)||i.image_description.match(data)))
+
+        setSearchedImages(match)
+        
+        setShowSearchedImages(1)
+
+     }
     return (
         <>
+       
+    
             <Title name={`Engage |  ${language?.gallery}`} />
             {/* Header   */}
             <Header color={color} Primary={english.Side} Type={currentLogged?.user_type} Sec={colorToggler} mode={mode} setMode={setMode} />
@@ -471,15 +491,30 @@ function Gallery() {
                     <h6 className={`text-xl mb-2 flex leading-none  pt-2 font-bold ${color?.text}`}>{language?.gallery} </h6>
                     <div className="sm:flex my-2">
                         <div className=" sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3  sm:mb-0">
-                            <form className="lg:pr-3" action="#" method="GET">
+                        
+                        
+                        {/* input text for search start */}
+                        <form className="lg:pr-3"  id='imageSearchBox'>
                                 <label htmlFor="users-search" className="sr-only">{language?.search}</label>
                                 <div className="mt-1 relative lg:w-64 xl:w-96">
-                                    <input type="text" name="email" id="users-search" className={`${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`} placeholder={language?.searchforimages}>
+                                    <input  type="text" name="imageSearch"   onChange={e=>searchImage(e.target.value)}  className={`${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`} placeholder={language?.searchforimages}>
+                                        
                                     </input>
                                 </div>
                             </form>
+                        {/* input text for search end */}
+
+
+
+                            {/* icons for delete and other operations start */}
                             <div className="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0">
-                                <a href="#" className={`${color?.textgray} hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
+                            {showSearchedImages===1?
+                            <a href="#" 
+                            onClick={()=>{setShowSearchedImages(0); clearSearchField();}}
+                            className={`${color?.textgray}  hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" title='clear search' width="26" height="26" fill="currentColor" className="bi bi-eraser-fill" viewBox="0 0 16 16"> <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/> </svg>
+                                </a>:<></>}
+                                <a href="#"  className={`${color?.textgray}  hover:${color?.text} cursor-pointer p-1 ${color?.hover} rounded inline-flex justify-center`}>
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"></path></svg>
                                 </a>
                                 <a onClick={allDelete} className={  check?.length === 0 || undefined ?
@@ -497,20 +532,30 @@ function Gallery() {
                                 </a>
                             </div>
                         </div>
+                        {/* icons for delete and other operations end */}
+
+                        {/* Add new image options start */}
                         <div className="flex items-center space-x-2 sm:space-x-3 lg:ml-auto">
                            <Button Primary={language?.Add} onClick={() => setAddImage(1)} /> 
                             <Button Primary={language?.AddfromURL} onClick={() => setAddURLImage(1)} />
                         </div>
+                        {/* Add new image options end */}
                     </div>
                     </div>
                     {/* Gallery Form */}
+
+                    {/* loaders for images start */}
                     <div className={visible === 0 ? 'block w-auto  h-auto m-6 flex' : 'hidden'}>
                         <div className='mr-2'>  <Loader /></div>
                         <div className='mx-2'>  <Loader /></div>
                         <div >  <Loader /></div>
                     </div>
-                    
+                    {/* loaders for images end */}
+
+                    {/* main gallery start */}
                     <div className={visible === 1 ? 'block' : 'hidden'}>
+                        {/* fetched images */}
+                    <div className={showSearchedImages===0?'block':'hidden'}>
                         <div className="flex-wrap container grid sm:grid-cols-2 py-4 -pl-6 lg:grid-cols-3 gap-4">
                             {images?.map((item, idx) => {
                                 return (
@@ -541,9 +586,43 @@ function Gallery() {
                             }
 
                         </div>
-
-
                     </div>
+                            
+                     {/* searched images display */}
+                        <div className={showSearchedImages===1?'block':'hidden'}>
+                        <div className="flex-wrap container grid sm:grid-cols-2 py-4 -pl-6 lg:grid-cols-3 gap-4">
+                            {searchedImages?.map((item, idx) => {
+                                return (
+                                    <>
+                                        <div className="block text-blueGray-600  text-xs font-bold " key={idx}  >
+                                            <div className='relative cursor-pointer'
+                                                tooltip title="Click here to view or edit." >
+                                                <a href="#" className="relative flex" >
+                                                    <input type="checkbox" id={item?.image_id}  tooltip title="Click here to delete image."
+                                                        name={item?.image_id} checked={item.isChecked || false}
+                                                        onChange={(e) => { handlecheckbox(e) }} className="bottom-0 right-0 cursor-pointer absolute bg-gray-30 opacity-30 m-1 border-gray-300 text-cyan-600  checked:opacity-100 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded-full"
+                                                        onClick={() => { setSelectedImage(!selectedImage) }} />
+                                                       { check?.length === 0 || undefined ?
+                                                    <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "450px" }}
+                                                        onClick={() => { setEnlargeImage(1); setActionEnlargeImage(item); 
+                                                         setIndexImage(idx); }} />
+                                                           :
+                                                         <img htmlFor={item?.image_id} className={`rounded-lg`} src={item.image_link} alt='Room Image' style={{ height: "170px", width: "450px" }}
+                                                       />}
+                                                </a>
+                                            </div>
+
+
+                                        </div></>
+                                )
+                            }
+                            )
+                            }
+
+                        </div>
+                        </div>
+                    </div>
+                     {/* main gallery Ends */}
                 </div>
 
                 {/* Modal Image Enlarge */}

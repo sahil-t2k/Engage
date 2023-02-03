@@ -311,8 +311,8 @@ Cancel:"Cancel"
 
 "BedsCols":{
   
- col1 : "Bed Length",
- col2 : "Bed Width", 
+ col1 : "Bed Length (in cms)",
+ col2 : "Bed Width (in cms)", 
 },
 
 "ServicesCols":{

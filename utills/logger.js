@@ -49,4 +49,26 @@ export const logger = createLogger({
     };
   }
 
+//import kafkaStream from 'kafka-stream';
+// var KafkaStream = require('kafka-stream');
+// LOGGER = bunyan.createLogger({
+//     name: 'kafka-bunyan-test',
+//     level: bunyan.TRACE
+// });
  
+//  kafkaStream = new KafkaStream({
+//     kafka: {
+//         connectionString:'103.136.36.27:9092'
+//     },
+//     topic: 'bunyan-kafka-topic'
+// });
+ 
+// kafkaStream.on('ready', function () {
+//     LOGGER.addStream({
+//         level: bunyan.INFO,
+//         stream: kafkaStream
+//     });
+ 
+//     // Now you can log
+//     LOGGER.info('Come on you target for faraway laughter, come on you stranger, you legend, you martyr, and shine!');
+// });

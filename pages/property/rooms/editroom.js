@@ -114,12 +114,11 @@ function Room() {
         if (response.data?.room_type == 'Single') {
           setBedDetails(response.data.beds?.[i])
         }
-        setAllRoomRates(response.data?.unconditional_rates?.[i]);
         filterCurrency(response.data?.unconditional_rates?.[i]);
         if (response.data.room_facilities !== undefined) {
           setServices(response.data.room_facilities);
         }
-
+          
         setRoomDetails(response.data);
         if (response.data.room_facilities == undefined) {
           fetchServices();
@@ -136,21 +135,34 @@ function Room() {
               }
               genData.push(temp)
             })
-            setGen(genData);
+            setGen(genData);;
           }
         }
         logger.info("url  to fetch room hitted successfully");
         setVisible(1)
       })
-      .catch((error) => { logger.error("url to fetch room, failed") });
+      .catch((error) => { logger.error("url to fetch room, failed");  });
   }
 
-  const filterCurrency = (props) => {
+  const filterCurrency = (props) => 
+  {
+    if(props != undefined)
+  {
     currency = lang?.CurrencyData.filter(el => {
       return props.baserate_currency.toUpperCase() === el.currency_code;
     });
-    setAllRoomRates({ ...allRoomRates, currency: currency?.[i]?.currency_name })
-  }
+    const rate={
+      "currency":currency?.[i]?.currency_name,
+      "baserate_amount": props.baserate_amount,
+      "tax_amount":props.tax_amount,
+      "otherfees_amount":props.otherfees_amount,
+      "room_id":props.room_id,
+      "un_rate_id":props.un_rate_id
+      }
+    //setAllRoomRates({ props., currency: currency?.[i]?.currency_name })
+    setAllRoomRates(rate)
+
+  }}
 
   // Room Services
   const fetchServices = async () => {
@@ -357,7 +369,8 @@ function Room() {
         image_link: actionImage?.image_link,
         image_title: actionImage?.image_title,
         image_description: actionImage?.image_description,
-        image_category: "room"
+        image_category: "room",
+        room_id:currentroom
       }]
       const finalImage = { "images": imagedata }
       setSpinner(1);
@@ -376,7 +389,7 @@ function Room() {
           setActionImage([])
           setError({});
           setFlag([])
-          submitImageLink(response?.data?.image_id);
+         // submitImageLink(response?.data?.image_id);
         })
         .catch(error => {
           setSpinner(0);
@@ -394,48 +407,48 @@ function Room() {
     }
   }
 
-  const submitImageLink = (props) => {
-    const imagedata = [{
-      image_id: props,
-      room_id: currentroom
-    }]
-    const finalImage = { "room_images": imagedata }
-    setSpinner(1)
-    axios.post('/api/room-images', finalImage, { header: { "content-type": "application/json" } }).then
-      ((response) => {
-        setSpinner(0);
-        toast.success("App: Room details update success.", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        fetchImages();
-        fetchDetails();
-        setError({})
-        setActionImage([]);
-        setAddImage(0);
-        Router.push("./editroom");
-        setDisp(2);
-      })
-      .catch((error) => {
-        setSpinner(0);
-        setError({});
-        toast.error("App: Room description update error. ", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      })
+  // const submitImageLink = (props) => {
+  //   const imagedata = [{
+  //     image_id: props,
+  //     room_id: currentroom
+  //   }]
+  //   const finalImage = { "room_images": imagedata }
+  //   setSpinner(1)
+  //   axios.post('/api/room-images', finalImage, { header: { "content-type": "application/json" } }).then
+  //     ((response) => {
+  //       setSpinner(0);
+  //       toast.success("App: Room details update success.", {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //       });
+  //       fetchImages();
+  //       fetchDetails();
+  //       setError({})
+  //       setActionImage([]);
+  //       setAddImage(0);
+  //       Router.push("./editroom");
+  //       setDisp(2);
+  //     })
+  //     .catch((error) => {
+  //       setSpinner(0);
+  //       setError({});
+  //       toast.error("App: Room description update error. ", {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //       });
+  //     })
 
-  }
+  // }
 
   /* Function for Update Room Description*/
   const submitRoomDescriptionEdit = () => {
@@ -505,8 +518,11 @@ function Room() {
         "un_rate_id": roomDetails?.unconditional_rates?.[0]?.un_rate_id
       }
       setSpinner(1);
-      const url = '/api/unconditional_rates'
-      axios.put(url, final_data, { header: { "content-type": "application/json" } }).then
+      
+      //const method=final_data?.un_rate_id? `put`:`post`
+      if(final_data.un_rate_id!= undefined){
+        const url = '/api/unconditional_rates'
+        axios.put(url, final_data, { header: { "content-type": "application/json" } }).then
         ((response) => {
           setSpinner(0)
           toast.success("Room rates update Success.", {
@@ -539,6 +555,43 @@ function Room() {
             progress: undefined,
           });
         })
+      }
+      else{const url = '/api/room_unconditional_rates'
+        axios.post(url, final_data, { header: { "content-type": "application/json" } }).then
+        ((response) => {
+          setSpinner(0)
+          toast.success("Room rates update Success.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setFlag([])
+          fetchDetails();
+          setError({});
+          setAllRoomRates([]);
+          Router.push("./editroom");
+
+
+        })
+        .catch((error) => {
+          setSpinner(0);
+          setError({});
+          toast.error("Room rates update error.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        })
+      }
+      
     }
   }
 
@@ -943,7 +996,7 @@ function Room() {
 
   // Validate Rates
   const validationRates = () => {
-    var result = validateRoomRates(allRoomRates)
+   var result = validateRoomRates(allRoomRates)
     if (result === true) {
       submitRoomRatesEdit()
     }
@@ -1077,12 +1130,22 @@ function Room() {
                         </label>
                         <div className={visible === 0 ? 'block' : 'hidden'}><Lineloader /></div>
                         <div className={visible === 1 ? 'block' : 'hidden'}>
-                          <input
+                        {(allRoomDetails?.room_type==='Capsule' || allRoomDetails?.room_type==='Suite')?
+                        <input
+                        disabled
                             type="text"
                             defaultValue={allRoomDetails?.room_type?.replaceAll("_", " ")}
 
                             className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`}
-                          />
+                          />:
+                            <select
+                            defaultValue={roomDetails?.room_type}
+                            onClick={(e) => setAllRoomDetails({ ...allRoomDetails, room_type_id: e.target.value }, setFlag(1))}
+                            className={`shadow-sm ${color?.greybackground} border border-gray-300 ${color?.text} sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5`} >
+                            <option  disabled selected value={roomDetails?.room_type}>{roomDetails?.room_type}</option>
+                           {roomtypes.filter(i=>i.room_type_name != 'Capsule' && i.room_type_name != 'Suite').map((i)=><option key={i.room_type_id} value={i?.room_type_id}>{i?.room_type_name.replaceAll('_',' ')}</option>)}
+                          </select>
+                           }
                         </div>
                       </div>
                     </div>
